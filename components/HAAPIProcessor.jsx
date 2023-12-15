@@ -1,5 +1,5 @@
 /*
- *  Copyright 2022 Curity AB
+ *  Copyright 2023 Curity AB
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState} from "react";
 import StartAuthorization from "./StartAuthorization";
 import {NativeModules, Text, View} from "react-native";
 import {Layout} from "./example";
@@ -26,7 +26,6 @@ export default function HAAPIProcessor(props) {
     const [step, setStep] = useState({name: null, haapiResponse: null, inputProblem: null})
     const [missingResponseType, setMissingResponseType] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [followRedirects, setFollowRedirects] = useState(true)
     const [links, setLinks] = useState([])
 
     useEffect(() => {
@@ -125,36 +124,10 @@ export default function HAAPIProcessor(props) {
             case 'process-result':
                 processHaapiResult()
                 break
-            case 'continue-redirect-step':
-                processRedirect()
-                break
-            case 'continue-continue-step':
-                processContinue()
-                break
-            case 'external-browser-launch':
-                launchExternalBrowser()
-                break
             default:
                 break
         }
     }, [step])
-
-    const processRedirect = async () => {
-        const action = step.haapiResponse.actions[0]
-
-        if (action.template === 'form' && action.kind === 'redirect') {
-            await callHaapi(
-                action.model.href,
-                action.model.method,
-                getRedirectBody(action.model.fields)
-            )
-
-            return
-        }
-
-        setStep({name: 'unknown-step', haapiResponse: step.haapiResponse})
-        setMissingResponseType('Redirect Step')
-    }
 
     const processPollingStep = () => {
         const haapiResponse = step.haapiResponse
@@ -170,78 +143,17 @@ export default function HAAPIProcessor(props) {
                 setStep({name: 'authentication-step', haapiResponse})
         }
     }
-    const processContinue = async () => {
-        const continueAction = step.haapiResponse.actions[0].model.continueActions[0]
 
-        if (continueAction && continueAction.template === 'form' && continueAction.kind === 'continue') {
-            await callHaapi(
-                continueAction.model.href,
-                continueAction.model.method,
-                getRedirectBody(continueAction.model.fields)
-            )
-
-            return
-        }
-
-        setStep({name: 'unknown-step', haapiResponse: step.haapiResponse})
-        setMissingResponseType('Continue Step')
-    }
-
-    const launchExternalBrowser = async () => {
-        const url = step.haapiResponse.actions[0].model.arguments.href + "&for_origin=" + window.location
-        const popup = window.open(url)
-
-        window.addEventListener('message', async event => {
-            if (event.source !== popup) {
-                return
-            }
-
-            if (!followRedirects) {
-                step.haapiResponse.actions[0].model.continueActions[0].model.fields[0].value = event.data
-                setStep({name: 'show-continue-step', haapiResponse: step.haapiResponse})
-            } else {
-                const continueAction = step.haapiResponse.actions[0].model.continueActions[0]
-
-                await callHaapi(
-                    continueAction.model.href,
-                    continueAction.model.method,
-                    new URLSearchParams({'_resume_nonce': event.data})
-                )
-            }
-
-            setTimeout(() => popup.close(), 3000)
-        })
-    }
     let stepComponent
 
     switch (step.name) {
         case 'loading':
         case 'authorization-complete':
-        case 'continue-redirect-step':
         case 'process-result':
             stepComponent = <Text>Loading..</Text>
             break
         case 'authentication-step':
-        case 'registration-step':
             stepComponent = processAuthenticationStep()
-            break
-        case 'show-redirect-step':
-            //stepComponent = <RedirectStep continueFlow={() => setStep({ name: 'continue-redirect-step', haapiResponse: step.haapiResponse })}/>
-            break
-        case 'show-continue-step':
-            // stepComponent = <RedirectStep type="Continue" continueFlow={() => setStep({ name: 'continue-continue-step', haapiResponse: step.haapiResponse })} />
-            break
-        case 'external-browser-launch':
-            // const remainingActions = step.haapiResponse.actions.slice(1)
-            // stepComponent = <Layout>
-            //     <Page>
-            //             <Well>
-            //             <Logo />
-            //             <p>{step.haapiResponse.actions[0].title}</p>
-            //             {remainingActions && remainingActions.map(action => renderAction(action))}
-            //         </Well>
-            //     </Page>
-            // </Layout>
             break
         case 'unknown-step':
             stepComponent = <Layout>
@@ -270,12 +182,4 @@ export default function HAAPIProcessor(props) {
 
         {stepComponent}
     </>)
-}
-
-const getRedirectBody = (fields) => {
-    if (!fields) {
-        return null
-    }
-
-    return new URLSearchParams(fields.map(field => [field.name, field.value]))
 }

@@ -18,7 +18,6 @@ import React, {StyleSheet, Text, View} from "react-native";
 import {Header, Layout} from "./example";
 import base64 from 'base-64'
 
-/* UI Components */
 export default function Authenticated(props) {
 
     const getSubject = (idToken) => {
@@ -33,8 +32,11 @@ export default function Authenticated(props) {
         return base64.decode(idToken.split('.')[1])
     }
 
+    const prettyPrintPayload = (idToken) => {
+        return JSON.stringify(decode(idToken), null, 2)
+    }
 
-    const {idToken, accessToken, scope, expiresIn} = props.tokens
+    const {idToken} = props.tokens
     const subject = getSubject(idToken)
 
     const styles = StyleSheet.create({
@@ -49,11 +51,11 @@ export default function Authenticated(props) {
     return (
         <Layout>
             <Header/>
-            <Text>Hello {subject}!</Text>
+            <Text style={styles.heading}>Hello {subject}!</Text>
 
             <View className="example-app-settings active">
                 <Text>ID Token claims</Text>
-                <Text style={styles.jsonData}>{decode(idToken)}</Text>
+                <Text style={styles.jsonData}>{prettyPrintPayload(idToken)}</Text>
             </View>
         </Layout>
     );
