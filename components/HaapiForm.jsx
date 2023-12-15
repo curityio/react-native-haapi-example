@@ -143,7 +143,7 @@ export default function HaapiForm(props) {
                     if (action.model.name === "bankid") {
                         return <BankIdView action={action} links={links} messages={messages} onFollowLink={onFollowLink}/>
                     } else {
-                        return <GenericLoginView action={action} />
+                        return <GenericLoginView action={action} links={links} messages={messages} onFollowLink={onFollowLink}/>
                     }
                 case "cancel":
                     return <SubmitButton title={action.title.literal} onPress={() => onSubmit(action.model, {})}/>
