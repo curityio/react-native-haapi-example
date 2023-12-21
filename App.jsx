@@ -1,5 +1,5 @@
 /*
- *  Copyright 2022 Curity AB
+ *  Copyright 2023 Curity AB
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,23 +14,26 @@
  *  limitations under the License.
  */
 
-import {Header, Layout, Main} from "./components/example"
-
-import {useState} from "react";
-import HAAPIProcessor from "./components/HAAPIProcessor";
+import { useState } from "react";
+import HaapiProcessor from "./components/HaapiProcessor";
 import Authenticated from "./components/Authenticated";
+import Styles from "./Styles";
+import { Image, SafeAreaView, ScrollView } from "react-native";
 
-function App() {
-    const [tokens, setTokens] = useState(null)
+const App = () => {
+    const [tokens, setTokens] = useState(null);
+    const Header = () => {
+        return <Image source={require("./images/curity-logo.png")} />;
+    };
 
     return (
-        <Layout>
-            <Header/>
-            <Main>
-                {tokens ? <Authenticated tokens={tokens}/> : <HAAPIProcessor setTokens={setTokens}/>}
-            </Main>
-        </Layout>
+        <SafeAreaView style={Styles.layoutContainer}>
+            <ScrollView>
+                <Header />
+                {tokens ? <Authenticated tokens={tokens} setTokens={setTokens} /> : <HaapiProcessor setTokens={setTokens} />}
+            </ScrollView>
+        </SafeAreaView>
     );
-}
+};
 
 export default App;

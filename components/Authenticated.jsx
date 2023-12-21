@@ -14,49 +14,72 @@
  *  limitations under the License.
  */
 
-import React, {StyleSheet, Text, View} from "react-native";
-import {Header, Layout} from "./example";
-import base64 from 'base-64'
+import React, { Button, NativeEventEmitter, NativeModules, Text, View } from "react-native";
+import base64 from "base-64";
+import Styles from "../Styles";
+import { useEffect } from "react";
+import {addEventListener, removeEventListener} from "./EventManager";
 
 export default function Authenticated(props) {
 
     const getSubject = (idToken) => {
         if (!idToken) {
-            return ""
+            return "";
         }
 
-        let decoded = JSON.parse(decode(idToken))
+        let decoded = JSON.parse(decode(idToken));
         return decoded.sub;
     };
     const decode = (idToken) => {
-        return base64.decode(idToken.split('.')[1])
-    }
+        if (!idToken) {
+            return "";
+        }
+        return base64.decode(idToken.split(".")[1]);
+    };
 
     const prettyPrintPayload = (idToken) => {
-        return JSON.stringify(decode(idToken), null, 2)
-    }
-
-    const {idToken} = props.tokens
-    const subject = getSubject(idToken)
-
-    const styles = StyleSheet.create({
-        jsonData: {},
-        heading: {
-            fontWeight: 'bold',
-            marginTop: 12,
-            marginBottom: 18,
+        if (!idToken) {
+            return "";
         }
-    })
+        return JSON.stringify(JSON.parse(decode(idToken)), null, 2);
+    };
+
+    const { idToken, accessToken, refreshToken } = props.tokens;
+    const setTokens = props.setTokens
+    const subject = getSubject(idToken);
+
+    const logout = () => {
+        const { HaapiModule } = NativeModules;
+        HaapiModule.logout().then(setTokens(null));
+    };
+
+    const refresh = () => {
+        const { HaapiModule } = NativeModules;
+        HaapiModule.refreshAccessToken();
+    };
+
+    useEffect(() => {
+        let tokenListener = addEventListener("TokenResponse", event => {
+            setTokens(event);
+        });
+        return () => removeEventListener(tokenListener);
+    });
 
     return (
-        <Layout>
-            <Header/>
-            <Text style={styles.heading}>Hello {subject}!</Text>
-
-            <View className="example-app-settings active">
-                <Text>ID Token claims</Text>
-                <Text style={styles.jsonData}>{prettyPrintPayload(idToken)}</Text>
-            </View>
-        </Layout>
+        <View>
+            <Text style={Styles.heading}>Hello {subject}!</Text>
+            <Button style={Styles.button} title="Logout" onPress={() => logout()} />
+            <Text style={Styles.heading}>Access Token</Text>
+            <Text style={Styles.json}>{accessToken}</Text>
+            {refreshToken ?
+                <View>
+                    <Text style={Styles.heading}>Refresh Token</Text>
+                    <Text style={Styles.json}>{refreshToken}</Text>
+                    <Button style={Styles.button} title="Refresh" onPress={() => refresh()} />
+                </View>
+                : ""}
+            <Text style={Styles.heading}>ID Token claims</Text>
+            <Text style={Styles.json}>{prettyPrintPayload(idToken)}</Text>
+        </View>
     );
 }

@@ -15,11 +15,10 @@
  */
 
 import {Button} from "react-native";
+import Styles from "../Styles";
 
 export default function StartAuthorization(props) {
     const { startAuthorization } = props
 
-    return <>
-        <Button onPress={startAuthorization} className="button button-primary button-fullwidth" title="Login"/>
-    </>
+    return <Button onPress={startAuthorization} style={Styles.button} title="Login"/>
 }
