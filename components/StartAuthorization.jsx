@@ -14,11 +14,11 @@
  *  limitations under the License.
  */
 
-import {Button} from "react-native";
 import Styles from "../Styles";
+import {SubmitButton} from "./view-components";
 
 export default function StartAuthorization(props) {
-    const { startAuthorization } = props
+    const {startAuthorization} = props
 
-    return <Button onPress={startAuthorization} style={Styles.button} title="Login"/>
+    return <SubmitButton onPress={startAuthorization} style={Styles.button} title="Login"/>
 }

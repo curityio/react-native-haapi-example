@@ -1,4 +1,4 @@
-/**
+/*
  *   Copyright 2023 Curity AB
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +15,8 @@
  */
 
 import React, {useCallback, useEffect, useState} from 'react';
-import {ActionTitle, Links, Messages, SubmitButton} from './view-components';
-import {Linking, Text, View} from 'react-native';
+import {Divider, Links, Messages, SubmitButton, Title} from './view-components';
+import {Linking, View} from 'react-native';
 import Styles from '../Styles';
 import {addEventListener, removeEventListener} from './EventManager';
 
@@ -39,21 +39,15 @@ const BankIdView = props => {
         const handlePress = useCallback(async urlToOpen => {
             await Linking.openURL(urlToOpen);
         }, []);
-        Linking.canOpenURL(props.url).then(supported => {
-            if (!supported) {
-                return <></>;
-            } else {
-                return <SubmitButton style={Styles.button} title={props.title} onPress={() => handlePress(props.url)}/>;
-            }
-        });
 
+        return <SubmitButton style={Styles.button} title={props.title} onPress={() => handlePress(props.url)}/>;
     };
     return (
         <View style={Styles.centerContainer}>
-            <ActionTitle title={action.title.literal} Styles={Styles.heading}/>
+            <Title title={action.title.literal} style={Styles.heading}/>
             <Messages messages={bankIdMessages}/>
             <Links onPress={() => false} links={bankIdLinks}/>
-            <Text>OR</Text>
+            <Divider text={"OR"} color={"white"}/>
             <LaunchBankIdButton title={'Launch BankID on this device'} url={action.model.href}/>
         </View>
     );

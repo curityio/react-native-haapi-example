@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from "react-native";
 
 const Styles = StyleSheet.create({
     layoutContainer: {
@@ -15,6 +15,9 @@ const Styles = StyleSheet.create({
     centerHorizontal: {
         flexDirection: "row",
         justifyContent: "space-around",
+    },
+    logo: {
+        resizeMode: "contain"
     },
     input: {
         height: 40,
@@ -33,8 +36,7 @@ const Styles = StyleSheet.create({
         backgroundColor: "blue",
         padding: 10
     },
-    selectorButton: {
-    },
+    selectorButton: {},
     cancelButton: {
         backgroundColor: "red",
     },

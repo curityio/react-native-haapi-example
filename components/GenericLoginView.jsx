@@ -1,11 +1,10 @@
-import { View } from "react-native";
-import { ActionTitle, Fields, InputProblem, Links, Messages, SubmitButton } from "./view-components";
-import { useEffect, useState } from "react";
+import {Fields, Links, Messages, Problem, SubmitButton, Title} from "./view-components";
+import {useEffect, useState} from "react";
 import Styles from "../Styles";
-import { removeEventListener, addEventListener } from "./EventManager";
+import {addEventListener, removeEventListener} from "./EventManager";
 
 const GenericLoginView = (props) => {
-    const { action, links, onFollowLink, messages, onSubmit } = props;
+    const {action, links, onFollowLink, messages, onSubmit} = props;
     const [fieldValues, setFieldValues] = useState({});
     const [error, setError] = useState(null);
 
@@ -21,12 +20,12 @@ const GenericLoginView = (props) => {
     }, []);
 
     return <>
-        <ActionTitle title={action.title.literal} Styles={Styles.heading} />
-        <InputProblem problem={error} styles={Styles.inputProblem} />
-        <Messages messages={messages} />
-        <Fields fields={action.model.fields} setFieldValues={setFieldValues} fieldValues={fieldValues} />
-        <SubmitButton title={action.title.literal} style={Styles.button} onPress={() => onSubmit(action, fieldValues)} />
-        <Links onPress={onFollowLink} links={links} />
+        <Title title={action.title.literal} Styles={Styles.heading}/>
+        <Problem problem={error} styles={Styles.inputProblem}/>
+        <Messages messages={messages}/>
+        <Fields fields={action.model.fields} setFieldValues={setFieldValues} fieldValues={fieldValues}/>
+        <SubmitButton title={action.title.literal} style={Styles.button} onPress={() => onSubmit(action, fieldValues)}/>
+        <Links onPress={onFollowLink} links={links}/>
     </>;
 
 };

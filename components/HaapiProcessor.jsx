@@ -14,19 +14,20 @@
  *  limitations under the License.
  */
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import StartAuthorization from "./StartAuthorization";
-import { Alert, NativeModules, Text, View } from "react-native";
+import {Alert, NativeModules, Text, View} from "react-native";
 import HaapiForm from "./HaapiForm";
 import HaapiConfiguration from "../configuration";
 import Styles from "../Styles";
 import {addEventListener, removeEventListener} from "./EventManager";
+import ErrorView from "./ErrorView";
 
 export default function HaapiProcessor(props) {
-    const welcome = <StartAuthorization startAuthorization={() => startAuthorization()} />;
-    const { setTokens } = props;
+    const welcome = <StartAuthorization startAuthorization={() => startAuthorization()}/>;
+    const {setTokens} = props;
     const [stepComponent, setStepComponent] = useState(welcome);
-    const { HaapiModule } = NativeModules;
+    const {HaapiModule} = NativeModules;
 
     useEffect(() => {
         const listeners = [];
@@ -36,7 +37,11 @@ export default function HaapiProcessor(props) {
             addEventListener("PollingStep", event => processAuthenticationStep(event)),
             addEventListener("ContinueSameStep", event => processAuthenticationStep(event)),
             addEventListener("TokenResponse", event => setTokens(event)),
-            addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description))
+            addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description)),
+            addEventListener("SessionTimedOut", event => {
+                setStepComponent(<ErrorView error={"Session timed out"} errorDescription={event.title.literal}
+                                            startOver={() => startAuthorization}/>)
+            })
         );
 
         return () => {
@@ -62,7 +67,7 @@ export default function HaapiProcessor(props) {
                                      onSubmit={submitAction}
                                      onFollowLink={followLink}
                                      messages={haapiResponse.messages}
-                                     links={haapiResponse.links} />;
+                                     links={haapiResponse.links}/>;
         setStepComponent(component);
     };
 

@@ -1,17 +1,17 @@
 import React from "react";
 import Styles from "../Styles";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {Image, Text, TextInput, TouchableOpacity, View} from "react-native";
 
-const ActionTitle = (props) => (<Text style={Styles.heading}>{props.title}</Text>);
+const Title = (props) => (<Text style={Styles.heading}>{props.title}</Text>);
 const Fields = (props) => {
-    const { fields, fieldValues, setFieldValues } = props;
+    const {fields, fieldValues, setFieldValues} = props;
 
     return fields.map((field) => {
         return <TextInput style={Styles.input}
                           secureTextEntry={field.name === "password"}
                           placeholder={field.label.literal}
                           onChangeText={newText => {
-                              let fieldValuesClone = { ...fieldValues };
+                              let fieldValuesClone = {...fieldValues};
                               fieldValuesClone[field.name] = newText;
                               setFieldValues(fieldValuesClone);
                           }}
@@ -19,7 +19,7 @@ const Fields = (props) => {
         />;
     });
 };
-const InputProblem = (props) => (<Text style={Styles.inputProblem}>{props.problem}</Text>);
+const Problem = (props) => (<Text style={Styles.inputProblem}>{props.problem}</Text>);
 const SubmitButton = (props) => {
     return <TouchableOpacity
         style={props.style}
@@ -29,13 +29,13 @@ const SubmitButton = (props) => {
 };
 
 const Links = (props) => {
-    const { links, onFollowLink } = props;
+    const {links, onFollowLink} = props;
     return links.map((link, i) => {
         if (link.type === "image/png") {
             return <View style={Styles.centerContainer} key={`link-${i}`}>
-                <Image source={{ uri: link.href }}
+                <Image source={{uri: link.href}}
                        style={Styles.imageLink}
-                       key={`ìmage-${i}`} />
+                       key={`ìmage-${i}`}/>
                 <Text style={Styles.message}
                       key={`link-${i}`}> {link.title.literal}</Text>
             </View>;
@@ -75,10 +75,22 @@ const Options = (props) => {
         return <SubmitButton style={[Styles.selectorButton, Styles.button]}
                              key={`option-${i}`}
                              title={option.title.literal}
-                             onPress={() => props.onFollowLink(option.model)} />;
+                             onPress={() => props.onFollowLink(option.model)}/>;
     });
 };
 
+const Divider = (props) => {
+    return <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{flex: 1, height: 1, backgroundColor: props.color}}/>
+        {props.text &&
+            <View>
+                <Text style={{width: 50, textAlign: 'center'}}>{props.text}</Text>
+            </View>
+        }
+        <View style={{flex: 1, height: 1, backgroundColor: props.color}}/>
+    </View>
+}
+
 export {
-    Options, Fields, Messages, Links, SubmitButton, InputProblem, ActionTitle,
+    Options, Fields, Messages, Links, SubmitButton, Problem, Title, Divider
 };

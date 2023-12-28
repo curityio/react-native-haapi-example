@@ -14,23 +14,24 @@
  *  limitations under the License.
  */
 
-import { useState } from "react";
+import {useState} from "react";
 import HaapiProcessor from "./components/HaapiProcessor";
 import Authenticated from "./components/Authenticated";
 import Styles from "./Styles";
-import { Image, SafeAreaView, ScrollView } from "react-native";
+import {Image, SafeAreaView, ScrollView} from "react-native";
 
 const App = () => {
     const [tokens, setTokens] = useState(null);
     const Header = () => {
-        return <Image source={require("./images/curity-logo.png")} />;
+        return <Image style={Styles.logo} source={require("./images/curity-logo.png")}/>;
     };
 
     return (
         <SafeAreaView style={Styles.layoutContainer}>
             <ScrollView>
-                <Header />
-                {tokens ? <Authenticated tokens={tokens} setTokens={setTokens} /> : <HaapiProcessor setTokens={setTokens} />}
+                <Header/>
+                {tokens ? <Authenticated tokens={tokens} setTokens={setTokens}/> :
+                    <HaapiProcessor setTokens={setTokens}/>}
             </ScrollView>
         </SafeAreaView>
     );
