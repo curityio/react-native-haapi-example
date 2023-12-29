@@ -1,3 +1,6 @@
 [submodule "android"]
 	path = android
 	url = git@github.com:curityio/react-native-haapi-android-module.git
+[submodule "ios"]
+	path = ios
+	url = git@github.com:curityio/react-native-haapi-ios-module.git
