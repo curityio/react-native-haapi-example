@@ -24,7 +24,7 @@ import {addEventListener, removeEventListener} from "./EventManager";
 import ErrorView from "./ErrorView";
 import HaapiModule from "./HaapiModule";
 
-export default function HaapiProcessor(props) {
+const HaapiProcessor = (props) => {
     const welcome = <StartAuthorization startAuthorization={() => startAuthorization()}/>;
     const {setTokens} = props;
     const [stepComponent, setStepComponent] = useState(welcome);
@@ -84,3 +84,4 @@ export default function HaapiProcessor(props) {
         </View>
     );
 }
+export default HaapiProcessor
