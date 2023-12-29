@@ -14,11 +14,12 @@
  *  limitations under the License.
  */
 
-import React, { Button, NativeEventEmitter, NativeModules, Text, View } from "react-native";
+import React, {Button, Text, View} from "react-native";
 import base64 from "base-64";
 import Styles from "../Styles";
-import { useEffect } from "react";
+import {useEffect} from "react";
 import {addEventListener, removeEventListener} from "./EventManager";
+import HaapiModule from "./HaapiModule";
 
 export default function Authenticated(props) {
 
@@ -44,17 +45,16 @@ export default function Authenticated(props) {
         return JSON.stringify(JSON.parse(decode(idToken)), null, 2);
     };
 
-    const { idToken, accessToken, refreshToken } = props.tokens;
+    const {idToken, accessToken, refreshToken} = props.tokens;
     const setTokens = props.setTokens
     const subject = getSubject(idToken);
 
     const logout = () => {
-        const { HaapiModule } = NativeModules;
         HaapiModule.logout().then(setTokens(null));
     };
 
     const refresh = () => {
-        const { HaapiModule } = NativeModules;
+        const {HaapiModule} = NativeModules;
         HaapiModule.refreshAccessToken();
     };
 
@@ -68,14 +68,14 @@ export default function Authenticated(props) {
     return (
         <View>
             <Text style={Styles.heading}>Hello {subject}!</Text>
-            <Button style={Styles.button} title="Logout" onPress={() => logout()} />
+            <Button style={Styles.button} title="Logout" onPress={() => logout()}/>
             <Text style={Styles.heading}>Access Token</Text>
             <Text style={Styles.json}>{accessToken}</Text>
             {refreshToken ?
                 <View>
                     <Text style={Styles.heading}>Refresh Token</Text>
                     <Text style={Styles.json}>{refreshToken}</Text>
-                    <Button style={Styles.button} title="Refresh" onPress={() => refresh()} />
+                    <Button style={Styles.button} title="Refresh" onPress={() => refresh()}/>
                 </View>
                 : ""}
             <Text style={Styles.heading}>ID Token claims</Text>

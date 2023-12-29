@@ -16,18 +16,18 @@
 
 import React, {useEffect, useState} from "react";
 import StartAuthorization from "./StartAuthorization";
-import {Alert, NativeModules, Text, View} from "react-native";
+import {Alert, Text, View} from "react-native";
 import HaapiForm from "./HaapiForm";
 import HaapiConfiguration from "../configuration";
 import Styles from "../Styles";
 import {addEventListener, removeEventListener} from "./EventManager";
 import ErrorView from "./ErrorView";
+import HaapiModule from "./HaapiModule";
 
 export default function HaapiProcessor(props) {
     const welcome = <StartAuthorization startAuthorization={() => startAuthorization()}/>;
     const {setTokens} = props;
     const [stepComponent, setStepComponent] = useState(welcome);
-    const {HaapiModule} = NativeModules;
 
     useEffect(() => {
         const listeners = [];

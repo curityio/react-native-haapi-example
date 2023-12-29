@@ -1,6 +1,7 @@
-import { NativeEventEmitter, NativeModules } from "react-native";
+import {NativeEventEmitter} from "react-native";
+import HaapiModule from "./HaapiModule";
 
-const eventEmitter = new NativeEventEmitter(NativeModules.HaapiModule);
+const eventEmitter = new NativeEventEmitter(HaapiModule);
 const addEventListener = (name, callback) => {
     return eventEmitter.addListener(name, callback);
 };
