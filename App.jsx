@@ -14,26 +14,34 @@
  *  limitations under the License.
  */
 
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import HaapiProcessor from "./components/HaapiProcessor";
 import Authenticated from "./components/Authenticated";
 import Styles from "./Styles";
-import {Image, SafeAreaView, ScrollView} from "react-native";
+import {Alert, Image, SafeAreaView, ScrollView} from "react-native";
+import {addEventListener, removeEventListener} from "./components/EventManager";
 
 const App = () => {
     const [tokens, setTokens] = useState(null);
     const Header = () => {
-        return <Image style={Styles.logo} source={require("./images/curity-logo.png")}/>;
+        return <Image style={Styles.logo} source={require("./images/curity-logo.png")} />;
     };
 
+    useEffect(() => {
+        const listener =
+                addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description))
+
+        return () => removeEventListener(listener);
+    }, []);
+
     return (
-        <SafeAreaView style={Styles.layoutContainer}>
-            <ScrollView>
-                <Header/>
-                {tokens ? <Authenticated tokens={tokens} setTokens={setTokens}/> :
-                    <HaapiProcessor setTokens={setTokens}/>}
-            </ScrollView>
-        </SafeAreaView>
+            <SafeAreaView style={Styles.layoutContainer}>
+                <ScrollView>
+                    <Header />
+                    {tokens ? <Authenticated tokens={tokens} setTokens={setTokens} /> :
+                            <HaapiProcessor setTokens={setTokens} />}
+                </ScrollView>
+            </SafeAreaView>
     );
 };
 
