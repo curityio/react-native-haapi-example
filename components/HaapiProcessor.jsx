@@ -15,19 +15,21 @@
  */
 
 import React, {useEffect, useState} from "react";
-import StartAuthorization from "./StartAuthorization";
+import WelcomeView from "./WelcomeView";
 import {Alert, Text, View} from "react-native";
-import HaapiForm from "./HaapiForm";
-import HaapiConfiguration from "../configuration";
 import Styles from "../Styles";
 import {addEventListener, removeEventListener} from "./EventManager";
 import ErrorView from "./ErrorView";
 import HaapiModule from "./HaapiModule";
+import Polling from "./Polling";
+import {Options, SubmitButton} from "./view-components";
+import ContinueView from "./ContinueView";
+import BankIdView from "./BankIdView";
+import GenericLoginView from "./GenericLoginView";
 
 const HaapiProcessor = (props) => {
-    const welcome = <StartAuthorization startAuthorization={() => startAuthorization()}/>;
     const {setTokens} = props;
-    const [stepComponent, setStepComponent] = useState(welcome);
+    const [stepComponent, setStepComponent] = useState(<WelcomeView/>);
 
     useEffect(() => {
         const listeners = [];
@@ -39,42 +41,60 @@ const HaapiProcessor = (props) => {
             addEventListener("TokenResponse", event => setTokens(event)),
             addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description)),
             addEventListener("SessionTimedOut", event => {
-                setStepComponent(<ErrorView error={"Session timed out"} errorDescription={event.title.literal}
-                                            startOver={() => startAuthorization}/>)
+                console.log("Session timed out during authentication. User will have to start over.")
+                setStepComponent(<ErrorView error={"Session timed out"} errorDescription={event.title.literal}/>)
             })
         );
 
         return () => {
-            console.log("Removing all listeners in HaapiProcessor");
+            console.debug("Removing all listeners in HaapiProcessor");
             listeners.forEach((listener => removeEventListener(listener)));
         };
     }, []);
 
 
-    const submitAction = (action, parameters) => {
-        console.log("Submitting action: " + JSON.stringify(action));
+    const submitAction = (action, parameters = {}) => {
+        console.debug("Submitting action: " + JSON.stringify(action));
         HaapiModule.submitForm(action, parameters);
     };
 
     const followLink = (model) => {
-        console.log("Following link: " + JSON.stringify(model));
+        console.debug("Following link: " + JSON.stringify(model));
 
         HaapiModule.navigate(model);
     };
+
     const processAuthenticationStep = (haapiResponse) => {
-        console.log(JSON.stringify(haapiResponse));
-        const component = <HaapiForm actions={haapiResponse.actions}
-                                     onSubmit={submitAction}
-                                     onFollowLink={followLink}
-                                     messages={haapiResponse.messages}
-                                     links={haapiResponse.links}/>;
-        setStepComponent(component);
-    };
-
-    const startAuthorization = async () => {
-        console.log("Starting authorization");
-
-        HaapiModule.start(HaapiConfiguration);
+        console.debug(JSON.stringify(haapiResponse));
+        const actionComponents = haapiResponse.actions.map((action) => {
+            switch (action.kind) {
+                case  "poll":
+                    return <Polling poll={() => submitAction(action)} key={"polling"}/>;
+                case  "authenticator-selector":
+                    return <Options options={action.model.options} onFollowLink={followLink} key={"options"}/>;
+                case "continue":
+                    return <ContinueView action={action} onSubmit={submitAction} messages={haapiResponse.messages}
+                                         key={"continue"}/>;
+                case "login":
+                    if (action.model.name === "bankid") {
+                        return <BankIdView action={action} links={haapiResponse.links} messages={haapiResponse.messages}
+                                           onFollowLink={followLink}
+                                           key={"bankid-view"}/>;
+                    } else {
+                        return <GenericLoginView action={action} links={haapiResponse.links}
+                                                 messages={haapiResponse.messages}
+                                                 onFollowLink={followLink}
+                                                 onSubmit={submitAction}
+                                                 key={"generic-view"}/>;
+                    }
+                case "cancel":
+                    return <SubmitButton title={action.title.literal}
+                                         style={[Styles.cancelButton, Styles.button]}
+                                         onPress={() => submitAction(action)}
+                                         key={"cancel-button"}/>;
+            }
+        });
+        setStepComponent(<>{actionComponents}</>)
     };
 
     return (
