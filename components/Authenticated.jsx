@@ -54,7 +54,7 @@ export default function Authenticated(props) {
     };
 
     const refresh = () => {
-        HaapiModule.refreshAccessToken();
+        HaapiModule.refreshAccessToken(refreshToken);
     };
 
     useEffect(() => {
@@ -65,20 +65,20 @@ export default function Authenticated(props) {
     });
 
     return (
-        <View>
-            <Text style={Styles.heading}>Hello {subject}!</Text>
-            <Button style={Styles.button} title="Logout" onPress={() => logout()}/>
-            <Text style={Styles.heading}>Access Token</Text>
-            <Text style={Styles.json}>{accessToken}</Text>
-            {refreshToken ?
-                <View>
-                    <Text style={Styles.heading}>Refresh Token</Text>
-                    <Text style={Styles.json}>{refreshToken}</Text>
-                    <Button style={Styles.button} title="Refresh" onPress={() => refresh()}/>
-                </View>
-                : ""}
-            <Text style={Styles.heading}>ID Token claims</Text>
-            <Text style={Styles.json}>{prettyPrintPayload(idToken)}</Text>
-        </View>
+            <View>
+                <Text style={Styles.heading}>Hello {subject}!</Text>
+                <Button style={Styles.button} title="Logout" onPress={() => logout()} />
+                <Text style={Styles.heading}>Access Token</Text>
+                <Text style={Styles.json}>{accessToken}</Text>
+                {refreshToken ?
+                        <View>
+                            <Text style={Styles.heading}>Refresh Token</Text>
+                            <Text style={Styles.json}>{refreshToken}</Text>
+                            <Button style={Styles.button} title="Refresh" onPress={() => refresh()} />
+                        </View>
+                        : ""}
+                <Text style={Styles.heading}>ID Token claims</Text>
+                <Text style={Styles.json}>{prettyPrintPayload(idToken)}</Text>
+            </View>
     );
 }
