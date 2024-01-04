@@ -1,5 +1,5 @@
 /*
- *  Copyright 2022 Curity AB
+ *  Copyright 2023 Curity AB
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,9 +16,19 @@
 
 import Styles from "../Styles";
 import {SubmitButton} from "./view-components";
+import HaapiModule from "./HaapiModule";
+import HaapiConfiguration from "../configuration.android";
 
-export default function StartAuthorization(props) {
-    const {startAuthorization} = props
+const WelcomeView = (props) => {
 
-    return <SubmitButton onPress={startAuthorization} style={Styles.button} title="Login"/>
+    const startHaapiLogin = () => {
+        console.log("Starting login");
+
+        HaapiModule.start(HaapiConfiguration);
+    };
+
+
+    return <SubmitButton onPress={startHaapiLogin} style={Styles.button} title="Login"/>
 }
+
+export default WelcomeView

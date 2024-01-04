@@ -54,7 +54,6 @@ export default function Authenticated(props) {
     };
 
     const refresh = () => {
-        const {HaapiModule} = NativeModules;
         HaapiModule.refreshAccessToken();
     };
 

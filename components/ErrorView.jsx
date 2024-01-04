@@ -17,15 +17,17 @@
 import Styles from "../Styles";
 import {Problem, SubmitButton, Title} from "./view-components";
 import {View} from "react-native";
+import HaapiModule from "./HaapiModule";
+import HaapiConfiguration from "../configuration.android";
 
 const ErrorView = (props) => {
-    const {error, errorDescription, startOver} = props;
+    const {error, errorDescription} = props;
     return <View style={Styles.centerContainer}>
         <Title title={error}/>
         <Problem problem={errorDescription}/>
         <SubmitButton style={Styles.button}
-                      title={"Start over"}
-                      onPress={startOver}/>
+                      title={"Retry"}
+                      onPress={() => HaapiModule.start(HaapiConfiguration)}/>
     </View>;
 }
 
