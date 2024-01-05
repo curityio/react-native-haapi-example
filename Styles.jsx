@@ -18,6 +18,7 @@ const Styles = StyleSheet.create({
     },
     centerContainer: {
         justifyContent: "center",
+        alignItems: "center"
     },
     centerHorizontal: {
         justifyContent: "space-around",
@@ -31,10 +32,6 @@ const Styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#cfd9e0",
         backgroundColor: "white",
-    },
-    jsonData: {
-        backgroundColor: "gray",
-        fontFamily: "Roboto-Mono",
     },
     button: {
         marginVertical: 10,
@@ -70,6 +67,7 @@ const Styles = StyleSheet.create({
     },
     message: {
         marginVertical: 5,
+        color: "white",
     },
     info: {
         color: "white",
@@ -78,7 +76,8 @@ const Styles = StyleSheet.create({
         color: "red",
     },
     json: {
-        backgroundColor: "black",
+        backgroundColor: "rgb(87, 100, 135)",
+        borderRadius: 5,
         fontFamily: "Roboto-Mono",
         color: "white",
         padding: 10,

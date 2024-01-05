@@ -40,16 +40,18 @@ const BankIdView = props => {
             await Linking.openURL(urlToOpen);
         }, []);
 
-        return <SubmitButton style={Styles.button} title={props.title} onPress={() => handlePress(props.url)}/>;
+        return <SubmitButton style={Styles.button} title={props.title} onPress={() => handlePress(props.url)} />;
     };
     return (
-        <View style={Styles.centerContainer}>
-            <Title title={action.title.literal} style={Styles.heading}/>
-            <Messages messages={bankIdMessages}/>
-            <Links onPress={() => false} links={bankIdLinks}/>
-            <Divider text={"OR"} color={"white"}/>
-            <LaunchBankIdButton title={'Launch BankID on this device'} url={action.model.href}/>
-        </View>
+            <>
+                <Title title={action.title.literal} style={Styles.heading} />
+                <View style={Styles.centerContainer}>
+                    <Messages messages={bankIdMessages} />
+                    <Links onPress={() => false} links={bankIdLinks} />
+                </View>
+                <Divider text={"OR"} color={"white"} />
+                <LaunchBankIdButton title={'Launch BankID on this device'} url={action.model.href} />
+            </>
     );
 };
 

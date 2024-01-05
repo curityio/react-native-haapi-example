@@ -80,7 +80,7 @@ const Options = (props) => {
 };
 
 const Divider = (props) => {
-    return <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    return <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 20}}>
         <View style={{flex: 1, height: 1, backgroundColor: props.color}} />
         {props.text &&
                 <View>

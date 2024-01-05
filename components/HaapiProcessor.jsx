@@ -65,6 +65,7 @@ const HaapiProcessor = (props) => {
     };
 
     const processAuthenticationStep = (haapiResponse) => {
+        setIsLoading(false)
         const actionComponents = haapiResponse.actions.map((action) => {
             switch (action.kind) {
                 case  "poll":
