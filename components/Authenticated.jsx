@@ -14,12 +14,13 @@
  *  limitations under the License.
  */
 
-import React, {Button, Text, View} from "react-native";
+import React, {Text, View} from "react-native";
 import base64 from "base-64";
 import Styles from "../Styles";
 import {useEffect} from "react";
 import {addEventListener, removeEventListener} from "./EventManager";
 import HaapiModule from "./HaapiModule";
+import {SubmitButton} from "./view-components";
 
 export default function Authenticated(props) {
 
@@ -67,14 +68,14 @@ export default function Authenticated(props) {
     return (
             <View>
                 <Text style={Styles.heading}>Hello {subject}!</Text>
-                <Button style={Styles.button} title="Logout" onPress={() => logout()} />
+                <SubmitButton style={Styles.button} title="Logout" onPress={() => logout()} />
                 <Text style={Styles.heading}>Access Token</Text>
                 <Text style={Styles.json}>{accessToken}</Text>
                 {refreshToken ?
                         <View>
                             <Text style={Styles.heading}>Refresh Token</Text>
                             <Text style={Styles.json}>{refreshToken}</Text>
-                            <Button style={Styles.button} title="Refresh" onPress={() => refresh()} />
+                            <SubmitButton style={Styles.button} title="Refresh" onPress={() => refresh()} />
                         </View>
                         : ""}
                 <Text style={Styles.heading}>ID Token claims</Text>

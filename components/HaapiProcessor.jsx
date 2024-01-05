@@ -16,7 +16,7 @@
 
 import React, {useEffect, useState} from "react";
 import WelcomeView from "./WelcomeView";
-import {ActivityIndicator, Text, View} from "react-native";
+import {ActivityIndicator} from "react-native";
 import Styles from "../Styles";
 import {addEventListener, removeEventListener} from "./EventManager";
 import ErrorView from "./ErrorView";
@@ -55,19 +55,16 @@ const HaapiProcessor = (props) => {
 
     const submitAction = (action, parameters = {}) => {
         console.debug("Submitting action: " + JSON.stringify(action));
-        setIsLoading(true)
-        HaapiModule.submitForm(action, parameters);
+        HaapiModule.submitForm(action, parameters)
     };
 
     const followLink = (model) => {
         console.debug("Following link: " + JSON.stringify(model));
-        setIsLoading(true)
 
-        HaapiModule.navigate(model);
+        HaapiModule.navigate(model)
     };
 
     const processAuthenticationStep = (haapiResponse) => {
-        setIsLoading(false)
         const actionComponents = haapiResponse.actions.map((action) => {
             switch (action.kind) {
                 case  "poll":
@@ -100,12 +97,11 @@ const HaapiProcessor = (props) => {
     };
 
     return (
-            <View style={Styles.centerContainer}>
-                <Text style={Styles.heading}> This is a demo app showing HAAPI capabilities </Text>
+            <>
                 {isLoading ?
-                        <ActivityIndicator style={[Styles.centerHorizontal, Styles.centerContainer]} size={"large"} />
+                        <ActivityIndicator style={Styles.centerHorizontal} size={"large"} />
                         : stepComponent}
-            </View>
+            </>
     );
 }
 export default HaapiProcessor

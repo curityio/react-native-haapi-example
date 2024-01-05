@@ -1,24 +1,29 @@
 import {StyleSheet} from "react-native";
 
 const Styles = StyleSheet.create({
+    header: {
+        marginBottom: 10,
+    },
     layoutContainer: {
         flex: 1,
         flexDirection: "column",
+        justifyContent: "center",
         color: "white",
         backgroundColor: "#2a2f3a",
-        overflow: "scroll",
-        padding: 20
+        padding: 20,
+    },
+    mainContent: {
+        backgroundColor: "#2a2f3a",
+        justifyContent: "center",
     },
     centerContainer: {
-        flex: 1,
-        justifyContent: 'center',
+        justifyContent: "center",
     },
     centerHorizontal: {
-        flexDirection: "row",
         justifyContent: "space-around",
     },
     logo: {
-        resizeMode: "contain"
+        resizeMode: "cover"
     },
     input: {
         height: 40,
@@ -34,7 +39,8 @@ const Styles = StyleSheet.create({
     button: {
         marginVertical: 10,
         alignItems: "center",
-        backgroundColor: "blue",
+        borderRadius: 5,
+        backgroundColor: "rgb(87, 100, 135)",
         padding: 10
     },
     selectorButton: {},

@@ -16,8 +16,10 @@
 
 import Styles from "../Styles";
 import {SubmitButton} from "./view-components";
+import {Text} from "react-native";
 import HaapiModule from "./HaapiModule";
 import HaapiConfiguration from "../configuration.android";
+import React from "react";
 
 const WelcomeView = (props) => {
     const {setIsLoading} = props
@@ -29,7 +31,10 @@ const WelcomeView = (props) => {
     };
 
 
-    return <SubmitButton onPress={startHaapiLogin} style={Styles.button} title="Login" />
+    return <>
+        <Text style={Styles.heading}> This is a demo app showing HAAPI capabilities </Text>
+        <SubmitButton onPress={startHaapiLogin} style={Styles.button} title="Login" />
+    </>
 }
 
 export default WelcomeView

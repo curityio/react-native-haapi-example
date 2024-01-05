@@ -18,13 +18,15 @@ import React, {useEffect, useState} from "react";
 import HaapiProcessor from "./components/HaapiProcessor";
 import Authenticated from "./components/Authenticated";
 import Styles from "./Styles";
-import {Alert, Image, SafeAreaView, ScrollView} from "react-native";
+import {Alert, Image, SafeAreaView, ScrollView, View} from "react-native";
 import {addEventListener, removeEventListener} from "./components/EventManager";
 
 const App = () => {
     const [tokens, setTokens] = useState(null);
     const Header = () => {
-        return <Image style={Styles.logo} source={require("./images/curity-logo.png")} />;
+        return <View style={Styles.header}>
+            <Image style={Styles.logo} source={require("./images/curity-logo.png")} />
+        </View>;
     };
 
     useEffect(() => {
@@ -35,8 +37,8 @@ const App = () => {
 
     return (
             <SafeAreaView style={Styles.layoutContainer}>
-                <ScrollView>
-                    <Header />
+                <Header style={Styles.header} />
+                <ScrollView contentContainerStyle={Styles.mainContent}>
                     {tokens ? <Authenticated tokens={tokens} setTokens={setTokens} /> :
                             <HaapiProcessor setTokens={setTokens} />}
                 </ScrollView>
