@@ -20,15 +20,16 @@ import HaapiModule from "./HaapiModule";
 import HaapiConfiguration from "../configuration.android";
 
 const WelcomeView = (props) => {
+    const {setIsLoading} = props
 
     const startHaapiLogin = () => {
         console.log("Starting login");
-
+        setIsLoading(true)
         HaapiModule.start(HaapiConfiguration);
     };
 
 
-    return <SubmitButton onPress={startHaapiLogin} style={Styles.button} title="Login"/>
+    return <SubmitButton onPress={startHaapiLogin} style={Styles.button} title="Login" />
 }
 
 export default WelcomeView

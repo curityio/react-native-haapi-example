@@ -22,8 +22,8 @@ const Fields = (props) => {
 const Problem = (props) => (<Text style={Styles.inputProblem}>{props.problem}</Text>);
 const SubmitButton = (props) => {
     return <TouchableOpacity
-        style={props.style}
-        onPress={props.onPress}>
+            style={props.style}
+            onPress={props.onPress}>
         <Text style={props.textStyle ? props.textStyle : Styles.buttonText}>{props.title}</Text>
     </TouchableOpacity>;
 };
@@ -35,7 +35,7 @@ const Links = (props) => {
             return <View style={Styles.centerContainer} key={`link-${i}`}>
                 <Image source={{uri: link.href}}
                        style={Styles.imageLink}
-                       key={`ìmage-${i}`}/>
+                       key={`ìmage-${i}`} />
                 <Text style={Styles.message}
                       key={`link-${i}`}> {link.title.literal}</Text>
             </View>;
@@ -66,8 +66,8 @@ const Messages = (props) => {
                      title={message.text.literal}
                      key={`message-${i}`}
         >{message.classList.includes("json") ?
-            JSON.stringify(JSON.parse(message.text.literal), null, 2) :
-            message.text.literal}</Text>;
+                JSON.stringify(JSON.parse(message.text.literal), null, 2) :
+                message.text.literal}</Text>;
     });
 };
 const Options = (props) => {
@@ -75,19 +75,19 @@ const Options = (props) => {
         return <SubmitButton style={[Styles.selectorButton, Styles.button]}
                              key={`option-${i}`}
                              title={option.title.literal}
-                             onPress={() => props.onFollowLink(option.model)}/>;
+                             onPress={() => props.onFollowLink(option.model)} />;
     });
 };
 
 const Divider = (props) => {
     return <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <View style={{flex: 1, height: 1, backgroundColor: props.color}}/>
+        <View style={{flex: 1, height: 1, backgroundColor: props.color}} />
         {props.text &&
-            <View>
-                <Text style={{width: 50, textAlign: 'center'}}>{props.text}</Text>
-            </View>
+                <View>
+                    <Text style={{color: props.color, width: 50, textAlign: 'center'}}>{props.text}</Text>
+                </View>
         }
-        <View style={{flex: 1, height: 1, backgroundColor: props.color}}/>
+        <View style={{flex: 1, height: 1, backgroundColor: props.color}} />
     </View>
 }
 

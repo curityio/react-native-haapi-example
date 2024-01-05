@@ -16,7 +16,7 @@
 
 import React, {useEffect, useState} from "react";
 import WelcomeView from "./WelcomeView";
-import {Text, View} from "react-native";
+import {ActivityIndicator, Text, View} from "react-native";
 import Styles from "../Styles";
 import {addEventListener, removeEventListener} from "./EventManager";
 import ErrorView from "./ErrorView";
@@ -29,7 +29,8 @@ import GenericLoginView from "./GenericLoginView";
 
 const HaapiProcessor = (props) => {
     const {setTokens} = props;
-    const [stepComponent, setStepComponent] = useState(<WelcomeView />);
+    const [isLoading, setIsLoading] = useState(false)
+    const [stepComponent, setStepComponent] = useState(<WelcomeView setIsLoading={setIsLoading} />);
 
     useEffect(() => {
         const listeners = [];
@@ -54,17 +55,19 @@ const HaapiProcessor = (props) => {
 
     const submitAction = (action, parameters = {}) => {
         console.debug("Submitting action: " + JSON.stringify(action));
+        setIsLoading(true)
         HaapiModule.submitForm(action, parameters);
     };
 
     const followLink = (model) => {
         console.debug("Following link: " + JSON.stringify(model));
+        setIsLoading(true)
 
         HaapiModule.navigate(model);
     };
 
     const processAuthenticationStep = (haapiResponse) => {
-        console.debug(JSON.stringify(haapiResponse));
+        setIsLoading(false)
         const actionComponents = haapiResponse.actions.map((action) => {
             switch (action.kind) {
                 case  "poll":
@@ -99,7 +102,9 @@ const HaapiProcessor = (props) => {
     return (
             <View style={Styles.centerContainer}>
                 <Text style={Styles.heading}> This is a demo app showing HAAPI capabilities </Text>
-                {stepComponent}
+                {isLoading ?
+                        <ActivityIndicator style={[Styles.centerHorizontal, Styles.centerContainer]} size={"large"} />
+                        : stepComponent}
             </View>
     );
 }

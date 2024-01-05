@@ -30,7 +30,6 @@ const App = () => {
     useEffect(() => {
         const listener =
                 addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description))
-
         return () => removeEventListener(listener);
     }, []);
 
