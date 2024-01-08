@@ -38,6 +38,11 @@ const HaapiProcessor = (props) => {
                 addEventListener("PollingStep", event => processAuthenticationStep(event)),
                 addEventListener("ContinueSameStep", event => processAuthenticationStep(event)),
                 addEventListener("TokenResponse", event => setTokens(event)),
+                addEventListener("TokenResponseError", event => {
+                    console.warn(`Failed to get token(s) after successful authentication. ${event.error}: ${event.error_description}`)
+                    setStepComponent(<ErrorView error={"Failed to request token"}
+                                                errorDescription={event.error_description} />)
+                }),
                 addEventListener("SessionTimedOut", event => {
                     console.log("Session timed out during authentication. User will have to start over.")
                     setStepComponent(<ErrorView error={"Session timed out"} errorDescription={event.title.literal} />)

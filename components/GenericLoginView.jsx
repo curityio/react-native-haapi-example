@@ -9,23 +9,25 @@ const GenericLoginView = (props) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const listener = addEventListener("IncorrectCredentials", event => {
-            setError(event.title.literal);
-        });
+        const listeners = [
+            addEventListener("IncorrectCredentials", event => setError(event.title.literal)),
+            addEventListener("ProblemRepresentation", event => setError(event.title.literal))
+        ];
 
         // Removes the listener once unmounted
         return () => {
-            removeEventListener(listener);
+            listeners.forEach(listener => removeEventListener(listener));
         };
     }, []);
 
     return <>
-        <Title title={action.title.literal} Styles={Styles.heading}/>
-        <Problem problem={error} styles={Styles.inputProblem}/>
-        <Messages messages={messages}/>
-        <Fields fields={action.model.fields} setFieldValues={setFieldValues} fieldValues={fieldValues}/>
-        <SubmitButton title={action.title.literal} style={Styles.button} onPress={() => onSubmit(action, fieldValues)}/>
-        <Links onPress={onFollowLink} links={links}/>
+        <Title title={action.title.literal} Styles={Styles.heading} />
+        <Problem problem={error} styles={Styles.inputProblem} />
+        <Messages messages={messages} />
+        <Fields fields={action.model.fields} setFieldValues={setFieldValues} fieldValues={fieldValues} />
+        <SubmitButton title={action.title.literal} style={Styles.button}
+                      onPress={() => onSubmit(action, fieldValues)} />
+        <Links onPress={onFollowLink} links={links} />
     </>;
 
 };
