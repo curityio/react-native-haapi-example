@@ -17,7 +17,6 @@
 import Styles from "../Styles";
 import {Problem, SubmitButton, Title} from "./view-components";
 import HaapiModule from "./HaapiModule";
-import HaapiConfiguration from "../configuration.android";
 
 const ErrorView = (props) => {
     const {error, errorDescription} = props;
@@ -26,7 +25,7 @@ const ErrorView = (props) => {
         <Problem problem={errorDescription} />
         <SubmitButton style={Styles.button}
                       title={"Retry"}
-                      onPress={() => HaapiModule.start(HaapiConfiguration)} />
+                      onPress={() => HaapiModule.start()} />
     </>;
 }
 

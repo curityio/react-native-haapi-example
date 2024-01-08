@@ -18,16 +18,13 @@ import Styles from "../Styles";
 import {SubmitButton} from "./view-components";
 import {Text} from "react-native";
 import HaapiModule from "./HaapiModule";
-import HaapiConfiguration from "../configuration.android";
 import React from "react";
 
 const WelcomeView = (props) => {
-    const {setIsLoading} = props
 
     const startHaapiLogin = () => {
         console.log("Starting login");
-        setIsLoading(true)
-        HaapiModule.start(HaapiConfiguration);
+        HaapiModule.start();
     };
 
 

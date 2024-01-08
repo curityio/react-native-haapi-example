@@ -16,7 +16,6 @@
 
 import React, {useEffect, useState} from "react";
 import WelcomeView from "./WelcomeView";
-import {ActivityIndicator} from "react-native";
 import Styles from "../Styles";
 import {addEventListener, removeEventListener} from "./EventManager";
 import ErrorView from "./ErrorView";
@@ -29,8 +28,7 @@ import GenericLoginView from "./GenericLoginView";
 
 const HaapiProcessor = (props) => {
     const {setTokens} = props;
-    const [isLoading, setIsLoading] = useState(false)
-    const [stepComponent, setStepComponent] = useState(<WelcomeView setIsLoading={setIsLoading} />);
+    const [stepComponent, setStepComponent] = useState(<WelcomeView />);
 
     useEffect(() => {
         const listeners = [];
@@ -65,7 +63,6 @@ const HaapiProcessor = (props) => {
     };
 
     const processAuthenticationStep = (haapiResponse) => {
-        setIsLoading(false)
         const actionComponents = haapiResponse.actions.map((action) => {
             switch (action.kind) {
                 case  "poll":
@@ -97,12 +94,6 @@ const HaapiProcessor = (props) => {
         setStepComponent(<>{actionComponents}</>)
     };
 
-    return (
-            <>
-                {isLoading ?
-                        <ActivityIndicator style={Styles.centerHorizontal} size={"large"} />
-                        : stepComponent}
-            </>
-    );
+    return (stepComponent);
 }
 export default HaapiProcessor
