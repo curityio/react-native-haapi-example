@@ -6,7 +6,8 @@
 # Getting Started
 
 > **Note**: Make sure you have completed
-> the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new
+> the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a
+> new
 > application" step, before proceeding.
 
 Since this example uses git submodule for the native modules, make sure to run this after checkout.
@@ -65,3 +66,9 @@ shortly provided you have set up your emulator/simulator correctly.
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
+# Curity Identity Server configuration
+
+To configure clients needed for this example to run on android, theres
+a [Config Spec](android-with-fallback-config-spec.xml) that can be imported using the admin UI
+in `Changes -> Run Config Spec`. Running this spec will prompt you for the relevant information needed to setup the
+server for using HAAPI with attestation, and fallback dynamic registration when attestation is not supported.
