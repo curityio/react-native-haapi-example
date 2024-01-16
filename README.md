@@ -10,16 +10,15 @@
 > new
 > application" step, before proceeding.
 
-Since this example uses git submodule for the native modules, make sure to run this after checkout.
 
-```bash
-git submodule update --init
-```
-
-Then, install all the necessary dependencies:
+To install necessary dependencies, run
 
 ```bash
 npm install
+```
+Since the HAAPI native modules are added as a gihub repository, to get the latest changes, run 
+```bash
+npm update
 ```
 
 ## Step 1: Start the Metro Server
