@@ -26,7 +26,8 @@ const WelcomeView = props => {
         try {
             await HaapiModule.start();
         } catch (e) {
-            console.debug('Error in starting HAAPI Login');
+            console.debug('Error in starting HAAPI Login', e);
+            console.error(e);
         }
     };
 
