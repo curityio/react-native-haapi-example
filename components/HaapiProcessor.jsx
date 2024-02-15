@@ -72,7 +72,7 @@ const HaapiProcessor = props => {
         try {
             await HaapiModule.navigate(model);
         } catch (e) {
-            console.debug('Error in following link' + JSON.stringify(action));
+            console.debug('Error in following link' + JSON.stringify(model));
         }
     };
 
