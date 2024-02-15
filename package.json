@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@curity/react-native-haapi-module": "^0.2.2",
+    "@curity/react-native-haapi-module": "file:../react-native-haapi-module/curity-react-native-haapi-module-0.3.2.tgz",
     "base-64": "^1.0.0",
     "react": "18.2.0",
     "react-native": "0.73.0"
