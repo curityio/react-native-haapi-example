@@ -11,11 +11,6 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		650B80D32B864B95000FC1FF /* HaapiModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B80D02B864B95000FC1FF /* HaapiModule.swift */; };
-		650B80D42B864B95000FC1FF /* HaapiModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 650B80D22B864B95000FC1FF /* HaapiModule.m */; };
-		650B80D82B865A47000FC1FF /* IdsvrHaapiSdk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650B80D72B865A47000FC1FF /* IdsvrHaapiSdk.xcframework */; };
-		650B80D92B865A47000FC1FF /* IdsvrHaapiSdk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 650B80D72B865A47000FC1FF /* IdsvrHaapiSdk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		650B80DC2B88984D000FC1FF /* ConfigurationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B80DB2B88984D000FC1FF /* ConfigurationHelper.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +21,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				650B80D92B865A47000FC1FF /* IdsvrHaapiSdk.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -45,11 +39,6 @@
 		5709B34CF0A7D63546082F79 /* Pods-HaapiReactNativeExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HaapiReactNativeExample.release.xcconfig"; path = "Target Support Files/Pods-HaapiReactNativeExample/Pods-HaapiReactNativeExample.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-HaapiReactNativeExample-HaapiReactNativeExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HaapiReactNativeExample-HaapiReactNativeExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-HaapiReactNativeExample-HaapiReactNativeExampleTests/Pods-HaapiReactNativeExample-HaapiReactNativeExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-HaapiReactNativeExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HaapiReactNativeExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		650B80D02B864B95000FC1FF /* HaapiModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HaapiModule.swift; path = HaapiReactNativeExample/HaapiModule.swift; sourceTree = "<group>"; };
-		650B80D12B864B95000FC1FF /* HaapiModule-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "HaapiModule-Bridging-Header.h"; path = "HaapiReactNativeExample/HaapiModule-Bridging-Header.h"; sourceTree = "<group>"; };
-		650B80D22B864B95000FC1FF /* HaapiModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HaapiModule.m; path = HaapiReactNativeExample/HaapiModule.m; sourceTree = "<group>"; };
-		650B80D72B865A47000FC1FF /* IdsvrHaapiSdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IdsvrHaapiSdk.xcframework; path = "../../ios-cat/build/IdsvrHaapiSdk.xcframework"; sourceTree = "<group>"; };
-		650B80DB2B88984D000FC1FF /* ConfigurationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationHelper.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = HaapiReactNativeExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-HaapiReactNativeExample-HaapiReactNativeExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HaapiReactNativeExample-HaapiReactNativeExampleTests.release.xcconfig"; path = "Target Support Files/Pods-HaapiReactNativeExample-HaapiReactNativeExampleTests/Pods-HaapiReactNativeExample-HaapiReactNativeExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -61,7 +50,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-HaapiReactNativeExample.a in Frameworks */,
-				650B80D82B865A47000FC1FF /* IdsvrHaapiSdk.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,16 +59,12 @@
 		13B07FAE1A68108700A75B9A /* HaapiReactNativeExample */ = {
 			isa = PBXGroup;
 			children = (
-				650B80D12B864B95000FC1FF /* HaapiModule-Bridging-Header.h */,
-				650B80D22B864B95000FC1FF /* HaapiModule.m */,
-				650B80D02B864B95000FC1FF /* HaapiModule.swift */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				650B80DB2B88984D000FC1FF /* ConfigurationHelper.swift */,
 			);
 			name = HaapiReactNativeExample;
 			sourceTree = "<group>";
@@ -88,7 +72,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				650B80D72B865A47000FC1FF /* IdsvrHaapiSdk.xcframework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-HaapiReactNativeExample.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-HaapiReactNativeExample-HaapiReactNativeExampleTests.a */,
@@ -284,11 +267,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				650B80D32B864B95000FC1FF /* HaapiModule.swift in Sources */,
-				650B80D42B864B95000FC1FF /* HaapiModule.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				650B80DC2B88984D000FC1FF /* ConfigurationHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
