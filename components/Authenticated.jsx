@@ -46,7 +46,7 @@ export default function Authenticated(props) {
         return JSON.stringify(JSON.parse(decode(idToken)), null, 2);
     };
 
-    const {idToken, accessToken, refreshToken} = props.tokens;
+    const {idToken, accessToken, refreshToken, scope} = props.tokens;
     const setTokens = props.setTokens
     const subject = getSubject(idToken);
 
@@ -71,6 +71,8 @@ export default function Authenticated(props) {
                 <SubmitButton style={Styles.button} title="Logout" onPress={() => logout()} />
                 <Text style={Styles.heading}>Access Token</Text>
                 <Text style={Styles.json}>{accessToken}</Text>
+                <Text style={Styles.heading}>Scope</Text>
+                <Text style={Styles.json}>{scope}</Text>
                 {refreshToken ?
                         <View>
                             <Text style={Styles.heading}>Refresh Token</Text>
