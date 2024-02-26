@@ -1,3 +1,0 @@
-[submodule "ios"]
-	path = ios
-	url = git@github.com:curityio/react-native-haapi-ios-module.git
