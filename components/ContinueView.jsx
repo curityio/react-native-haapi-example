@@ -3,11 +3,12 @@ import Styles from "../Styles";
 
 const ContinueView = (props) => {
     const {action, onSubmit, messages} = props;
+    const title = action.model.actionTitle.literal ? action.model.actionTitle.literal : action.model.actionTitle
     return <>
-        <Title title={action.model.actionTitle.literal} />
+        <Title title={title} />
         <Messages messages={messages} />
         <SubmitButton style={Styles.button}
-                      title={action.model.actionTitle.literal}
+                      title={title}
                       onPress={() => onSubmit(action, {})} />
     </>;
 };
