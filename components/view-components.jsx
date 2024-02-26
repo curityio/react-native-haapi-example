@@ -64,8 +64,14 @@ const Links = (props) => {
     });
 };
 const Messages = (props) => {
-    const classListToStyle = (classListString) => {
-        const classArray = classListString.slice(1, classListString.length - 1).split(",").map(it => it.trim());
+    const classListToStyle = (classList) => {
+        let classArray;
+        // On android its a string, on ios an array
+        if (typeof classList === 'string') {
+            classArray = classList.slice(1, classList.length - 1).split(",").map(it => it.trim());
+        } else {
+            classArray = classList;
+        }
         let styles = [Styles.message];
         classArray.forEach(className => {
             const style = Styles[className.trim()];
@@ -78,18 +84,19 @@ const Messages = (props) => {
 
     return props.messages.map((message, i) => {
         const styles = classListToStyle(message.classList);
+        const literal = message.text.literal ? message.text.literal : message.text
         return <Text style={styles}
                      title={message.text.literal}
                      key={`message-${i}`}
         >{message.classList.includes("json") ?
-                JSON.stringify(JSON.parse(message.text.literal), null, 2) :
+                JSON.stringify(JSON.parse(literal), null, 2) :
                 message.text.literal}</Text>;
     });
 };
 const Options = (props) => (props.options.map((option, i) => (
                 <SubmitButton style={[Styles.selectorButton, Styles.button]}
                               key={`option-${i}`}
-                              title={option.title.literal}
+                              title={option.title.literal ? option.title.literal : option.title}
                               onPress={() => props.onFollowLink(option.model)} />
         ))
 );

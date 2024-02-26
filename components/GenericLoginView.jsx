@@ -11,7 +11,6 @@ const GenericLoginView = (props) => {
     useEffect(() => {
         const listeners = [
             addEventListener("IncorrectCredentials", event => setError(event.title.literal)),
-            addEventListener("ProblemRepresentation", event => setError(event.title.literal))
         ];
 
         // Removes the listener once unmounted
