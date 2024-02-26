@@ -5,7 +5,7 @@ const HaapiConfiguration = {
     "tokenEndpointUri": "https://dlindau.ngrok.io/dev/oauth/token",
     "authorizationEndpointUri": "https://dlindau.ngrok.io/dev/oauth/authorize",
     "revocationEndpointUri": "https://dlindau.ngrok.io/revoke",
-    "acrValues": "urn:se:curity:authentication:username:username",
-    "scope": "openid profile",
+    "acrValues": "",
+    "scope": "openid",
 }
 export default HaapiConfiguration
