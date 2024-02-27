@@ -2,12 +2,13 @@ const HaapiConfiguration = {
     "appRedirect": "app:start",
     "keyStoreAlias": "haapi-react-native",
     "clientId": "react-dev-client",
-    "baseUri": "https://dlindau.ngrok.io",
-    "tokenEndpointUri": "https://dlindau.ngrok.io/dev/oauth/token",
-    "authorizationEndpointUri": "https://dlindau.ngrok.io/dev/oauth/authorize",
-    "revocationEndpointUri": "https://dlindau.ngrok.io/revoke",
+    "baseUri": "https://localhost:8443",
+    "tokenEndpointUri": "https://localhost:8443/dev/oauth/token",
+    "authorizationEndpointUri": "https://localhost:8443/dev/oauth/authorize",
+    "revocationEndpointUri": "https://localhost:8443/revoke",
+    "validateTlsCertificate": false,
     "scope": "openid profile",
-    "registrationEndpointUri": "https://dlindau.ngrok.io/oauth-dev/oauth-registration",
+    "registrationEndpointUri": "https://localhost:8443/oauth-dev/oauth-registration",
     "fallback_template_id": "react-native-fallback",
     "registration_secret": "my-good-secret"
 }
