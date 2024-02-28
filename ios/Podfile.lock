@@ -887,7 +887,7 @@ PODS:
   - React-Mapbuffer (0.73.0):
     - glog
     - React-debug
-  - react-native-haapi-module (0.3.2):
+  - react-native-haapi-module (0.4.0):
     - IdsvrHaapiSdk
     - React-Core
   - React-nativeconfig (0.73.0)
@@ -1253,7 +1253,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 9f6fb9ed9f03a0fb961ab8dc2e0e0ee0dc729e77
   React-logger: 008caec0d6a587abc1e71be21bfac5ba1662fe6a
   React-Mapbuffer: 58fe558faf52ecde6705376700f848d0293d1cef
-  react-native-haapi-module: c93eeb3a3233febdf2be5e47a72999af78f91bd7
+  react-native-haapi-module: aa999c37ac7a5d087ee6c7472a71c187ccd60d24
   React-nativeconfig: a063483672b8add47a4875b0281e202908ff6747
   React-NativeModulesApple: 169506a5fd708ab22811f76ee06a976595c367a1
   React-perflogger: b61e5db8e5167f5e70366e820766c492847c082e
