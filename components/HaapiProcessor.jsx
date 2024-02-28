@@ -33,23 +33,29 @@ const HaapiProcessor = props => {
     useEffect(() => {
         const listeners = [];
         listeners.push(
-            addEventListener('AuthenticationStep', event => processAuthenticationStep(event)),
-            addEventListener('AuthenticationSelectorStep', event => processAuthenticationStep(event)),
-            addEventListener('PollingStep', event => processAuthenticationStep(event)),
-            addEventListener('ContinueSameStep', event => processAuthenticationStep(event)),
-            addEventListener('TokenResponse', event => setTokens(event)),
-            addEventListener('TokenResponseError', event => {
-                console.warn(
-                    `Failed to get token(s) after successful authentication. ${event.error}: ${event.error_description}`,
-                );
-                setStepComponent(
-                    <ErrorView error={'Failed to request token'} errorDescription={event.error_description} />,
-                );
-            }),
-            addEventListener('SessionTimedOut', event => {
-                console.log('Session timed out during authentication. User will have to start over.');
-                setStepComponent(<ErrorView error={'Session timed out'} errorDescription={event.title.literal} />);
-            }),
+                addEventListener('AuthenticationStep', event => processAuthenticationStep(event)),
+                addEventListener('AuthenticationSelectorStep', event => processAuthenticationStep(event)),
+                addEventListener('PollingStep', event => processAuthenticationStep(event)),
+                addEventListener('ContinueSameStep', event => processAuthenticationStep(event)),
+                addEventListener('TokenResponse', event => setTokens(event)),
+                addEventListener('TokenResponseError', event => {
+                    console.warn(
+                            `Failed to get token(s) after successful authentication. ${event.error}: ${event.error_description}`,
+                    );
+                    setStepComponent(
+                            <ErrorView error={'Failed to request token'} errorDescription={event.error_description} />,
+                    );
+                }),
+                addEventListener("ProblemRepresentation", event => {
+                    const description = event.error_description ? event.error_description : event.errorDescription;
+                    console.warn(`Received a problem ${event.error}: ${description}`);
+                    setStepComponent(<ErrorView error={event.error} errorDescription={description} />);
+
+                }),
+                addEventListener('SessionTimedOut', event => {
+                    console.log('Session timed out during authentication. User will have to start over.');
+                    setStepComponent(<ErrorView error={'Session timed out'} errorDescription={event.title.literal} />);
+                }),
         );
 
         return () => {
@@ -87,44 +93,44 @@ const HaapiProcessor = props => {
                     return <Options options={action.model.options} onFollowLink={followLink} key={'options'} />;
                 case 'continue':
                     return (
-                        <ContinueView
-                            action={action}
-                            onSubmit={submitAction}
-                            messages={haapiResponse.messages}
-                            key={'continue'}
-                        />
+                            <ContinueView
+                                    action={action}
+                                    onSubmit={submitAction}
+                                    messages={haapiResponse.messages}
+                                    key={'continue'}
+                            />
                     );
                 case 'login':
                     if (action.model.name === 'bankid') {
                         return (
-                            <BankIdView
-                                action={action}
-                                links={haapiResponse.links}
-                                messages={haapiResponse.messages}
-                                onFollowLink={followLink}
-                                key={'bankid-view'}
-                            />
+                                <BankIdView
+                                        action={action}
+                                        links={haapiResponse.links}
+                                        messages={haapiResponse.messages}
+                                        onFollowLink={followLink}
+                                        key={'bankid-view'}
+                                />
                         );
                     } else {
                         return (
-                            <GenericLoginView
-                                action={action}
-                                links={haapiResponse.links}
-                                messages={haapiResponse.messages}
-                                onFollowLink={followLink}
-                                onSubmit={submitAction}
-                                key={'generic-view'}
-                            />
+                                <GenericLoginView
+                                        action={action}
+                                        links={haapiResponse.links}
+                                        messages={haapiResponse.messages}
+                                        onFollowLink={followLink}
+                                        onSubmit={submitAction}
+                                        key={'generic-view'}
+                                />
                         );
                     }
                 case 'cancel':
                     return (
-                        <SubmitButton
-                            title={action.title.literal}
-                            style={[Styles.cancelButton, Styles.button]}
-                            onPress={() => submitAction(action)}
-                            key={'cancel-button'}
-                        />
+                            <SubmitButton
+                                    title={action.title.literal}
+                                    style={[Styles.cancelButton, Styles.button]}
+                                    onPress={() => submitAction(action)}
+                                    key={'cancel-button'}
+                            />
                     );
             }
         });

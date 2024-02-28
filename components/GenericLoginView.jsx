@@ -25,7 +25,10 @@ const GenericLoginView = (props) => {
         <Messages messages={messages} />
         <Fields fields={action.model.fields} setFieldValues={setFieldValues} fieldValues={fieldValues} />
         <SubmitButton title={action.title.literal} style={Styles.button}
-                      onPress={() => onSubmit(action, fieldValues)} />
+                      onPress={() => {
+                          setError(null)
+                          onSubmit(action, fieldValues)
+                      }} />
         <Links onPress={onFollowLink} links={links} />
     </>;
 
