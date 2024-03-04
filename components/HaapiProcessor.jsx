@@ -46,12 +46,6 @@ const HaapiProcessor = props => {
                             <ErrorView error={'Failed to request token'} errorDescription={event.error_description} />,
                     );
                 }),
-                addEventListener("ProblemRepresentation", event => {
-                    const description = event.error_description ? event.error_description : event.errorDescription;
-                    console.warn(`Received a problem ${event.error}: ${description}`);
-                    setStepComponent(<ErrorView error={event.error} errorDescription={description} />);
-
-                }),
                 addEventListener('SessionTimedOut', event => {
                     console.log('Session timed out during authentication. User will have to start over.');
                     setStepComponent(<ErrorView error={'Session timed out'} errorDescription={event.title.literal} />);
@@ -85,6 +79,7 @@ const HaapiProcessor = props => {
     };
 
     const processAuthenticationStep = haapiResponse => {
+        console.debug("Received an authentication step: " + JSON.stringify(haapiResponse));
         const actionComponents = haapiResponse.actions.map(action => {
             switch (action.kind) {
                 case 'poll':

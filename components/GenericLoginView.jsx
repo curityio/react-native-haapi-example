@@ -15,7 +15,7 @@
  */
 
 import {Fields, Links, Messages, Problem, SubmitButton, Title} from "./view-components";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Styles from "../Styles";
 import {addEventListener, removeEventListener} from "./EventManager";
 
@@ -27,6 +27,7 @@ const GenericLoginView = (props) => {
     useEffect(() => {
         const listeners = [
             addEventListener("IncorrectCredentials", event => setError(event.title.literal ? event.title.literal : event.title)),
+            addEventListener("ProblemRepresentation", event => setError(event.title.literal ? event.title.literal : event.title)),
         ];
 
         // Removes the listener once unmounted
