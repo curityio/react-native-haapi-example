@@ -55,30 +55,23 @@ const HaapiProcessor = props => {
     };
 
     const processResponse = (haapiResponse) => {
+        console.debug("Received a haapi response: " + JSON.stringify(haapiResponse));
         // Not exhaustive, just testing the promises
-        switch (haapiResponse.type) {
-            case 'POLLING_STEP':
-            case 'AUTHENTICATION_STEP':
-                processAuthenticationStep(haapiResponse);
-                break;
-            case 'https://curity.se/problems/incorrect-credentials':
-                // Should show error in same view. Showing error view allowing the user to restart for now
-                setStepComponent(<ErrorView error="Invalid Credentials" errorDescription={"Invalid credentials"}
-                                            retry={() => startHaapiLogin()} />)
-                break;
-            case undefined:
-                // likely, token response. Needs more validating
-                setTokens(haapiResponse)
-                break;
-            default:
-                console.log(haapiResponse);
-                setStepComponent(<ErrorView error="Unknown step" errorDescription={haapiResponse.type}
-                                            retry={() => startHaapiLogin()} />)
+        if (haapiResponse.actions) {
+            processActions(haapiResponse);
+        } else if (haapiResponse.accessToken) {
+            setTokens(haapiResponse)
+        } else if (haapiResponse.type === 'https://curity.se/problems/incorrect-credentials') {
+            // Should show error in same view. Showing error view allowing the user to restart for now
+            setStepComponent(<ErrorView error="Invalid Credentials" errorDescription={"Invalid credentials"}
+                                        retry={() => startHaapiLogin()} />)
+        } else {
+            setStepComponent(<ErrorView error="Unknown step" errorDescription={haapiResponse.type}
+                                        retry={() => startHaapiLogin()} />)
         }
     }
 
-    const processAuthenticationStep = haapiResponse => {
-        console.debug("Received an authentication step: " + JSON.stringify(haapiResponse));
+    const processActions = haapiResponse => {
         const actionComponents = haapiResponse.actions.map(action => {
             switch (action.kind) {
                 case 'poll':
