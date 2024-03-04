@@ -16,16 +16,15 @@
 
 import Styles from "../Styles";
 import {Problem, SubmitButton, Title} from "./view-components";
-import HaapiModule from "./HaapiModule";
 
 const ErrorView = (props) => {
-    const {error, errorDescription} = props;
+    const {error, errorDescription, retry} = props;
     return <>
         <Title title={error} />
         <Problem problem={errorDescription} />
         <SubmitButton style={Styles.button}
                       title={"Retry"}
-                      onPress={() => HaapiModule.start()} />
+                      onPress={retry} />
     </>;
 }
 

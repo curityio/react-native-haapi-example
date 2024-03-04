@@ -14,12 +14,11 @@
  *  limitations under the License.
  */
 
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import HaapiProcessor from "./components/HaapiProcessor";
 import Authenticated from "./components/Authenticated";
 import Styles from "./Styles";
-import {Alert, Image, SafeAreaView, ScrollView, View} from "react-native";
-import {addEventListener, removeEventListener} from "./components/EventManager";
+import {Image, SafeAreaView, ScrollView, View} from "react-native";
 
 const App = () => {
     const [tokens, setTokens] = useState(null);
@@ -29,11 +28,11 @@ const App = () => {
         </View>;
     };
 
-    useEffect(() => {
+    /*useEffect(() => {
         const listener =
                 addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description))
         return () => removeEventListener(listener);
-    }, []);
+    }, []);*/
 
     return (
             <SafeAreaView style={Styles.layoutContainer}>

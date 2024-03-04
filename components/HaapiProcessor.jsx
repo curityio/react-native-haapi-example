@@ -14,69 +14,68 @@
  *  limitations under the License.
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import WelcomeView from './WelcomeView';
 import Styles from '../Styles';
-import {addEventListener, removeEventListener} from './EventManager';
-import ErrorView from './ErrorView';
 import HaapiModule from './HaapiModule';
 import Polling from './Polling';
 import {Options, SubmitButton} from './view-components';
 import ContinueView from './ContinueView';
 import BankIdView from './BankIdView';
 import GenericLoginView from './GenericLoginView';
+import ErrorView from "./ErrorView";
 
 const HaapiProcessor = props => {
+
+    const startHaapiLogin = () => {
+        console.log('Starting login');
+        HaapiModule.start()
+                .then(processResponse)
+                .catch((e) => console.error(e))
+    };
+
     const {setTokens} = props;
-    const [stepComponent, setStepComponent] = useState(<WelcomeView />);
-
-    useEffect(() => {
-        const listeners = [];
-        listeners.push(
-                addEventListener('AuthenticationStep', event => processAuthenticationStep(event)),
-                addEventListener('AuthenticationSelectorStep', event => processAuthenticationStep(event)),
-                addEventListener('PollingStep', event => processAuthenticationStep(event)),
-                addEventListener('ContinueSameStep', event => processAuthenticationStep(event)),
-                addEventListener('TokenResponse', event => setTokens(event)),
-                addEventListener('TokenResponseError', event => {
-                    console.warn(
-                            `Failed to get token(s) after successful authentication. ${event.error}: ${event.error_description}`,
-                    );
-                    setStepComponent(
-                            <ErrorView error={'Failed to request token'} errorDescription={event.error_description} />,
-                    );
-                }),
-                addEventListener('SessionTimedOut', event => {
-                    console.log('Session timed out during authentication. User will have to start over.');
-                    setStepComponent(<ErrorView error={'Session timed out'} errorDescription={event.title.literal} />);
-                }),
-        );
-
-        return () => {
-            console.debug('Removing all listeners in HaapiProcessor');
-            listeners.forEach(listener => removeEventListener(listener));
-        };
-    }, []);
-
-    const submitAction = async (action, parameters = {}) => {
+    const [stepComponent, setStepComponent] = useState(<WelcomeView onLogin={startHaapiLogin} />);
+    const submitAction = (action, parameters = {}) => {
         console.debug('Submitting action: ' + JSON.stringify(action));
-        try {
-            await HaapiModule.submitForm(action, parameters);
-        } catch (e) {
-            console.debug('Error in submitting' + JSON.stringify(action));
-            console.error(e);
-        }
+        HaapiModule.submitForm(action, parameters).then(haapiResponse => {
+            processResponse(haapiResponse);
+        }).catch(error => {
+            console.error(error);
+        });
     };
 
-    const followLink = async model => {
+    const followLink = model => {
         console.debug('Following link: ' + JSON.stringify(model));
-        try {
-            await HaapiModule.navigate(model);
-        } catch (e) {
-            console.debug('Error in following link' + JSON.stringify(model));
-            console.error(e);
-        }
+        HaapiModule.navigate(model)
+                .then(processResponse)
+                .catch(error => {
+                    console.error(error);
+                });
     };
+
+    const processResponse = (haapiResponse) => {
+        // Not exhaustive, just testing the promises
+        switch (haapiResponse.type) {
+            case 'POLLING_STEP':
+            case 'AUTHENTICATION_STEP':
+                processAuthenticationStep(haapiResponse);
+                break;
+            case 'https://curity.se/problems/incorrect-credentials':
+                // Should show error in same view. Showing error view allowing the user to restart for now
+                setStepComponent(<ErrorView error="Invalid Credentials" errorDescription={"Invalid credentials"}
+                                            retry={() => startHaapiLogin()} />)
+                break;
+            case undefined:
+                // likely, token response. Needs more validating
+                setTokens(haapiResponse)
+                break;
+            default:
+                console.log(haapiResponse);
+                setStepComponent(<ErrorView error="Unknown step" errorDescription={haapiResponse.type}
+                                            retry={() => startHaapiLogin()} />)
+        }
+    }
 
     const processAuthenticationStep = haapiResponse => {
         console.debug("Received an authentication step: " + JSON.stringify(haapiResponse));
