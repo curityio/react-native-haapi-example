@@ -16,9 +16,23 @@ To install necessary dependencies, run
 ```bash
 npm install
 ```
-Since the HAAPI native modules are added as a gihub repository, to get the latest changes, run 
+
+# Development modules
+To be able to run unreleased modules, you need to checkout the module repo and update the dependency to be file based. 
+First, create the package:
 ```bash
-npm update
+git clone https://github.com/curityio/react-native-haapi-module.git
+cd react-native-haapi-module
+npm pack
+```
+
+This should create a `.tgz` file.
+
+Then we can update the depdencies.
+
+```bash
+npm uninstall @curity/react-native-haapi-module
+npm install <path-to-file>.tgz --save
 ```
 
 ## Step 1: Start the Metro Server
