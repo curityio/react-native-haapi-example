@@ -3,7 +3,8 @@
     <metadata>
         <purpose>configuration-bundle</purpose>
         <name>Android HAAPI Client</name>
-        <description>Configure an android HAAPI client, with a template to use as fallback when attestation is not
+        <description>Configure an android HAAPI client, with a template to use as fallback when
+            attestation is not
             supported
         </description>
     </metadata>
@@ -16,43 +17,66 @@
         </variable-definition>
         <variable-definition>
             <name>ANDROID_HAAPI_CLIENT</name>
-            <tagpath/>
-            <description>The ID of the client to add for android, used by clients who can perform attestation
+            <tagpath />
+            <description>The ID of the client to add for android, used by clients who can perform
+                attestation
             </description>
             <type-hint>string</type-hint>
         </variable-definition>
         <variable-definition>
             <name>ANDROID_FALLBACK_SECRET</name>
-            <tagpath/>
-            <description>The secret the android client should use to be able to register a fallback client</description>
+            <tagpath />
+            <description>The secret the android client should use to be able to register a fallback
+                client</description>
             <type-hint>string</type-hint>
         </variable-definition>
         <variable-definition>
             <name>ANDROID_REDIRECT_URI</name>
-            <tagpath/>
+            <tagpath />
             <description>The redirect_uri used for the android clients</description>
             <type-hint>string</type-hint>
         </variable-definition>
         <variable-definition>
             <name>ANDROID_FALLBACK_TEMPLATE</name>
-            <tagpath/>
-            <description>The ID of the template used for fallback when android clients can't do attestation
+            <tagpath />
+            <description>The ID of the template used for fallback when android clients can't do
+                attestation
             </description>
             <type-hint>string</type-hint>
         </variable-definition>
         <variable-definition>
             <name>ANDROID_PACKAGE_NAME</name>
-            <tagpath/>
-            <description>The package name of the android app, used for attestation. Can be changed after import.
+            <tagpath />
+            <description>The package name of the android app, used for attestation. Can be changed
+                after import.
             </description>
             <type-hint>string</type-hint>
         </variable-definition>
         <variable-definition>
             <name>ANDROID_SIGNATURE_DIGEST</name>
-            <tagpath/>
-            <description>The digest of the certificate used to sign the android app, used for attestation. Can be
-                changed after import.
+            <tagpath />
+            <description>The digest of the certificate used to sign the android app, used for
+                attestation. Can be changed after import.
             </description>
+            <type-hint>string</type-hint>
+        </variable-definition>
+        <variable-definition>
+            <name>IOS_HAAPI_CLIENT</name>
+            <tagpath />
+            <description>The ID of the client to add for iOS. Attestation will be enabled.
+            </description>
+            <type-hint>string</type-hint>
+        </variable-definition>
+        <variable-definition>
+            <name>IOS_REDIRECT_URI</name>
+            <tagpath />
+            <description>The redirect_uri used for the iOS client.</description>
+            <type-hint>string</type-hint>
+        </variable-definition>
+        <variable-definition>
+            <name>IOS_APP_ID</name>
+            <tagpath />
+            <description>The App ID of the iOS client.</description>
             <type-hint>string</type-hint>
         </variable-definition>
         <variable-definition>
@@ -62,7 +86,7 @@
             <type-hint>data-source</type-hint>
         </variable-definition>
     </variable-definitions>
-    <actions/>
+    <actions />
     <merge-config>
         <config xmlns="http://tail-f.com/ns/config/1.0">
             <profiles xmlns="https://curity.se/ns/conf/base">
@@ -79,11 +103,12 @@
                                         <redirect-uris>#{ANDROID_REDIRECT_URI}</redirect-uris>
                                         <refresh-token-ttl>3600</refresh-token-ttl>
                                         <scope>openid</scope>
-                                        <user-authentication/>
+                                        <user-authentication />
                                         <capabilities>
-                                            <code/>
+                                            <code />
                                             <haapi>
                                                 <use-legacy-dpop>false</use-legacy-dpop>
+                                                <issue-token-bound-authorization-code>true</issue-token-bound-authorization-code>
                                             </haapi>
                                         </capabilities>
                                         <attestation>
@@ -97,25 +122,52 @@
                                     <client>
                                         <id>#{ANDROID_FALLBACK_TEMPLATE}</id>
                                         <redirect-uris>#{ANDROID_REDIRECT_URI}</redirect-uris>
+                                        <proof-key>
+                                            <require-proof-key>false</require-proof-key>
+                                        </proof-key>
                                         <scope>openid</scope>
-                                        <user-authentication/>
+                                        <user-authentication />
                                         <capabilities>
-                                            <code/>
+                                            <code />
                                             <haapi>
                                                 <allow-without-attestation>true</allow-without-attestation>
                                                 <use-legacy-dpop>false</use-legacy-dpop>
+                                                <issue-token-bound-authorization-code>true</issue-token-bound-authorization-code>
                                             </haapi>
                                         </capabilities>
                                         <dynamic-client-registration-template>
-                                            <secret/>
+                                            <secret />
                                             <authenticate-client-by>#{ANDROID_HAAPI_CLIENT}</authenticate-client-by>
                                         </dynamic-client-registration-template>
+                                    </client>
+                                    <client>
+                                        <id>#{IOS_HAAPI_CLIENT}</id>
+                                        <no-authentication>true</no-authentication>
+                                        <redirect-uris>#{IOS_REDIRECT_URI}</redirect-uris>
+                                        <proof-key>
+                                            <require-proof-key>false</require-proof-key>
+                                        </proof-key>
+                                        <refresh-token-ttl>3600</refresh-token-ttl>
+                                        <scope>openid</scope>
+                                        <user-authentication />
+                                        <capabilities>
+                                            <code />
+                                            <haapi>
+                                                <use-legacy-dpop>false</use-legacy-dpop>
+                                                <issue-token-bound-authorization-code>true</issue-token-bound-authorization-code>
+                                            </haapi>
+                                        </capabilities>
+                                        <attestation>
+                                            <ios>
+                                                <app-id>#{IOS_APP_ID}</app-id>
+                                            </ios>
+                                        </attestation>
                                     </client>
                                 </config-backed>
                             </client-store>
                             <dynamic-client-registration>
                                 <client-data-source>#{CLIENT_DATA_STORE}</client-data-source>
-                                <templatized/>
+                                <templatized />
                             </dynamic-client-registration>
                         </authorization-server>
                     </settings>
@@ -130,17 +182,30 @@
             </error-description>
         </must-exist>
         <must-not-exist>
-            <path>/profiles/profile{#{TOKEN_PROFILE}
+            <path>
+                /profiles/profile{#{TOKEN_PROFILE}
                 oauth-service}/settings/authorization-server/client-store/config-backed/client{#{ANDROID_HAAPI_CLIENT}}
             </path>
-            <error-description>A client with ID ${ANDROID_HAAPI_CLIENT} already exist. Please select a new ID.
+            <error-description>A client with ID ${ANDROID_HAAPI_CLIENT} already exist. Please select
+                a new ID.
             </error-description>
         </must-not-exist>
         <must-not-exist>
-            <path>/profiles/profile{#{TOKEN_PROFILE}
+            <path>
+                /profiles/profile{#{TOKEN_PROFILE}
+                oauth-service}/settings/authorization-server/client-store/config-backed/client{#{IOS_HAAPI_CLIENT}}
+            </path>
+            <error-description>A client with ID ${IOS_HAAPI_CLIENT} already exist. Please select a
+                new ID.
+            </error-description>
+        </must-not-exist>
+        <must-not-exist>
+            <path>
+                /profiles/profile{#{TOKEN_PROFILE}
                 oauth-service}/settings/authorization-server/client-store/config-backed/client{#{ANDROID_FALLBACK_TEMPLATE}}
             </path>
-            <error-description>A client with ID ${ANDROID_FALLBACK_TEMPLATE} already exist. Please select a new ID.
+            <error-description>A client with ID ${ANDROID_FALLBACK_TEMPLATE} already exist. Please
+                select a new ID.
             </error-description>
         </must-not-exist>
     </conditions>

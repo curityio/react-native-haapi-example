@@ -81,7 +81,7 @@ This is one way to run your app — you can also run it directly from within And
 
 # Curity Identity Server configuration
 
-To configure clients needed for this example to run on android, theres
-a [Config Spec](android-with-fallback-config-spec.xml) that can be imported using the admin UI
+To configure clients needed for this example to run, theres
+a [Config Spec](setup-mobile-clients-config-spec.xml) that can be imported using the admin UI
 in `Changes -> Run Config Spec`. Running this spec will prompt you for the relevant information needed to setup the
 server for using HAAPI with attestation, and fallback dynamic registration when attestation is not supported.
