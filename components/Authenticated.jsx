@@ -17,8 +17,6 @@
 import React, {Text, View} from "react-native";
 import base64 from "base-64";
 import Styles from "../Styles";
-import {useEffect} from "react";
-import {addEventListener, removeEventListener} from "./EventManager";
 import HaapiModule from "./HaapiModule";
 import {SubmitButton} from "./view-components";
 
@@ -46,7 +44,7 @@ export default function Authenticated(props) {
         return JSON.stringify(JSON.parse(decode(idToken)), null, 2);
     };
 
-    const {idToken, accessToken, refreshToken, scope} = props.tokens;
+    const {idToken, accessToken, refreshToken, scope, expiresIn} = props.tokens;
     const setTokens = props.setTokens
     const subject = getSubject(idToken);
 
@@ -55,15 +53,8 @@ export default function Authenticated(props) {
     };
 
     const refresh = () => {
-        HaapiModule.refreshAccessToken(refreshToken);
+        HaapiModule.refreshAccessToken(refreshToken).then(tokenResponse => setTokens(tokenResponse));
     };
-
-    useEffect(() => {
-        let tokenListener = addEventListener("TokenResponse", event => {
-            setTokens(event);
-        });
-        return () => removeEventListener(tokenListener);
-    });
 
     return (
             <View>
@@ -73,6 +64,8 @@ export default function Authenticated(props) {
                 <Text style={Styles.json}>{accessToken}</Text>
                 <Text style={Styles.heading}>Scope</Text>
                 <Text style={Styles.json}>{scope}</Text>
+                <Text style={Styles.heading}>Expires In</Text>
+                <Text style={Styles.json}>{expiresIn}</Text>
                 {refreshToken ?
                         <View>
                             <Text style={Styles.heading}>Refresh Token</Text>
