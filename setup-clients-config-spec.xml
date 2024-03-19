@@ -2,11 +2,8 @@
 <conf-spec xmlns="https://curity.se/ns/conf-spec">
     <metadata>
         <purpose>configuration-bundle</purpose>
-        <name>Android HAAPI Client</name>
-        <description>Configure an android HAAPI client, with a template to use as fallback when
-            attestation is not
-            supported
-        </description>
+        <name>React Native HAAPI Clients</name>
+        <description>Configure mobile HAAPI clients. On Android, fallback registration will be enabled. Attestation will be enabled for both platforms, so if thi is to be used with development tools, attestation will have to be disabled afterwards on iOS. Note that this config spec will setup DCR with the requirement, but the registration endpoint will have to be added manually. </description>
     </metadata>
     <variable-definitions>
         <variable-definition>
