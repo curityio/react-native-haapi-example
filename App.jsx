@@ -20,9 +20,11 @@ import Authenticated from "./components/Authenticated";
 import Styles from "./Styles";
 import {Alert, Image, SafeAreaView, ScrollView, View} from "react-native";
 import {addEventListener, removeEventListener} from "./components/EventManager";
+import {Spinner} from "./components/view-components";
 
 const App = () => {
     const [tokens, setTokens] = useState(null);
+    const [isLoading, setLoading] = useState(false)
     const Header = () => {
         return <View style={Styles.header}>
             <Image style={Styles.logo} source={require("./images/curity-logo.png")} />
@@ -30,14 +32,18 @@ const App = () => {
     };
 
     useEffect(() => {
-        const listener =
-                addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description))
-        return () => removeEventListener(listener);
+        const listeners = [
+            addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description)),
+            addEventListener("HaapiLoading", () => setLoading(true)),
+            addEventListener("HaapiFinishedLoading", () => setLoading(false))
+        ];
+        return () => listeners.forEach(listener => removeEventListener(listener));
     }, []);
 
     return (
             <SafeAreaView style={Styles.layoutContainer}>
                 <Header style={Styles.header} />
+                {isLoading ? <Spinner /> : <></>}
                 <ScrollView contentContainerStyle={Styles.mainContent}>
                     {tokens ? <Authenticated tokens={tokens} setTokens={setTokens} /> :
                             <HaapiProcessor setTokens={setTokens} />}
