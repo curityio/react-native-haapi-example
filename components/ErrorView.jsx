@@ -15,17 +15,18 @@
  */
 
 import Styles from "../Styles";
-import {Problem, SubmitButton, Title} from "./view-components";
-import HaapiModule from "./HaapiModule";
+import {JsonView, Problem, SubmitButton, Title} from "./view-components";
+import Haapi from "./Haapi";
 
 const ErrorView = (props) => {
-    const {error, errorDescription} = props;
+    const {error, errorDescription, response} = props;
     return <>
         <Title title={error} />
         <Problem problem={errorDescription} />
+        <JsonView json={JSON.stringify(response)} />
         <SubmitButton style={Styles.button}
                       title={"Retry"}
-                      onPress={() => HaapiModule.start()} />
+                      onPress={() => Haapi.start()} />
     </>;
 }
 
