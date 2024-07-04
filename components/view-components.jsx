@@ -117,4 +117,21 @@ const Divider = (props) => (
         </View>
 )
 
-export {Options, Fields, Messages, Links, SubmitButton, Problem, Title, Divider};
+const JsonView = (props) => {
+    const {json} = props;
+
+    const prettyPrintPayload = (jsonString) => {
+        if (!jsonString) {
+            return "";
+        }
+        return JSON.stringify(JSON.parse(jsonString), null, 2);
+    };
+
+    return <Text style={Styles.json}>{prettyPrintPayload(json)}</Text>
+}
+
+const Spinner = (props) => {
+    return <ActivityIndicator size="large" />
+}
+
+export {Options, Fields, Messages, Links, SubmitButton, Problem, Title, Divider, JsonView, Spinner};
