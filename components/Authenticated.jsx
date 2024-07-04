@@ -17,8 +17,8 @@
 import React, {Text, View} from "react-native";
 import base64 from "base-64";
 import Styles from "../Styles";
-import HaapiModule from "./HaapiModule";
-import {SubmitButton} from "./view-components";
+import * as Haapi from "./Haapi";
+import {JsonView, SubmitButton} from "./view-components";
 
 export default function Authenticated(props) {
 
@@ -37,23 +37,16 @@ export default function Authenticated(props) {
         return base64.decode(idToken.split(".")[1]);
     };
 
-    const prettyPrintPayload = (idToken) => {
-        if (!idToken) {
-            return "";
-        }
-        return JSON.stringify(JSON.parse(decode(idToken)), null, 2);
-    };
-
     const {idToken, accessToken, refreshToken, scope, expiresIn} = props.tokens;
     const setTokens = props.setTokens
     const subject = getSubject(idToken);
 
     const logout = () => {
-        HaapiModule.logout().then(setTokens(null));
+        Haapi.logout().then(setTokens(null));
     };
 
     const refresh = () => {
-        HaapiModule.refreshAccessToken(refreshToken).then(tokenResponse => setTokens(tokenResponse));
+        Haapi.refreshAccessToken(refreshToken).then(tokenResponse => setTokens(tokenResponse));
     };
 
     return (
@@ -74,7 +67,7 @@ export default function Authenticated(props) {
                         </View>
                         : ""}
                 <Text style={Styles.heading}>ID Token claims</Text>
-                <Text style={Styles.json}>{prettyPrintPayload(idToken)}</Text>
+                <JsonView json={decode(idToken)} />
             </View>
     );
 }
