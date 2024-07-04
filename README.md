@@ -35,6 +35,15 @@ npm uninstall @curity/react-native-haapi-module
 npm install <path-to-file>.tgz --save
 ```
 
+Alternatively, we can use the repo directly to be able to easily change the source code without having to pack the
+module for each change.
+
+```bash
+npm uninstall @curity/react-native-haapi-module
+npm install <path-to-repo> --save
+```
+
+
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
