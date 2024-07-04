@@ -16,7 +16,7 @@
 
 import React from "react";
 import Styles from "../Styles";
-import {Image, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View} from "react-native";
 
 const Title = (props) => (<Text style={Styles.heading}>{props.title}</Text>);
 const Fields = (props) => {
@@ -56,13 +56,13 @@ const Links = (props) => {
                       key={`link-${i}`}> {link.title.literal}</Text>
             </View>;
         }
-        return <Text style={Styles.link}
-                     title={link.title.literal}
-                     onPress={() => onFollowLink(link.model, {})}
-                     key={`link-${i}`}
-        />;
+        return <SubmitButton key={`link-${i}`}
+                             onPress={() => onFollowLink(link, {})}
+                             title={link.title.literal}
+                             style={Styles.link} />
     });
 };
+
 const Messages = (props) => {
     const classListToStyle = (classList) => {
         let classArray;
@@ -82,15 +82,19 @@ const Messages = (props) => {
         return styles;
     };
 
+    const getMessageText = (message) => {
+        const text = message.text.literal ? message.text.literal : message.text
+        if (message.classList.includes("json")) {
+            return JSON.stringify(JSON.parse(text), null, 2)
+        } else {
+            return text;
+        }
+    }
+
     return props.messages.map((message, i) => {
         const styles = classListToStyle(message.classList);
-        const literal = message.text.literal ? message.text.literal : message.text
         return <Text style={styles}
-                     title={message.text.literal}
-                     key={`message-${i}`}
-        >{message.classList.includes("json") ?
-                JSON.stringify(JSON.parse(literal), null, 2) :
-                message.text.literal}</Text>;
+                     key={`message-${i}`}>{getMessageText(message)}</Text>;
     });
 };
 const Options = (props) => (props.options.map((option, i) => (

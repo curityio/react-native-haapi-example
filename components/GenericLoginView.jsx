@@ -46,7 +46,7 @@ const GenericLoginView = (props) => {
                           setError(null)
                           onSubmit(action, fieldValues)
                       }} />
-        <Links onPress={onFollowLink} links={links} />
+        <Links onFollowLink={onFollowLink} links={links} />
     </>;
 
 };
