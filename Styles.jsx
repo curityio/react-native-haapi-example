@@ -82,5 +82,8 @@ const Styles = StyleSheet.create({
         color: "white",
         padding: 10,
     },
+    spinnerContainer: {
+        height: 30
+    }
 });
 export default Styles;

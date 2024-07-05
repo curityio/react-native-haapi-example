@@ -43,7 +43,9 @@ const App = () => {
     return (
             <SafeAreaView style={Styles.layoutContainer}>
                 <Header style={Styles.header} />
-                {isLoading ? <Spinner /> : <></>}
+                <View style={Styles.spinnerContainer}>
+                    {isLoading ? <Spinner /> : <></>}
+                </View>
                 <ScrollView contentContainerStyle={Styles.mainContent}>
                     {tokens ? <Authenticated tokens={tokens} setTokens={setTokens} /> :
                             <HaapiProcessor setTokens={setTokens} />}
