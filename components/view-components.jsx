@@ -17,6 +17,7 @@
 import React from "react";
 import Styles from "../Styles";
 import {ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View} from "react-native";
+import * as Haapi from "./Haapi";
 
 const Title = (props) => (<Text style={Styles.heading}>{props.title}</Text>);
 const Fields = (props) => {
@@ -45,7 +46,8 @@ const SubmitButton = (props) => (
 );
 
 const Links = (props) => {
-    const {links, onFollowLink} = props;
+    const {links, style} = props;
+    const onFollowLink = props.onFollowLink ? props.onFollowLink : Haapi.followLink
     return links.map((link, i) => {
         if (link.type === "image/png") {
             return <View style={Styles.centerContainer} key={`link-${i}`}>
@@ -56,10 +58,22 @@ const Links = (props) => {
                       key={`link-${i}`}> {link.title.literal}</Text>
             </View>;
         }
+
         return <SubmitButton key={`link-${i}`}
-                             onPress={() => onFollowLink(link, {})}
+                             onPress={() => onFollowLink(link.model)}
                              title={link.title.literal}
-                             style={Styles.link} />
+                             style={style ? style : Styles.link} />
+    });
+};
+
+const RegistrationLinks = (props) => {
+    const {links, style} = props;
+    const onFollowLink = props.onFollowLink ? props.onFollowLink : Haapi.followLink
+    return links.map((link, i) => {
+        return <SubmitButton key={`registration-${i}`}
+                             onPress={() => onFollowLink(link)}
+                             title={link.title.literal}
+                             style={style ? style : Styles.link} />;
     });
 };
 
@@ -134,4 +148,4 @@ const Spinner = (props) => {
     return <ActivityIndicator size="large" />
 }
 
-export {Options, Fields, Messages, Links, SubmitButton, Problem, Title, Divider, JsonView, Spinner};
+export {Options, Fields, Messages, Links, SubmitButton, Problem, Title, Divider, JsonView, Spinner, RegistrationLinks};

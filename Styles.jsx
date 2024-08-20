@@ -40,7 +40,13 @@ const Styles = StyleSheet.create({
         backgroundColor: "rgb(87, 100, 135)",
         padding: 10
     },
-    selectorButton: {},
+    selectorButton: {
+        marginVertical: 10,
+        alignItems: "center",
+        borderRadius: 5,
+        backgroundColor: "rgb(87, 100, 135)",
+        padding: 10
+    },
     cancelButton: {
         backgroundColor: "red",
     },

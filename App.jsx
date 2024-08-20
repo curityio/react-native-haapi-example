@@ -20,10 +20,13 @@ import Authenticated from "./components/Authenticated";
 import Styles from "./Styles";
 import {Alert, Image, SafeAreaView, ScrollView, View} from "react-native";
 import {addEventListener, removeEventListener} from "./components/EventManager";
-import {Spinner} from "./components/view-components";
+import {Problem, Spinner} from "./components/view-components";
+
+export const HaapiContext = React.createContext(null);
 
 const App = () => {
     const [tokens, setTokens] = useState(null);
+    const [error, setError] = useState(null);
     const [isLoading, setLoading] = useState(false)
     const Header = () => {
         return <View style={Styles.header}>
@@ -43,13 +46,22 @@ const App = () => {
     return (
             <SafeAreaView style={Styles.layoutContainer}>
                 <Header style={Styles.header} />
-                <View style={Styles.spinnerContainer}>
-                    {isLoading ? <Spinner /> : <></>}
-                </View>
-                <ScrollView contentContainerStyle={Styles.mainContent}>
-                    {tokens ? <Authenticated tokens={tokens} setTokens={setTokens} /> :
-                            <HaapiProcessor setTokens={setTokens} />}
-                </ScrollView>
+                <HaapiContext.Provider value={{
+                    tokens: tokens,
+                    setTokens: setTokens,
+                    error: error,
+                    setError: setError,
+                    isLoading: isLoading,
+                    setLoading: setLoading
+                }}>
+                    <View style={Styles.spinnerContainer}>
+                        {isLoading ? <Spinner /> : <></>}
+                    </View>
+                    <Problem problem={error} styles={Styles.inputProblem} />
+                    <ScrollView contentContainerStyle={Styles.mainContent}>
+                        {tokens ? <Authenticated /> : <HaapiProcessor />}
+                    </ScrollView>
+                </HaapiContext.Provider>
             </SafeAreaView>
     );
 };

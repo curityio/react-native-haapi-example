@@ -19,6 +19,8 @@ import base64 from "base-64";
 import Styles from "../Styles";
 import * as Haapi from "./Haapi";
 import {JsonView, SubmitButton} from "./view-components";
+import {useContext} from "react";
+import {HaapiContext} from "../App";
 
 export default function Authenticated(props) {
 
@@ -37,8 +39,8 @@ export default function Authenticated(props) {
         return base64.decode(idToken.split(".")[1]);
     };
 
-    const {idToken, accessToken, refreshToken, scope, expiresIn} = props.tokens;
-    const setTokens = props.setTokens
+    const {tokens, setTokens} = useContext(HaapiContext)
+    const {idToken, accessToken, refreshToken, scope, expiresIn} = tokens;
     const subject = getSubject(idToken);
 
     const logout = () => {

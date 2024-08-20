@@ -14,17 +14,19 @@
  *   limitations under the License.
  */
 
-import {Links, Messages, Problem, Spinner, SubmitButton, Title} from "./view-components";
-import React, {useEffect, useState} from "react";
+import {Messages, RegistrationLinks, SubmitButton, Title} from "./view-components";
+import React, {useContext, useEffect} from "react";
 import Styles from "../Styles";
 import {addEventListener, removeEventListener} from "./EventManager";
-import * as Haapi from './Haapi';
+import {HaapiContext} from "../App";
 
 const WebAuthnLoginView = (props) => {
     const response = props.response;
-    const [error, setError] = useState(props.error);
+    const {setError} = useContext(HaapiContext);
+
 
     useEffect(() => {
+        console.log(JSON.stringify(response));
         const listeners = [
             addEventListener("WebAuthnUserCancelled", () => setError("User cancelled Webauthn dialog")),
             addEventListener("WebAuthnRegistrationFailed", () => setError("Registration failed. Please try again")),
@@ -36,6 +38,7 @@ const WebAuthnLoginView = (props) => {
             listeners.forEach(listener => removeEventListener(listener));
         };
     }, []);
+
     const RetryActions = ({actions}) => {
         const buttons = actions.map((action, index) => {
             return <SubmitButton title={action.title.literal}
@@ -47,10 +50,8 @@ const WebAuthnLoginView = (props) => {
 
     return <>
         <Title title="WebAuthn" Styles={Styles.heading} />
-        {error ? <></> : <Spinner />}
-        <Problem problem={error} styles={Styles.inputProblem} />
         <Messages messages={response.messages} />
-        <Links onFollowLink={Haapi.followLink} links={response.links} />
+        <RegistrationLinks links={response.links} />
     </>;
 
 };

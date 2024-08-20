@@ -14,15 +14,16 @@
  *  limitations under the License.
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import WelcomeView from './WelcomeView';
 import {addEventListener, removeEventListener} from './EventManager';
 import ErrorView from './ErrorView';
 import WebAuthnLoginView from "./WebAuthnLoginView";
 import Actions from "./Actions";
+import {HaapiContext} from "../App";
 
 const HaapiProcessor = props => {
-    const {setTokens} = props;
+    const {setTokens, setError} = useContext(HaapiContext);
     const [stepComponent, setStepComponent] = useState(<WelcomeView />);
 
     useEffect(() => {
@@ -48,8 +49,12 @@ const HaapiProcessor = props => {
                     );
                 }),
                 addEventListener('SessionTimedOut', event => {
-                    console.log('Session timed out during authentication. User will have to start over.');
+                    console.info('Session timed out during authentication. User will have to start over.');
                     setStepComponent(<ErrorView error={'Session timed out'} errorDescription={event.title.literal} />);
+                }),
+                addEventListener('ProblemRepresentation', event => {
+                    console.warn('Received a problem');
+                    setStepComponent(<ErrorView response={event} />);
                 }),
                 addEventListener('WebAuthnAuthenticationStep', event => setWebauthnStep(event)),
                 addEventListener("WebAuthnUserCancelled", event => setWebauthnStep(event,
@@ -67,7 +72,8 @@ const HaapiProcessor = props => {
     }, []);
 
     const setWebauthnStep = (event, error) => {
-        setStepComponent(<WebAuthnLoginView response={event} error={error} />)
+        setError(error);
+        setStepComponent(<WebAuthnLoginView response={event} />)
     }
 
     const processAuthenticationStep = haapiResponse => {

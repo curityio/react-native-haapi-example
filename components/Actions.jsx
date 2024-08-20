@@ -16,12 +16,13 @@
 
 import Polling from "./Polling";
 import * as Haapi from "./Haapi";
-import {Options, SubmitButton} from "./view-components";
+import {SubmitButton} from "./view-components";
 import ContinueView from "./ContinueView";
 import BankIdView from "./BankIdView";
 import GenericLoginView from "./GenericLoginView";
 import Styles from "../Styles";
 import React from "react";
+import AuthenticatorSelectorView from "./AuthenticatorSelectorView";
 
 const Actions = (props) => {
     const {actions, haapiResponse} = props;
@@ -30,8 +31,8 @@ const Actions = (props) => {
             case 'poll':
                 return <Polling poll={() => Haapi.submitAction(action)} key={'polling'} />;
             case 'authenticator-selector':
-                return <Options options={action.model.options} onFollowLink={Haapi.followLink}
-                                key={'options'} />;
+                return <AuthenticatorSelectorView action={action} response={haapiResponse}
+                                                  key={'authenticator-selector'} />
             case 'continue':
                 return (
                         <ContinueView
@@ -43,7 +44,6 @@ const Actions = (props) => {
                 );
             case 'device-register':
             case 'login':
-                console.log(JSON.stringify(action));
                 if (action.model.name === 'bankid') {
                     return (
                             <BankIdView

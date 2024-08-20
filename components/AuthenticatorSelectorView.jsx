@@ -1,5 +1,5 @@
 /*
- *   Copyright 2023 Curity AB
+ *   Copyright 2024 Curity AB
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -14,24 +14,18 @@
  *   limitations under the License.
  */
 
+import {Links, Messages, Title} from "./view-components";
+import React from "react";
 import Styles from "../Styles";
-import {JsonView, Messages, Problem, SubmitButton, Title} from "./view-components";
-import * as Haapi from './Haapi';
 
-const ErrorView = (props) => {
-    const {error, errorDescription, response} = props;
-
-    const title = response.title.literal ? response.title.literal : error
+const AuthenticatorSelectorView = (props) => {
+    const {action, response} = props;
 
     return <>
-        <Title title={title} />
-        <Problem problem={errorDescription} />
         <Messages messages={response.messages} />
-        <JsonView json={JSON.stringify(response)} />
-        <SubmitButton style={Styles.button}
-                      title={"Retry"}
-                      onPress={() => Haapi.startLogin()} />
+        <Title title={action.title.literal} />
+        <Links links={action.model.options} style={Styles.selectorButton} />
     </>;
-}
 
-export default ErrorView
+};
+export default AuthenticatorSelectorView;
