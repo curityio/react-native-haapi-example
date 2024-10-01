@@ -14,23 +14,23 @@
  *   limitations under the License.
  */
 
-import {Messages, RegistrationLinks, SubmitButton, Title} from "./view-components";
+import {Links, Messages, Title} from "../view-components";
 import React, {useContext, useEffect} from "react";
-import Styles from "../Styles";
-import {addEventListener, removeEventListener} from "./EventManager";
-import {HaapiContext} from "../App";
+import Styles from "../../Styles";
+import {addEventListener, removeEventListener} from "../EventManager";
+import {HaapiContext} from "../../App";
 
-const WebAuthnLoginView = (props) => {
+const WebAuthnView = (props) => {
     const response = props.response;
     const {setError} = useContext(HaapiContext);
+    const action = response.actions[0];
 
 
     useEffect(() => {
-        console.log(JSON.stringify(response));
         const listeners = [
             addEventListener("WebAuthnUserCancelled", () => setError("User cancelled Webauthn dialog")),
             addEventListener("WebAuthnRegistrationFailed", () => setError("Registration failed. Please try again")),
-            addEventListener("WebAuthnRegistrationFailedKeyRegistered", () => setError("Registration failed. Key is possibly already registered"))
+            addEventListener("WebAuthnRegistrationFailedKeyRegistered", () => setError("Registration failed. Key is possibly already registered")),
         ];
 
         // Removes the listener once unmounted
@@ -39,21 +39,16 @@ const WebAuthnLoginView = (props) => {
         };
     }, []);
 
-    const RetryActions = ({actions}) => {
-        const buttons = actions.map((action, index) => {
-            return <SubmitButton title={action.title.literal}
-                                 key={`action-${index}`}
-                                 onPress={() => console.debug("Retry pushed")} />
-        });
-        return <>{buttons}</>
-    }
+    const title = action.title.literal || action.title;
+    const registerDevice = response.actionModel.continueActions[0];
 
     return <>
-        <Title title="WebAuthn" Styles={Styles.heading} />
+        <Title title={title} Styles={Styles.heading} />
         <Messages messages={response.messages} />
-        <RegistrationLinks links={response.links} />
+        <Links links={response.actionModel.continueActions} style={Styles.button} />
+        <Links links={response.links} />
     </>;
 
 };
 
-export default WebAuthnLoginView;
+export default WebAuthnView;

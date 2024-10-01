@@ -14,18 +14,17 @@
  *   limitations under the License.
  */
 
-import {Links, Messages, Title} from "./view-components";
+import {Links, Title} from "../view-components";
 import React from "react";
-import Styles from "../Styles";
+import Styles from "../../Styles";
 
-const AuthenticatorSelectorView = (props) => {
-    const {action, response} = props;
+const AuthenticatorSelectorAction = (props) => {
+    const {action} = props;
 
     return <>
-        <Messages messages={response.messages} />
         <Title title={action.title.literal} />
         <Links links={action.model.options} style={Styles.selectorButton} />
     </>;
 
 };
-export default AuthenticatorSelectorView;
+export default AuthenticatorSelectorAction;

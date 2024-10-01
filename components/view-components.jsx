@@ -23,20 +23,23 @@ const Title = (props) => (<Text style={Styles.heading}>{props.title}</Text>);
 const Fields = (props) => {
     const {fields, fieldValues, setFieldValues} = props;
 
-    return fields.map((field) => (
-            <TextInput style={Styles.input}
-                       secureTextEntry={field.name === "password"}
-                       placeholder={field.label.literal}
-                       onChangeText={newText => {
-                           let fieldValuesClone = {...fieldValues};
-                           fieldValuesClone[field.name] = newText;
-                           setFieldValues(fieldValuesClone);
-                       }}
-                       key={field.name}
-            />
-    ));
+    return fields
+            .filter(field => field.type !== 'hidden')
+            .map(field => (
+                    <TextInput style={Styles.input}
+                               secureTextEntry={field.name === "password"}
+                               placeholder={field.label.literal}
+                               onChangeText={newText => {
+                                   let fieldValuesClone = {...fieldValues};
+                                   fieldValuesClone[field.name] = newText;
+                                   setFieldValues(fieldValuesClone);
+                               }}
+                               key={field.name}
+                    />
+            ));
 };
 const Problem = (props) => (<Text style={Styles.inputProblem}>{props.problem}</Text>);
+const Info = (props) => (<Text style={Styles.info}>{props.info}</Text>);
 const SubmitButton = (props) => (
         <TouchableOpacity
                 style={props.style}
@@ -59,9 +62,13 @@ const Links = (props) => {
             </View>;
         }
 
+        const title = link.title.literal || link.title;
+
+        const linkModel = link.model || link;
+
         return <SubmitButton key={`link-${i}`}
-                             onPress={() => onFollowLink(link.model)}
-                             title={link.title.literal}
+                             onPress={() => onFollowLink(linkModel)}
+                             title={title}
                              style={style ? style : Styles.link} />
     });
 };
@@ -69,10 +76,12 @@ const Links = (props) => {
 const RegistrationLinks = (props) => {
     const {links, style} = props;
     const onFollowLink = props.onFollowLink ? props.onFollowLink : Haapi.followLink
+
     return links.map((link, i) => {
+        const title = link.title.literal || link.title;
         return <SubmitButton key={`registration-${i}`}
                              onPress={() => onFollowLink(link)}
-                             title={link.title.literal}
+                             title={title}
                              style={style ? style : Styles.link} />;
     });
 };
@@ -148,4 +157,17 @@ const Spinner = (props) => {
     return <ActivityIndicator size="large" />
 }
 
-export {Options, Fields, Messages, Links, SubmitButton, Problem, Title, Divider, JsonView, Spinner, RegistrationLinks};
+export {
+    Options,
+    Fields,
+    Messages,
+    Links,
+    SubmitButton,
+    Problem,
+    Info,
+    Title,
+    Divider,
+    JsonView,
+    Spinner,
+    RegistrationLinks
+};

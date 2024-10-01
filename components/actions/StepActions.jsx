@@ -14,58 +14,41 @@
  *   limitations under the License.
  */
 
-import Polling from "./Polling";
-import * as Haapi from "./Haapi";
-import {SubmitButton} from "./view-components";
-import ContinueView from "./ContinueView";
-import BankIdView from "./BankIdView";
-import GenericLoginView from "./GenericLoginView";
-import Styles from "../Styles";
+import PollingAction from "../Polling";
+import * as Haapi from "../Haapi";
+import {Links, Messages, SubmitButton} from "../view-components";
+import ContinueAction from "./ContinueAction";
+import BankIdAction from "./BankIdAction";
+import GenericAction from "./GenericAction";
+import Styles from "../../Styles";
 import React from "react";
-import AuthenticatorSelectorView from "./AuthenticatorSelectorView";
+import AuthenticatorSelectorAction from "./AuthenticatorSelectorAction";
 
-const Actions = (props) => {
+const StepActions = (props) => {
     const {actions, haapiResponse} = props;
+    let actionShowMessages = false;
+    let actionShowLinks = false;
+
     const actionComponents = actions.map(action => {
         switch (action.kind) {
             case 'poll':
-                return <Polling poll={() => Haapi.submitAction(action)} key={'polling'} />;
+                return <PollingAction poll={() => Haapi.submitAction(action)} key={'polling'} />;
+            case 'redirect':
+                Haapi.followLink(action.model);
+                return null
             case 'authenticator-selector':
-                return <AuthenticatorSelectorView action={action} response={haapiResponse}
-                                                  key={'authenticator-selector'} />
+                return <AuthenticatorSelectorAction action={action}
+                                                    key={'authenticator-selector'} />
             case 'continue':
+                actionShowMessages = true;
                 return (
-                        <ContinueView
+                        <ContinueAction
                                 action={action}
                                 onSubmit={Haapi.submitAction}
                                 messages={haapiResponse.messages}
                                 key={'continue'}
                         />
                 );
-            case 'device-register':
-            case 'login':
-                if (action.model.name === 'bankid') {
-                    return (
-                            <BankIdView
-                                    action={action}
-                                    links={haapiResponse.links}
-                                    messages={haapiResponse.messages}
-                                    onFollowLink={Haapi.followLink}
-                                    key={'bankid-view'}
-                            />
-                    );
-                } else {
-                    return (
-                            <GenericLoginView
-                                    action={action}
-                                    links={haapiResponse.links}
-                                    messages={haapiResponse.messages}
-                                    onFollowLink={Haapi.followLink}
-                                    onSubmit={Haapi.submitAction}
-                                    key={'generic-view'}
-                            />
-                    );
-                }
             case 'cancel':
                 return (
                         <SubmitButton
@@ -75,9 +58,37 @@ const Actions = (props) => {
                                 key={'cancel-button'}
                         />
                 );
+            default:
+                if (action.model.name === 'bankid') {
+                    actionShowMessages = true;
+                    actionShowLinks = true;
+                    return (
+                            <BankIdAction
+                                    action={action}
+                                    links={haapiResponse.links}
+                                    messages={haapiResponse.messages}
+                                    onFollowLink={Haapi.followLink}
+                                    key={'bankid-view'}
+                            />
+                    );
+                } else {
+                    return (
+                            <GenericAction
+                                    action={action}
+                                    onSubmit={Haapi.submitAction}
+                                    key={'generic-view'}
+                            />
+                    );
+                }
         }
     });
-    return <>{actionComponents}</>
+    const messages = actionShowMessages ? <></> : <Messages messages={haapiResponse.messages} />;
+    const links = actionShowLinks ? <></> : <Links links={haapiResponse.links} />;
+    return (<>
+        {messages}
+        {actionComponents}
+        {links}
+    </>)
 
 }
-export default Actions
+export default StepActions

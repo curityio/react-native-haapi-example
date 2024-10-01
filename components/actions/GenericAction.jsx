@@ -14,19 +14,22 @@
  *   limitations under the License.
  */
 
-import {Fields, Links, Messages, SubmitButton, Title} from "./view-components";
-import React, {useEffect, useState} from "react";
-import Styles from "../Styles";
-import {addEventListener, removeEventListener} from "./EventManager";
+import {Fields, SubmitButton, Title} from "../view-components";
+import React, {useContext, useEffect, useState} from "react";
+import Styles from "../../Styles";
+import {addEventListener, removeEventListener} from "../EventManager";
+import {HaapiContext} from "../../App";
 
-const GenericLoginView = (props) => {
-    const {action, links, onFollowLink, messages, onSubmit} = props;
+const GenericAction = (props) => {
+    const {action, onSubmit} = props;
     const [fieldValues, setFieldValues] = useState({});
-    const [error, setError] = useState(null);
+    const {setError} = useContext(HaapiContext);
 
     useEffect(() => {
         const listeners = [
-            addEventListener("IncorrectCredentials", event => setError(event.title.literal ? event.title.literal : event.title)),
+            addEventListener("IncorrectCredentials", event => {
+                setError(event.title.literal ? event.title.literal : event.title)
+            }),
             addEventListener("ProblemRepresentation", event => setError(event.title.literal ? event.title.literal : event.title)),
         ];
 
@@ -35,18 +38,15 @@ const GenericLoginView = (props) => {
             listeners.forEach(listener => removeEventListener(listener));
         };
     }, []);
-
     return <>
         <Title title={action.title.literal} Styles={Styles.heading} />
-        <Messages messages={messages} />
         <Fields fields={action.model.fields} setFieldValues={setFieldValues} fieldValues={fieldValues} />
-        <SubmitButton title={action.title.literal} style={Styles.button}
+        <SubmitButton title={action.model.actionTitle} style={Styles.button}
                       onPress={() => {
                           setError(null)
                           onSubmit(action, fieldValues)
                       }} />
-        <Links links={links} />
     </>;
 
 };
-export default GenericLoginView;
+export default GenericAction;

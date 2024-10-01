@@ -18,8 +18,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import WelcomeView from './WelcomeView';
 import {addEventListener, removeEventListener} from './EventManager';
 import ErrorView from './ErrorView';
-import WebAuthnLoginView from "./WebAuthnLoginView";
-import Actions from "./Actions";
+import WebAuthnView from "./actions/WebAuthnView";
+import StepActions from "./actions/StepActions";
 import {HaapiContext} from "../App";
 
 const HaapiProcessor = props => {
@@ -72,13 +72,15 @@ const HaapiProcessor = props => {
     }, []);
 
     const setWebauthnStep = (event, error) => {
+        console.debug("Received a webauthn step: " + JSON.stringify(event));
         setError(error);
-        setStepComponent(<WebAuthnLoginView response={event} />)
+        setStepComponent(<WebAuthnView response={event} />)
     }
 
     const processAuthenticationStep = haapiResponse => {
         console.debug("Received an authentication step: " + JSON.stringify(haapiResponse));
-        setStepComponent(<Actions actions={haapiResponse.actions} haapiResponse={haapiResponse} />);
+        setError(null);
+        setStepComponent(<StepActions actions={haapiResponse.actions} haapiResponse={haapiResponse} />);
     };
 
     return stepComponent;

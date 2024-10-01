@@ -1,5 +1,5 @@
 /*
- *   Copyright 2023 Curity AB
+ *   Copyright 2024 Curity AB
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
  */
 
 import React, {useCallback, useEffect, useState} from 'react';
-import {Divider, Links, Messages, SubmitButton, Title} from './view-components';
+import {Divider, Links, Messages, SubmitButton, Title} from '../view-components';
 import {Linking, View} from 'react-native';
-import Styles from '../Styles';
-import {addEventListener, removeEventListener} from './EventManager';
+import Styles from '../../Styles';
+import {addEventListener, removeEventListener} from '../EventManager';
 
-const BankIdView = props => {
+const BankIdAction = props => {
     const {action} = props;
     const [bankIdMessages, setBankIdMessages] = useState(props.messages);
     const [bankIdLinks, setBankIdLinks] = useState(props.links);
@@ -55,4 +55,4 @@ const BankIdView = props => {
     );
 };
 
-export default BankIdView;
+export default BankIdAction;

@@ -14,10 +14,10 @@
  *   limitations under the License.
  */
 
-import {Messages, SubmitButton, Title} from "./view-components";
-import Styles from "../Styles";
+import {Messages, SubmitButton, Title} from "../view-components";
+import Styles from "../../Styles";
 
-const ContinueView = (props) => {
+const ContinueAction = (props) => {
     const {action, onSubmit, messages} = props;
     const title = action.model.actionTitle.literal ? action.model.actionTitle.literal : action.model.actionTitle
     return <>
@@ -28,4 +28,4 @@ const ContinueView = (props) => {
                       onPress={() => onSubmit(action, {})} />
     </>;
 };
-export default ContinueView;
+export default ContinueAction;

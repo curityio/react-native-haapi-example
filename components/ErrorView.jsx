@@ -17,9 +17,12 @@
 import Styles from "../Styles";
 import {JsonView, Messages, Problem, SubmitButton, Title} from "./view-components";
 import * as Haapi from './Haapi';
+import {useContext} from "react";
+import {HaapiContext} from "../App";
 
 const ErrorView = (props) => {
     const {error, errorDescription, response} = props;
+    const {setError} = useContext(HaapiContext);
 
     const title = response.title.literal ? response.title.literal : error
 
@@ -30,7 +33,10 @@ const ErrorView = (props) => {
         <JsonView json={JSON.stringify(response)} />
         <SubmitButton style={Styles.button}
                       title={"Retry"}
-                      onPress={() => Haapi.startLogin()} />
+                      onPress={() => {
+                          setError(null)
+                          Haapi.startLogin()
+                      }} />
     </>;
 }
 

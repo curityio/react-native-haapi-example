@@ -20,13 +20,14 @@ import Authenticated from "./components/Authenticated";
 import Styles from "./Styles";
 import {Alert, Image, SafeAreaView, ScrollView, View} from "react-native";
 import {addEventListener, removeEventListener} from "./components/EventManager";
-import {Problem, Spinner} from "./components/view-components";
+import {Info, Problem, Spinner} from "./components/view-components";
 
 export const HaapiContext = React.createContext(null);
 
 const App = () => {
     const [tokens, setTokens] = useState(null);
     const [error, setError] = useState(null);
+    const [infoText, setInfoText] = useState(null);
     const [isLoading, setLoading] = useState(false)
     const Header = () => {
         return <View style={Styles.header}>
@@ -50,6 +51,8 @@ const App = () => {
                     tokens: tokens,
                     setTokens: setTokens,
                     error: error,
+                    infoText: infoText,
+                    setInfoText: setInfoText,
                     setError: setError,
                     isLoading: isLoading,
                     setLoading: setLoading
@@ -58,6 +61,7 @@ const App = () => {
                         {isLoading ? <Spinner /> : <></>}
                     </View>
                     <Problem problem={error} styles={Styles.inputProblem} />
+                    <Info info={infoText} />
                     <ScrollView contentContainerStyle={Styles.mainContent}>
                         {tokens ? <Authenticated /> : <HaapiProcessor />}
                     </ScrollView>

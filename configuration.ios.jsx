@@ -1,6 +1,6 @@
 const HaapiConfiguration = {
     "appRedirect": "app:start",
-    "clientId": "react-dev-ios-client",
+    "clientId": "react-ios-client",
     "baseUri": "https://dlindau.ngrok.io",
     "tokenEndpointUri": "https://dlindau.ngrok.io/dev/oauth/token",
     "authorizationEndpointUri": "https://dlindau.ngrok.io/dev/oauth/authorize",

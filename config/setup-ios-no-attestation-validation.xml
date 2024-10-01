@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<conf-spec xmlns="https://curity.se/ns/conf-spec">
+    <metadata>
+        <purpose>configuration-bundle</purpose>
+        <name>React Native HAAPI iOS Client</name>
+        <description>Create configuration for using HAAPI on a iOS mobile simulator. Attestation is disabled.
+        </description>
+    </metadata>
+    <variable-definitions>
+        <variable-definition>
+            <name>TOKEN_PROFILE</name>
+            <tagpath>/profiles/profile/id</tagpath>
+            <description>The profile where to add the clients</description>
+            <type-hint>profile</type-hint>
+        </variable-definition>
+        <variable-definition>
+            <name>IOS_HAAPI_CLIENT</name>
+            <tagpath/>
+            <description>The ID of the client to add for iOS. Attestation will be enabled.
+            </description>
+            <type-hint>string</type-hint>
+        </variable-definition>
+        <variable-definition>
+            <name>IOS_REDIRECT_URI</name>
+            <tagpath/>
+            <description>The redirect_uri used for the iOS client.</description>
+            <type-hint>string</type-hint>
+        </variable-definition>
+        <variable-definition>
+            <name>IOS_APP_ID</name>
+            <tagpath/>
+            <description>The App ID of the iOS client. Since this config spec does not validate attestation this value
+                does not have be correct.
+            </description>
+            <type-hint>string</type-hint>
+        </variable-definition>
+    </variable-definitions>
+    <actions/>
+    <merge-config>
+        <config xmlns="http://tail-f.com/ns/config/1.0">
+            <profiles xmlns="https://curity.se/ns/conf/base">
+                <profile>
+                    <id>#{TOKEN_PROFILE}</id>
+                    <type xmlns:as="https://curity.se/ns/conf/profile/oauth">as:oauth-service</type>
+                    <settings>
+                        <authorization-server xmlns="https://curity.se/ns/conf/profile/oauth">
+                            <client-store>
+                                <config-backed>
+                                    <client>
+                                        <id>#{IOS_HAAPI_CLIENT}</id>
+                                        <no-authentication>true</no-authentication>
+                                        <redirect-uris>#{IOS_REDIRECT_URI}</redirect-uris>
+                                        <proof-key>
+                                            <require-proof-key>false</require-proof-key>
+                                        </proof-key>
+                                        <refresh-token-ttl>3600</refresh-token-ttl>
+                                        <scope>openid</scope>
+                                        <user-authentication/>
+                                        <capabilities>
+                                            <code/>
+                                            <haapi>
+                                                <use-legacy-dpop>false</use-legacy-dpop>
+                                                <issue-token-bound-authorization-code>true
+                                                </issue-token-bound-authorization-code>
+                                            </haapi>
+                                        </capabilities>
+                                        <attestation>
+                                            <ios>
+                                                <app-id>#{IOS_APP_ID}</app-id>
+                                            </ios>
+                                            <disable-attestation-validation>true</disable-attestation-validation>
+                                        </attestation>
+                                    </client>
+                                </config-backed>
+                            </client-store>
+                        </authorization-server>
+                    </settings>
+                </profile>
+            </profiles>
+            <environments xmlns="https://curity.se/ns/conf/base">
+                <environment>
+                    <services>
+                        <zones>
+                            <default-zone>
+                                <mobile-app-association>
+                                    <ios-app-configuration>
+                                        <app-id>#{IOS_APP_ID}</app-id>
+                                    </ios-app-configuration>
+                                </mobile-app-association>
+                            </default-zone>
+                        </zones>
+                    </services>
+                </environment>
+            </environments>
+        </config>
+    </merge-config>
+    <conditions>
+        <must-exist>
+            <path>/profiles/profile{#{TOKEN_PROFILE} oauth-service}/id</path>
+            <error-description>The provided profile does not exist or is not a token profile.</error-description>
+        </must-exist>
+        <must-not-exist>
+            <path>/profiles/profile{#{TOKEN_PROFILE}
+                oauth-service}/settings/authorization-server/client-store/config-backed/client{#{IOS_HAAPI_CLIENT}}
+            </path>
+            <error-description>A client with ID ${IOS_HAAPI_CLIENT} already exist. Please select a new ID.
+            </error-description>
+        </must-not-exist>
+    </conditions>
+</conf-spec>
