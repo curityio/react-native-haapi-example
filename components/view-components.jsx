@@ -19,6 +19,11 @@ import Styles from "../Styles";
 import {ActivityIndicator, Image, Text, TextInput, TouchableOpacity, View} from "react-native";
 import * as Haapi from "./Haapi";
 
+const Header = (props) => (
+        <TouchableOpacity onPress={props.onPress}>
+            <Image style={Styles.logo} source={require("../images/curity-logo.png")} />
+        </TouchableOpacity>);
+
 const Title = (props) => (<Text style={Styles.heading}>{props.title}</Text>);
 const Fields = (props) => {
     const {fields, fieldValues, setFieldValues} = props;
@@ -169,5 +174,6 @@ export {
     Divider,
     JsonView,
     Spinner,
-    RegistrationLinks
+    RegistrationLinks,
+    Header
 };

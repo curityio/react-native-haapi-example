@@ -18,9 +18,10 @@ import React, {useEffect, useState} from "react";
 import HaapiProcessor from "./components/HaapiProcessor";
 import Authenticated from "./components/Authenticated";
 import Styles from "./Styles";
-import {Alert, Image, SafeAreaView, ScrollView, View} from "react-native";
+import {Alert, SafeAreaView, ScrollView, View} from "react-native";
 import {addEventListener, removeEventListener} from "./components/EventManager";
-import {Info, Problem, Spinner} from "./components/view-components";
+import {Header, Info, Problem, Spinner} from "./components/view-components";
+import WelcomeView from "./components/WelcomeView";
 
 export const HaapiContext = React.createContext(null);
 
@@ -29,11 +30,8 @@ const App = () => {
     const [error, setError] = useState(null);
     const [infoText, setInfoText] = useState(null);
     const [isLoading, setLoading] = useState(false)
-    const Header = () => {
-        return <View style={Styles.header}>
-            <Image style={Styles.logo} source={require("./images/curity-logo.png")} />
-        </View>;
-    };
+    const [isWelcome, setWelcome] = useState(true)
+    const [stepComponent, setStepComponent] = useState(null);
 
     useEffect(() => {
         const listeners = [
@@ -44,28 +42,43 @@ const App = () => {
         return () => listeners.forEach(listener => removeEventListener(listener));
     }, []);
 
+    const clearState = () => {
+        setWelcome(true);
+        setError(false);
+        setTokens(null);
+        setStepComponent(null);
+    }
+
     return (
             <SafeAreaView style={Styles.layoutContainer}>
-                <Header style={Styles.header} />
-                <HaapiContext.Provider value={{
-                    tokens: tokens,
-                    setTokens: setTokens,
-                    error: error,
-                    infoText: infoText,
-                    setInfoText: setInfoText,
-                    setError: setError,
-                    isLoading: isLoading,
-                    setLoading: setLoading
-                }}>
-                    <View style={Styles.spinnerContainer}>
-                        {isLoading ? <Spinner /> : <></>}
-                    </View>
-                    <Problem problem={error} styles={Styles.inputProblem} />
-                    <Info info={infoText} />
-                    <ScrollView contentContainerStyle={Styles.mainContent}>
-                        {tokens ? <Authenticated /> : <HaapiProcessor />}
-                    </ScrollView>
-                </HaapiContext.Provider>
+                <View style={Styles.innerLayoutContainer}>
+                    <Header style={Styles.header} onPress={() => clearState()} />
+                    {isWelcome &&
+                            <WelcomeView onLogin={() => setWelcome(false)} />
+                    }
+                    <HaapiContext.Provider value={{
+                        tokens: tokens,
+                        setTokens: setTokens,
+                        error: error,
+                        infoText: infoText,
+                        setInfoText: setInfoText,
+                        setError: setError,
+                        isLoading: isLoading,
+                        setLoading: setLoading,
+                        setStepComponent: setStepComponent,
+                        stepComponent: stepComponent,
+                        clearState: clearState,
+                    }}>
+                        <View style={Styles.spinnerContainer}>
+                            {isLoading ? <Spinner /> : <></>}
+                        </View>
+                        <Problem problem={error} styles={Styles.inputProblem} />
+                        <Info info={infoText} />
+                        <ScrollView contentContainerStyle={Styles.mainContent}>
+                            {tokens ? <Authenticated /> : <HaapiProcessor />}
+                        </ScrollView>
+                    </HaapiContext.Provider>
+                </View>
             </SafeAreaView>
     );
 };

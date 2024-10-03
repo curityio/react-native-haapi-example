@@ -14,11 +14,11 @@
  *   limitations under the License.
  */
 
-import {Links, Messages, Title} from "../view-components";
+import {Links, Messages, Title} from "./view-components";
 import React, {useContext, useEffect} from "react";
-import Styles from "../../Styles";
-import {addEventListener, removeEventListener} from "../EventManager";
-import {HaapiContext} from "../../App";
+import Styles from "../Styles";
+import {addEventListener, removeEventListener} from "./EventManager";
+import {HaapiContext} from "../App";
 
 const WebAuthnView = (props) => {
     const response = props.response;

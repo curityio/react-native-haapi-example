@@ -39,12 +39,12 @@ export default function Authenticated(props) {
         return base64.decode(idToken.split(".")[1]);
     };
 
-    const {tokens, setTokens} = useContext(HaapiContext)
+    const {tokens, setTokens, clearState} = useContext(HaapiContext)
     const {idToken, accessToken, refreshToken, scope, expiresIn} = tokens;
     const subject = getSubject(idToken);
 
     const logout = () => {
-        Haapi.logout().then(setTokens(null));
+        Haapi.logout().then(clearState);
     };
 
     const refresh = () => {
@@ -54,7 +54,7 @@ export default function Authenticated(props) {
     return (
             <View>
                 <Text style={Styles.heading}>Hello {subject}!</Text>
-                <SubmitButton style={Styles.button} title="Logout" onPress={() => logout()} />
+                <SubmitButton style={Styles.button} title="Logout" onPress={logout} />
                 <Text style={Styles.heading}>Access Token</Text>
                 <Text style={Styles.json}>{accessToken}</Text>
                 <Text style={Styles.heading}>Scope</Text>

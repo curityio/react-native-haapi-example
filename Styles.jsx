@@ -8,12 +8,15 @@ const Styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        color: "white",
-        backgroundColor: "#2a2f3a",
-        padding: 20,
+        color: "rgb(38, 44, 61)",
+        backgroundColor: "white",
+    },
+    innerLayoutContainer: {
+        margin: 20,
+        height: "100%",
     },
     mainContent: {
-        backgroundColor: "#2a2f3a",
+        backgroundColor: "white",
         justifyContent: "center",
     },
     centerContainer: {
@@ -23,8 +26,13 @@ const Styles = StyleSheet.create({
     centerHorizontal: {
         justifyContent: "space-around",
     },
+    loginImageContainer: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    loginImage: {},
     logo: {
-        resizeMode: "cover"
+        resizeMode: "center"
     },
     input: {
         height: 40,
@@ -55,7 +63,7 @@ const Styles = StyleSheet.create({
     },
     heading: {
         fontWeight: "bold",
-        color: "white",
+        color: "rgb(38, 44, 61)",
         marginTop: 12,
         marginBottom: 10,
         fontFamily: "Roboto-Regular",
@@ -90,6 +98,6 @@ const Styles = StyleSheet.create({
     },
     spinnerContainer: {
         height: 30
-    }
+    },
 });
 export default Styles;

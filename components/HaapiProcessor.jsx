@@ -14,17 +14,15 @@
  *  limitations under the License.
  */
 
-import React, {useContext, useEffect, useState} from 'react';
-import WelcomeView from './WelcomeView';
+import React, {useContext, useEffect} from 'react';
 import {addEventListener, removeEventListener} from './EventManager';
 import ErrorView from './ErrorView';
-import WebAuthnView from "./actions/WebAuthnView";
+import WebAuthnView from "./WebAuthnView";
 import StepActions from "./actions/StepActions";
 import {HaapiContext} from "../App";
 
 const HaapiProcessor = props => {
-    const {setTokens, setError} = useContext(HaapiContext);
-    const [stepComponent, setStepComponent] = useState(<WelcomeView />);
+    const {setTokens, setError, stepComponent, setStepComponent} = useContext(HaapiContext);
 
     useEffect(() => {
         const listeners = [];
