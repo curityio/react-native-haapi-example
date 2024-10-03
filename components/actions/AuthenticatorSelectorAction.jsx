@@ -23,7 +23,7 @@ const AuthenticatorSelectorAction = (props) => {
 
     return <>
         <Title title={action.title.literal} />
-        <Links links={action.model.options} style={Styles.selectorButton} />
+        <Links links={action.model.options} style={Styles.selectorButton} textStyle={Styles.buttonText} />
     </>;
 
 };

@@ -1,9 +1,7 @@
 import {StyleSheet} from "react-native";
 
 const Styles = StyleSheet.create({
-    header: {
-        marginBottom: 10,
-    },
+    header: {},
     layoutContainer: {
         flex: 1,
         flexDirection: "column",
@@ -37,8 +35,9 @@ const Styles = StyleSheet.create({
     input: {
         height: 40,
         marginVertical: 12,
+        paddingHorizontal: 12,
         borderWidth: 1,
-        borderColor: "#cfd9e0",
+        borderColor: "rgb(38, 44, 61)",
         backgroundColor: "white",
     },
     button: {
@@ -46,7 +45,8 @@ const Styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 5,
         backgroundColor: "rgb(87, 100, 135)",
-        padding: 10
+        padding: 10,
+        color: "white",
     },
     selectorButton: {
         marginVertical: 10,
@@ -70,7 +70,8 @@ const Styles = StyleSheet.create({
         alignItems: "center"
     },
     link: {
-        color: "blue",
+        color: "rgb(38, 44, 61)",
+        textDecorationLine: "underline"
     },
     imageLink: {
         height: 200,
@@ -81,10 +82,10 @@ const Styles = StyleSheet.create({
     },
     message: {
         marginVertical: 5,
-        color: "white",
+        color: "rgb(38, 44, 61)",
     },
     info: {
-        color: "white",
+        color: "rgb(38, 44, 61)",
     },
     error: {
         color: "red",
@@ -96,8 +97,29 @@ const Styles = StyleSheet.create({
         color: "white",
         padding: 10,
     },
-    spinnerContainer: {
-        height: 30
+    spinner: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
+    fieldSet: {
+        marginTop: 20,
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "rgb(38, 44, 61)",
+    },
+    legend: {
+        position: 'absolute',
+        top: -10,
+        left: 10,
+        fontWeight: 'bold',
+        backgroundColor: "white"
+    }
 });
 export default Styles;

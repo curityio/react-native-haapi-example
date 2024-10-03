@@ -84,6 +84,9 @@ const StepActions = (props) => {
     });
     const messages = actionShowMessages ? <></> : <Messages messages={haapiResponse.messages} />;
     const links = actionShowLinks ? <></> : <Links links={haapiResponse.links} />;
+    console.debug(`An action will show the messages: ${actionShowMessages}`);
+    console.debug(`An action will show the links: ${actionShowLinks}`);
+    console.debug(`Creating view with messages: ${JSON.stringify(haapiResponse.messages)} and links: ${JSON.stringify(haapiResponse.links)}`);
     return (<>
         {messages}
         {actionComponents}

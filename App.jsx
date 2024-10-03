@@ -16,7 +16,7 @@
 
 import React, {useEffect, useState} from "react";
 import HaapiProcessor from "./components/HaapiProcessor";
-import Authenticated from "./components/Authenticated";
+import AuthenticatedView from "./components/AuthenticatedView";
 import Styles from "./Styles";
 import {Alert, SafeAreaView, ScrollView, View} from "react-native";
 import {addEventListener, removeEventListener} from "./components/EventManager";
@@ -69,16 +69,16 @@ const App = () => {
                         stepComponent: stepComponent,
                         clearState: clearState,
                     }}>
-                        <View style={Styles.spinnerContainer}>
-                            {isLoading ? <Spinner /> : <></>}
-                        </View>
                         <Problem problem={error} styles={Styles.inputProblem} />
                         <Info info={infoText} />
                         <ScrollView contentContainerStyle={Styles.mainContent}>
-                            {tokens ? <Authenticated /> : <HaapiProcessor />}
+                            {tokens ? <AuthenticatedView /> : <HaapiProcessor />}
                         </ScrollView>
                     </HaapiContext.Provider>
                 </View>
+                {isLoading &&
+                        <Spinner style={Styles.spinner} />
+                }
             </SafeAreaView>
     );
 };

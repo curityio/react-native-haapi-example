@@ -39,8 +39,6 @@ const WebAuthnView = (props) => {
         };
     }, []);
 
-    const title = action.title.literal || action.title;
-    const registerDevice = response.actionModel.continueActions[0];
 
     return <>
         <Title title={title} Styles={Styles.heading} />

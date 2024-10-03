@@ -22,7 +22,7 @@ import {JsonView, SubmitButton} from "./view-components";
 import {useContext} from "react";
 import {HaapiContext} from "../App";
 
-export default function Authenticated(props) {
+export default function AuthenticatedView(props) {
 
     const getSubject = (idToken) => {
         if (!idToken) {
@@ -55,21 +55,27 @@ export default function Authenticated(props) {
             <View>
                 <Text style={Styles.heading}>Hello {subject}!</Text>
                 <SubmitButton style={Styles.button} title="Logout" onPress={logout} />
-                <Text style={Styles.heading}>Access Token</Text>
-                <Text style={Styles.json}>{accessToken}</Text>
-                <Text style={Styles.heading}>Scope</Text>
-                <Text style={Styles.json}>{scope}</Text>
-                <Text style={Styles.heading}>Expires In</Text>
-                <Text style={Styles.json}>{expiresIn}</Text>
-                {refreshToken ?
-                        <View>
-                            <Text style={Styles.heading}>Refresh Token</Text>
+                <View style={Styles.fieldSet}>
+                    <Text style={Styles.legend}>Access Token</Text>
+                    <Text style={Styles.json}>{accessToken}</Text>
+                    <Text style={Styles.heading}>Scope</Text>
+                    <Text style={Styles.json}>{scope}</Text>
+                    <Text style={Styles.heading}>Expires In</Text>
+                    <Text style={Styles.json}>{expiresIn}</Text>
+                </View>
+                {refreshToken &&
+                        <View style={Styles.fieldSet}>
+                            <Text style={Styles.legend}>Refresh Token</Text>
                             <Text style={Styles.json}>{refreshToken}</Text>
                             <SubmitButton style={Styles.button} title="Refresh" onPress={() => refresh()} />
                         </View>
-                        : ""}
-                <Text style={Styles.heading}>ID Token claims</Text>
-                <JsonView json={decode(idToken)} />
+                }
+                {idToken &&
+                        <View style={Styles.fieldSet}>
+                            <Text style={Styles.legend}>ID Token claims</Text>
+                            <JsonView json={decode(idToken)} />
+                        </View>
+                }
             </View>
     );
 }
