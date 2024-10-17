@@ -2,8 +2,8 @@
 <conf-spec xmlns="https://curity.se/ns/conf-spec">
     <metadata>
         <purpose>configuration-bundle</purpose>
-        <name>Android no Fallback</name>
-        <description>Add android client without fallback configuration</description>
+        <name>Android no Fallback with passkeys</name>
+        <description>Add android client for the react-native example capp without fallback configuration and enable a app-association for passkeys</description>
     </metadata>
     <variable-definitions>
         <variable-definition>
@@ -21,34 +21,10 @@
             <type-hint>string</type-hint>
         </variable-definition>
         <variable-definition>
-            <name>ANDROID_REDIRECT_URI</name>
-            <tagpath/>
-            <description>The redirect_uri used for the android clients</description>
-            <type-hint>string</type-hint>
-        </variable-definition>
-        <variable-definition>
-            <name>ANDROID_PACKAGE_NAME</name>
-            <tagpath/>
-            <description>The package name of the android app, used for attestation. Since this configuration spec does
-                not validate attestation, this can be a bogus value. Can be changed
-                after import.
-            </description>
-            <type-hint>string</type-hint>
-        </variable-definition>
-        <variable-definition>
-            <name>ANDROID_SIGNATURE_DIGEST</name>
-            <tagpath/>
-            <description>The digest of the certificate used to sign the android app, used for
-                attestation. Since this configuration spec does not validate attestation, this can be a bogus value. Can
-                be changed after import.
-            </description>
-            <type-hint>string</type-hint>
-        </variable-definition>
-        <variable-definition>
             <name>ANDROID_CERTIFICATE_FINGERPRINT</name>
             <tagpath/>
             <description>The fingerprint of the certificate used to sign the app. This is used in the app-association
-                for passkeys and has to be correct for passkeys to work. Can be changed after import
+                for passkeys and has to be correct for passkeys to work. Will also be configured for the attestation, but attestation validation is turned off
             </description>
             <type-hint>string</type-hint>
         </variable-definition>
@@ -66,7 +42,7 @@
                                 <config-backed>
                                     <client>
                                         <id>#{ANDROID_HAAPI_CLIENT}</id>
-                                        <redirect-uris>#{ANDROID_REDIRECT_URI}</redirect-uris>
+                                        <redirect-uris>app:start</redirect-uris>
                                         <refresh-token-ttl>3600</refresh-token-ttl>
                                         <scope>openid</scope>
                                         <user-authentication/>
@@ -75,8 +51,7 @@
                                             <code/>
                                             <haapi>
                                                 <use-legacy-dpop>false</use-legacy-dpop>
-                                                <issue-token-bound-authorization-code>true
-                                                </issue-token-bound-authorization-code>
+                                                <issue-token-bound-authorization-code>true</issue-token-bound-authorization-code>
                                             </haapi>
                                         </capabilities>
                                         <proof-key>
@@ -85,8 +60,8 @@
                                         <attestation>
                                             <disable-attestation-validation>true</disable-attestation-validation>
                                             <android>
-                                                <package-name>#{ANDROID_PACKAGE_NAME}</package-name>
-                                                <signature-digest>#{ANDROID_SIGNATURE_DIGEST}</signature-digest>
+                                                <package-name>io.curity.haapi.react.example</package-name>
+                                                <signature-digest>#{ANDROID_CERTIFICATE_FINGERPRINT}</signature-digest>
                                             </android>
                                         </attestation>
                                     </client>
@@ -104,7 +79,7 @@
                                 <mobile-app-association>
                                     <android-app-configuration>
                                         <namespace>android_app</namespace>
-                                        <package-name>#{ANDROID_PACKAGE_NAME}</package-name>
+                                        <package-name>io.curity.haapi.react.example</package-name>
                                         <sha256-cert-fingerprints>
                                             <fingerprint>#{ANDROID_CERTIFICATE_FINGERPRINT}</fingerprint>
                                         </sha256-cert-fingerprints>
