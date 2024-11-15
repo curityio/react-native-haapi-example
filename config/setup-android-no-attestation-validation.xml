@@ -15,8 +15,7 @@
         <variable-definition>
             <name>ANDROID_HAAPI_CLIENT</name>
             <tagpath/>
-            <description>The ID of the client to add for android, used by clients who can perform
-                attestation
+            <description>The ID of the client to add for iOS. Attestation will be enabled for the client, but validation will be turned off.
             </description>
             <type-hint>string</type-hint>
         </variable-definition>

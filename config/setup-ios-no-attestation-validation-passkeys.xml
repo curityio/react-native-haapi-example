@@ -20,6 +20,13 @@
             </description>
             <type-hint>string</type-hint>
         </variable-definition>
+        <variable-definition>
+            <name>IOS_APP_ID</name>
+            <tagpath/>
+            <description>The App ID of the iOS client. Used for the app association filed created for passkey support
+            </description>
+            <type-hint>string</type-hint>
+        </variable-definition>
     </variable-definitions>
     <actions/>
     <merge-config>
@@ -52,7 +59,7 @@
                                         </capabilities>
                                         <attestation>
                                             <ios>
-                                                <app-id>io.curity.example.reactnative.HaapiExample</app-id>
+                                                <app-id>#{IOS_APP_ID}</app-id>
                                             </ios>
                                             <disable-attestation-validation>true</disable-attestation-validation>
                                         </attestation>
@@ -63,6 +70,21 @@
                     </settings>
                 </profile>
             </profiles>
+            <environments xmlns="https://curity.se/ns/conf/base">
+                <environment>
+                    <services>
+                        <zones>
+                            <default-zone>
+                                <mobile-app-association>
+                                    <ios-app-configuration>
+                                        <app-id>#{IOS_APP_ID}</app-id>
+                                    </ios-app-configuration>
+                                </mobile-app-association>
+                            </default-zone>
+                        </zones>
+                    </services>
+                </environment>
+            </environments>
         </config>
     </merge-config>
     <conditions>

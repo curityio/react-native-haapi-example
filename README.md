@@ -17,6 +17,13 @@ To install necessary dependencies, run
 npm install
 ```
 
+For iOS, you also need to run
+```bash
+cd ios
+pod install
+```
+Issuing `pod install` will generate a XCode workspace where you can run the example in an emulator.
+
 # Development modules
 To be able to run unreleased modules, you need to checkout the module repo and update the dependency to be file based. 
 First, create the package:
@@ -90,7 +97,9 @@ This is one way to run your app — you can also run it directly from within And
 
 # Curity Identity Server configuration
 
-To configure clients needed for this example to run, theres
-a [Config Spec](setup-mobile-clients-config-spec.xml) that can be imported using the admin UI
-in `Changes -> Run Config Spec`. Running this spec will prompt you for the relevant information needed to setup the
+To configure clients needed for this example to run, there's config specs for [android](config/setup-android-no-attestation-validation.xml) and [ios](config/setup-ios-no-attestation-validation.xml that can be imported using the admin UI in `Changes -> Run Config Spec`. Running spec will prompt you for basic information needed to create the client. Some default values will be added, which for development purposes should not need to be changed. Redirect URI for the clients will configured as `app:start`.
 server for using HAAPI with attestation, and fallback dynamic registration when attestation is not supported.
+
+## Configure passkey authentication
+See [Mobile Logins Using Passkeys](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) article in the Curity resource library for setting up the authenticator and clients using the admin UI.
+For convenience, clients can be setup using [android](config/setup-android-no-attestation-validation-passkeys.xml) or [ios](config/setup-ios-no-attestation-validation-passkeys.xml) config specs. Associated domains has to be added to the iOS workspace manually.
