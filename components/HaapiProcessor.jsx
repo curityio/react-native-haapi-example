@@ -31,7 +31,10 @@ const HaapiProcessor = props => {
                 addEventListener('AuthenticationSelectorStep', event => processAuthenticationStep(event)),
                 addEventListener('PollingStep', event => processAuthenticationStep(event)),
                 addEventListener('ContinueSameStep', event => processAuthenticationStep(event)),
-                addEventListener('TokenResponse', event => setTokens(event)),
+                addEventListener('TokenResponse', event => {
+                    console.debug(`Got a token response ${JSON.stringify(event)}`);
+                    setTokens(event)
+                }),
                 addEventListener('TokenResponseError', event => {
                     console.warn(
                             `Failed to get token(s) after successful authentication. ${event.error}: ${event.error_description}`,
@@ -40,12 +43,12 @@ const HaapiProcessor = props => {
                             <ErrorView error={'Failed to request token'} errorDescription={event.error_description} />,
                     );
                 }),
-                addEventListener('UnknownResponse', event => {
+                /*addEventListener('UnknownResponse', event => {
                     console.warn(`Unknown HAAPI response: ${JSON.stringify(event)}`)
                     setStepComponent(
                             <ErrorView error={'Unknown HAAPI response'} response={event} />,
                     );
-                }),
+                }),*/
                 addEventListener('SessionTimedOut', event => {
                     console.info('Session timed out during authentication. User will have to start over.');
                     setStepComponent(<ErrorView error={'Session timed out'} errorDescription={event.title.literal} />);
@@ -54,13 +57,13 @@ const HaapiProcessor = props => {
                     console.warn('Received a problem');
                     setStepComponent(<ErrorView response={event} />);
                 }),
-                addEventListener('WebAuthnAuthenticationStep', event => setWebauthnStep(event)),
+                /*addEventListener('WebAuthnAuthenticationStep', event => setWebauthnStep(event)),
                 addEventListener("WebAuthnUserCancelled", event => setWebauthnStep(event,
                         "User cancelled Webauthn dialog")),
                 addEventListener("WebAuthnRegistrationFailed", event => setWebauthnStep(event,
                         "Registration failed. Please try again")),
                 addEventListener("WebAuthnRegistrationFailedKeyRegistered", event => setWebauthnStep(event,
-                        "Registration failed. Key is possibly already registered"))
+                        "Registration failed. Key is possibly already registered"))*/
         );
 
         return () => {

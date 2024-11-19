@@ -40,10 +40,12 @@ const WebAuthnView = (props) => {
     }, []);
 
 
+    const title = action.title.literal || action.title;
+    const continueActions = response.actionModel.continueActions ?  <Links links={response.actionModel.continueActions} style={Styles.button} textStyle={Styles.buttonText}/> : <></>;
     return <>
         <Title title={title} Styles={Styles.heading} />
         <Messages messages={response.messages} />
-        <Links links={response.actionModel.continueActions} style={Styles.button} />
+        {continueActions}
         <Links links={response.links} />
     </>;
 

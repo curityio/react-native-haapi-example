@@ -29,12 +29,25 @@ export const Title = (props) => (<Text style={Styles.heading}>{props.title}</Tex
 export const Fields = (props) => {
     const {fields, fieldValues, setFieldValues} = props;
 
+    const getFieldPlaceHolder = (field) => {
+        if (field.placeholder) {
+            return field.placeholder;
+        } else if (field.label && field.label.literal) {
+            return field.label.literal;
+        } else if (field.label) {
+            return field.label;
+        } else {
+            return null;
+        }
+    }
+
     return fields
             .filter(field => field.type !== 'hidden')
             .map(field => (
                     <TextInput style={Styles.input}
                                secureTextEntry={field.name === "password"}
-                               placeholder={field.label.literal}
+                               placeholder={getFieldPlaceHolder(field)}
+                               defaultValue={field.value}
                                onChangeText={newText => {
                                    let fieldValuesClone = {...fieldValues};
                                    fieldValuesClone[field.name] = newText;

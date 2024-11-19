@@ -36,8 +36,8 @@ const App = () => {
     useEffect(() => {
         const listeners = [
             addEventListener("HaapiError", event => Alert.alert(event.error, event.error_description)),
-            addEventListener("HaapiLoading", () => setLoading(true)),
-            addEventListener("HaapiFinishedLoading", () => setLoading(false))
+           // addEventListener("HaapiLoading", () => setLoading(true)),
+           // addEventListener("HaapiFinishedLoading", () => setLoading(false))
         ];
         return () => listeners.forEach(listener => removeEventListener(listener));
     }, []);

@@ -27,4 +27,3 @@ const removeEventListener = (listener) => {
 };
 
 export {addEventListener, removeEventListener}
-

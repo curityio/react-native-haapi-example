@@ -24,13 +24,22 @@ const ErrorView = (props) => {
     const {error, errorDescription, response} = props;
     const {setError} = useContext(HaapiContext);
 
-    const title = response.title.literal ? response.title.literal : error
+    let messages, jsonView = <></>;
+    let title;
+    if (response) {
+       messages = <Messages messages={response.messages} />;
+       jsonView = <JsonView json={JSON.stringify(response)} />;
+       title = response.title.literal || response.title;
+    }
+    else {
+        title = error;
+    }
 
     return <>
         <Title title={title} />
         <Problem problem={errorDescription} />
-        <Messages messages={response.messages} />
-        <JsonView json={JSON.stringify(response)} />
+        {messages}
+        {jsonView}
         <SubmitButton style={Styles.button}
                       title={"Retry"}
                       onPress={() => {

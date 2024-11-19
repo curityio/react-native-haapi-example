@@ -38,10 +38,13 @@ const GenericAction = (props) => {
             listeners.forEach(listener => removeEventListener(listener));
         };
     }, []);
+
+    const buttonTitle = action.model.actionTitle.literal || action.model.actionTitle;
+    const title = action.title.literal || action.title;
     return <>
-        <Title title={action.title.literal} Styles={Styles.heading} />
+        <Title title={title} Styles={Styles.heading} />
         <Fields fields={action.model.fields} setFieldValues={setFieldValues} fieldValues={fieldValues} />
-        <SubmitButton title={action.model.actionTitle} style={Styles.button}
+        <SubmitButton title={buttonTitle} style={Styles.button}
                       onPress={() => {
                           setError(null)
                           onSubmit(action, fieldValues)
