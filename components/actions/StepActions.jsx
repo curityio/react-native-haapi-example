@@ -50,9 +50,10 @@ const StepActions = (props) => {
                         />
                 );
             case 'cancel':
+                const title = action.model.actionTitle.literal || action.model.actionTitle;
                 return (
                         <SubmitButton
-                                title={action.title.literal}
+                                title={title}
                                 style={[Styles.cancelButton, Styles.button]}
                                 onPress={() => Haapi.submitAction(action)}
                                 key={'cancel-button'}

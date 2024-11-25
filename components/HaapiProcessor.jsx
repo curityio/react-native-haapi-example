@@ -43,12 +43,12 @@ const HaapiProcessor = props => {
                             <ErrorView error={'Failed to request token'} errorDescription={event.error_description} />,
                     );
                 }),
-                /*addEventListener('UnknownResponse', event => {
+                addEventListener('UnknownResponse', event => {
                     console.warn(`Unknown HAAPI response: ${JSON.stringify(event)}`)
                     setStepComponent(
                             <ErrorView error={'Unknown HAAPI response'} response={event} />,
                     );
-                }),*/
+                }),
                 addEventListener('SessionTimedOut', event => {
                     console.info('Session timed out during authentication. User will have to start over.');
                     setStepComponent(<ErrorView error={'Session timed out'} errorDescription={event.title.literal} />);
@@ -57,13 +57,13 @@ const HaapiProcessor = props => {
                     console.warn('Received a problem');
                     setStepComponent(<ErrorView response={event} />);
                 }),
-                /*addEventListener('WebAuthnAuthenticationStep', event => setWebauthnStep(event)),
+                addEventListener('WebAuthnAuthenticationStep', event => setWebauthnStep(event)),
                 addEventListener("WebAuthnUserCancelled", event => setWebauthnStep(event,
                         "User cancelled Webauthn dialog")),
                 addEventListener("WebAuthnRegistrationFailed", event => setWebauthnStep(event,
                         "Registration failed. Please try again")),
                 addEventListener("WebAuthnRegistrationFailedKeyRegistered", event => setWebauthnStep(event,
-                        "Registration failed. Key is possibly already registered"))*/
+                        "Registration failed. Key is possibly already registered"))
         );
 
         return () => {

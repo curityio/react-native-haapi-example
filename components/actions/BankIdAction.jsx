@@ -15,6 +15,7 @@
  */
 
 import React, {useCallback, useEffect, useState} from 'react';
+import { Platform } from "react-native";
 import {Divider, Links, Messages, SubmitButton, Title} from '../view-components';
 import {Linking, View} from 'react-native';
 import Styles from '../../Styles';
@@ -42,6 +43,19 @@ const BankIdAction = props => {
 
         return <SubmitButton style={Styles.button} title={props.title} onPress={() => handlePress(props.url)} />;
     };
+
+    const bankidArgs = action.model.arguments || action.model;
+
+    // Not setting a redirect means the user has to switch back manually. Consider adding a URL that triggers the app
+    const deepLink = `https://app.bankid.com/?autostarttoken=${bankidArgs.autoStartToken}&redirect=`;
+    let launchUrl;
+    if (Platform.OS === 'ios') {
+        launchUrl = deepLink;
+    } else {
+        launchUrl = bankidArgs.href;
+    }
+
+    console.debug(`Using ${launchUrl} to start the BankID app`);
     return (
             <>
                 <Title title={action.title.literal} style={Styles.heading} />
@@ -50,7 +64,7 @@ const BankIdAction = props => {
                     <Links onPress={() => false} links={bankIdLinks} />
                 </View>
                 <Divider text={"OR"} color={"white"} />
-                <LaunchBankIdButton title={'Launch BankID on this device'} url={action.model.href} />
+                <LaunchBankIdButton title={'Launch BankID on this device'} url={launchUrl} />
             </>
     );
 };
