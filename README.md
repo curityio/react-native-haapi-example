@@ -97,9 +97,15 @@ This is one way to run your app — you can also run it directly from within And
 
 # Curity Identity Server configuration
 
-To configure clients needed for this example to run, there's config specs for [android](config/setup-android-no-attestation-validation.xml) and [ios](config/setup-ios-no-attestation-validation.xml that can be imported using the admin UI in `Changes -> Run Config Spec`. Running spec will prompt you for basic information needed to create the client. Some default values will be added, which for development purposes should not need to be changed. Redirect URI for the clients will configured as `app:start`.
-server for using HAAPI with attestation, and fallback dynamic registration when attestation is not supported.
+To configure clients needed for this example to run, there's config specs for [android](config/setup-android-no-attestation-validation.xml) and [ios](config/setup-ios-no-attestation-validation.xml that can be imported using the admin UI in `Changes -> Run Config Spec`. Running a spec will prompt you for basic information needed to create the client. Some default values will be added, which for development purposes should not need to be changed. Redirect URI for the clients will configured as `app:start`.
 
 ## Configure passkey authentication
 See [Mobile Logins Using Passkeys](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) article in the Curity resource library for setting up the authenticator and clients using the admin UI.
 For convenience, clients can be setup using [android](config/setup-android-no-attestation-validation-passkeys.xml) or [ios](config/setup-ios-no-attestation-validation-passkeys.xml) config specs. Associated domains has to be added to the iOS workspace manually.
+
+### Android signing certificate
+Android needs to have the fingerprint of the signing certificate configured when passkeys are enabled. To find your fingerprint, go to `android/` folder in a terminal and issue:
+```bash
+./gradlew signingReport
+```
+Locate the SHA256 fingerprint in the report and configure it using the config spec.
