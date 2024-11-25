@@ -16,26 +16,22 @@
 
 import Styles from '../Styles';
 import {SubmitButton} from './view-components';
-import {Text} from 'react-native';
-import HaapiModule from './HaapiModule';
+import {Image, Text, View} from 'react-native';
+import * as Haapi from './Haapi';
 import React from 'react';
 
 const WelcomeView = props => {
-    const startHaapiLogin = async () => {
-        console.log('Starting login');
-        try {
-            await HaapiModule.start();
-        } catch (e) {
-            console.debug('Error in starting HAAPI Login', e);
-            console.error(e);
-        }
-    };
-
-    return (
-        <>
-            <Text style={Styles.heading}> This is a demo app showing HAAPI capabilities </Text>
-            <SubmitButton onPress={startHaapiLogin} style={Styles.button} title="Login" />
-        </>
+    const onLogin = () => {
+        props.onLogin();
+        Haapi.startLogin();
+    }
+    return (<>
+                <View style={Styles.loginImageContainer}>
+                    <Image style={Styles.loginImage} source={require("../images/login-symbol-computer.png")} />
+                    <Text style={Styles.heading}> This is a demo app showing HAAPI capabilities </Text>
+                </View>
+                <SubmitButton onPress={onLogin} style={Styles.button} title="Login" />
+            </>
     );
 };
 

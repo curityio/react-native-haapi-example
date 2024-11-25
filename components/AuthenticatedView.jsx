@@ -17,10 +17,12 @@
 import React, {Text, View} from "react-native";
 import base64 from "base-64";
 import Styles from "../Styles";
-import HaapiModule from "./HaapiModule";
-import {SubmitButton} from "./view-components";
+import * as Haapi from "./Haapi";
+import {JsonView, SubmitButton} from "./view-components";
+import {useContext} from "react";
+import {HaapiContext} from "../App";
 
-export default function Authenticated(props) {
+export default function AuthenticatedView(props) {
 
     const getSubject = (idToken) => {
         if (!idToken) {
@@ -37,44 +39,43 @@ export default function Authenticated(props) {
         return base64.decode(idToken.split(".")[1]);
     };
 
-    const prettyPrintPayload = (idToken) => {
-        if (!idToken) {
-            return "";
-        }
-        return JSON.stringify(JSON.parse(decode(idToken)), null, 2);
-    };
-
-    const {idToken, accessToken, refreshToken, scope, expiresIn} = props.tokens;
-    const setTokens = props.setTokens
+    const {tokens, setTokens, clearState} = useContext(HaapiContext)
+    const {idToken, accessToken, refreshToken, scope, expiresIn} = tokens;
     const subject = getSubject(idToken);
 
     const logout = () => {
-        HaapiModule.logout().then(setTokens(null));
+        Haapi.logout().then(clearState);
     };
 
     const refresh = () => {
-        HaapiModule.refreshAccessToken(refreshToken).then(tokenResponse => setTokens(tokenResponse));
+        Haapi.refreshAccessToken(refreshToken).then(tokenResponse => setTokens(tokenResponse));
     };
 
     return (
             <View>
                 <Text style={Styles.heading}>Hello {subject}!</Text>
-                <SubmitButton style={Styles.button} title="Logout" onPress={() => logout()} />
-                <Text style={Styles.heading}>Access Token</Text>
-                <Text style={Styles.json}>{accessToken}</Text>
-                <Text style={Styles.heading}>Scope</Text>
-                <Text style={Styles.json}>{scope}</Text>
-                <Text style={Styles.heading}>Expires In</Text>
-                <Text style={Styles.json}>{expiresIn}</Text>
-                {refreshToken ?
-                        <View>
-                            <Text style={Styles.heading}>Refresh Token</Text>
+                <SubmitButton style={Styles.button} title="Logout" onPress={logout} />
+                <View style={Styles.fieldSet}>
+                    <Text style={Styles.legend}>Access Token</Text>
+                    <Text style={Styles.json}>{accessToken}</Text>
+                    <Text style={Styles.heading}>Scope</Text>
+                    <Text style={Styles.json}>{scope}</Text>
+                    <Text style={Styles.heading}>Expires In</Text>
+                    <Text style={Styles.json}>{expiresIn}</Text>
+                </View>
+                {refreshToken &&
+                        <View style={Styles.fieldSet}>
+                            <Text style={Styles.legend}>Refresh Token</Text>
                             <Text style={Styles.json}>{refreshToken}</Text>
                             <SubmitButton style={Styles.button} title="Refresh" onPress={() => refresh()} />
                         </View>
-                        : ""}
-                <Text style={Styles.heading}>ID Token claims</Text>
-                <Text style={Styles.json}>{prettyPrintPayload(idToken)}</Text>
+                }
+                {idToken &&
+                        <View style={Styles.fieldSet}>
+                            <Text style={Styles.legend}>ID Token claims</Text>
+                            <JsonView json={decode(idToken)} />
+                        </View>
+                }
             </View>
     );
 }

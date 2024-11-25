@@ -15,7 +15,7 @@
  */
 
 import {NativeEventEmitter} from "react-native";
-import HaapiModule from "./HaapiModule";
+import {HaapiModule} from "./Haapi";
 
 const eventEmitter = new NativeEventEmitter(HaapiModule);
 const addEventListener = (name, callback) => {
@@ -27,4 +27,3 @@ const removeEventListener = (listener) => {
 };
 
 export {addEventListener, removeEventListener}
-

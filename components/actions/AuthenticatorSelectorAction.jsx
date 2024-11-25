@@ -14,12 +14,17 @@
  *   limitations under the License.
  */
 
-import {NativeModules} from "react-native";
-import HaapiConfiguration from "../configuration";
+import {Links, Title} from "../view-components";
+import React from "react";
+import Styles from "../../Styles";
 
-const {HaapiModule} = NativeModules;
-HaapiModule.load(HaapiConfiguration).catch(e => {
-    console.error('Error in loading configuration', e);
-});
+const AuthenticatorSelectorAction = (props) => {
+    const {action} = props;
 
-export default HaapiModule;
+    return <>
+        <Title title={action.title.literal} />
+        <Links links={action.model.options} style={Styles.selectorButton} textStyle={Styles.buttonText} />
+    </>;
+
+};
+export default AuthenticatorSelectorAction;

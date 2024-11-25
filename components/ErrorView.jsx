@@ -15,17 +15,37 @@
  */
 
 import Styles from "../Styles";
-import {Problem, SubmitButton, Title} from "./view-components";
-import HaapiModule from "./HaapiModule";
+import {JsonView, Messages, Problem, SubmitButton, Title} from "./view-components";
+import * as Haapi from './Haapi';
+import {useContext} from "react";
+import {HaapiContext} from "../App";
 
 const ErrorView = (props) => {
-    const {error, errorDescription} = props;
+    const {error, errorDescription, response} = props;
+    const {setError} = useContext(HaapiContext);
+
+    let messages, jsonView = <></>;
+    let title;
+    if (response) {
+       messages = <Messages messages={response.messages} />;
+       jsonView = <JsonView json={JSON.stringify(response)} />;
+       title = response.title.literal || response.title;
+    }
+    else {
+        title = error;
+    }
+
     return <>
-        <Title title={error} />
+        <Title title={title} />
         <Problem problem={errorDescription} />
+        {messages}
+        {jsonView}
         <SubmitButton style={Styles.button}
                       title={"Retry"}
-                      onPress={() => HaapiModule.start()} />
+                      onPress={() => {
+                          setError(null)
+                          Haapi.startLogin()
+                      }} />
     </>;
 }
 

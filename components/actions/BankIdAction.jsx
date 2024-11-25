@@ -1,5 +1,5 @@
 /*
- *   Copyright 2023 Curity AB
+ *   Copyright 2024 Curity AB
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  */
 
 import React, {useCallback, useEffect, useState} from 'react';
-import {Divider, Links, Messages, SubmitButton, Title} from './view-components';
+import { Platform } from "react-native";
+import {Divider, Links, Messages, SubmitButton, Title} from '../view-components';
 import {Linking, View} from 'react-native';
-import Styles from '../Styles';
-import {addEventListener, removeEventListener} from './EventManager';
+import Styles from '../../Styles';
+import {addEventListener, removeEventListener} from '../EventManager';
 
-const BankIdView = props => {
+const BankIdAction = props => {
     const {action} = props;
     const [bankIdMessages, setBankIdMessages] = useState(props.messages);
     const [bankIdLinks, setBankIdLinks] = useState(props.links);
@@ -42,6 +43,19 @@ const BankIdView = props => {
 
         return <SubmitButton style={Styles.button} title={props.title} onPress={() => handlePress(props.url)} />;
     };
+
+    const bankidArgs = action.model.arguments || action.model;
+
+    // Not setting a redirect means the user has to switch back manually. Consider adding a URL that triggers the app
+    const deepLink = `https://app.bankid.com/?autostarttoken=${bankidArgs.autoStartToken}&redirect=`;
+    let launchUrl;
+    if (Platform.OS === 'ios') {
+        launchUrl = deepLink;
+    } else {
+        launchUrl = bankidArgs.href;
+    }
+
+    console.debug(`Using ${launchUrl} to start the BankID app`);
     return (
             <>
                 <Title title={action.title.literal} style={Styles.heading} />
@@ -50,9 +64,9 @@ const BankIdView = props => {
                     <Links onPress={() => false} links={bankIdLinks} />
                 </View>
                 <Divider text={"OR"} color={"white"} />
-                <LaunchBankIdButton title={'Launch BankID on this device'} url={action.model.href} />
+                <LaunchBankIdButton title={'Launch BankID on this device'} url={launchUrl} />
             </>
     );
 };
 
-export default BankIdView;
+export default BankIdAction;

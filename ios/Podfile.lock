@@ -14,7 +14,7 @@ PODS:
   - hermes-engine (0.73.0):
     - hermes-engine/Pre-built (= 0.73.0)
   - hermes-engine/Pre-built (0.73.0)
-  - IdsvrHaapiSdk (4.0.0)
+  - IdsvrHaapiSdk (4.3.0)
   - libevent (2.1.12)
   - RCT-Folly (2022.05.16.00):
     - boost
@@ -887,8 +887,8 @@ PODS:
   - React-Mapbuffer (0.73.0):
     - glog
     - React-debug
-  - react-native-haapi-module (0.4.0):
-    - IdsvrHaapiSdk
+  - react-native-haapi-module (0.6.0):
+    - IdsvrHaapiSdk (= 4.3.0)
     - React-Core
   - React-nativeconfig (0.73.0)
   - React-NativeModulesApple (0.73.0):
@@ -1230,7 +1230,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   hermes-engine: 34304f8c6e8fa68f63a5fe29af82f227d817d7a7
-  IdsvrHaapiSdk: 1f3dbe04391adf4e862ca66f3335b5f18919f5a4
+  IdsvrHaapiSdk: ebc2be9a8701dd1030a2b8ccf12bdf2b99852ec8
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: 5e3631b27c08716986980ef23eed8abdee1cdcaf
@@ -1253,7 +1253,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 9f6fb9ed9f03a0fb961ab8dc2e0e0ee0dc729e77
   React-logger: 008caec0d6a587abc1e71be21bfac5ba1662fe6a
   React-Mapbuffer: 58fe558faf52ecde6705376700f848d0293d1cef
-  react-native-haapi-module: aa999c37ac7a5d087ee6c7472a71c187ccd60d24
+  react-native-haapi-module: 774357ad97473bf4cff67827ec76fe463d7bdd8a
   React-nativeconfig: a063483672b8add47a4875b0281e202908ff6747
   React-NativeModulesApple: 169506a5fd708ab22811f76ee06a976595c367a1
   React-perflogger: b61e5db8e5167f5e70366e820766c492847c082e
@@ -1277,6 +1277,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 44003f970aa541b79dfdd59cf236fda41bd5890f
 
-PODFILE CHECKSUM: cc65430443c3779c240a38d720b44915512986f5
+PODFILE CHECKSUM: 526ec2334acaa31fd5e19921b24a4a9d7cf59ab7
 
 COCOAPODS: 1.15.2

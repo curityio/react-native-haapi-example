@@ -1,19 +1,20 @@
 import {StyleSheet} from "react-native";
 
 const Styles = StyleSheet.create({
-    header: {
-        marginBottom: 10,
-    },
+    header: {},
     layoutContainer: {
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        color: "white",
-        backgroundColor: "#2a2f3a",
-        padding: 20,
+        color: "rgb(38, 44, 61)",
+        backgroundColor: "white",
+    },
+    innerLayoutContainer: {
+        margin: 20,
+        height: "100%",
     },
     mainContent: {
-        backgroundColor: "#2a2f3a",
+        backgroundColor: "white",
         justifyContent: "center",
     },
     centerContainer: {
@@ -23,14 +24,20 @@ const Styles = StyleSheet.create({
     centerHorizontal: {
         justifyContent: "space-around",
     },
+    loginImageContainer: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    loginImage: {},
     logo: {
-        resizeMode: "cover"
+        resizeMode: "center"
     },
     input: {
         height: 40,
         marginVertical: 12,
+        paddingHorizontal: 12,
         borderWidth: 1,
-        borderColor: "#cfd9e0",
+        borderColor: "rgb(38, 44, 61)",
         backgroundColor: "white",
     },
     button: {
@@ -38,9 +45,16 @@ const Styles = StyleSheet.create({
         alignItems: "center",
         borderRadius: 5,
         backgroundColor: "rgb(87, 100, 135)",
+        padding: 10,
+        color: "white",
+    },
+    selectorButton: {
+        marginVertical: 10,
+        alignItems: "center",
+        borderRadius: 5,
+        backgroundColor: "rgb(87, 100, 135)",
         padding: 10
     },
-    selectorButton: {},
     cancelButton: {
         backgroundColor: "red",
     },
@@ -49,14 +63,15 @@ const Styles = StyleSheet.create({
     },
     heading: {
         fontWeight: "bold",
-        color: "white",
+        color: "rgb(38, 44, 61)",
         marginTop: 12,
         marginBottom: 10,
         fontFamily: "Roboto-Regular",
         alignItems: "center"
     },
     link: {
-        color: "blue",
+        color: "rgb(38, 44, 61)",
+        textDecorationLine: "underline"
     },
     imageLink: {
         height: 200,
@@ -67,10 +82,10 @@ const Styles = StyleSheet.create({
     },
     message: {
         marginVertical: 5,
-        color: "white",
+        color: "rgb(38, 44, 61)",
     },
     info: {
-        color: "white",
+        color: "rgb(38, 44, 61)",
     },
     error: {
         color: "red",
@@ -82,5 +97,29 @@ const Styles = StyleSheet.create({
         color: "white",
         padding: 10,
     },
+    spinner: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    fieldSet: {
+        marginTop: 20,
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "rgb(38, 44, 61)",
+    },
+    legend: {
+        position: 'absolute',
+        top: -10,
+        left: 10,
+        fontWeight: 'bold',
+        backgroundColor: "white"
+    }
 });
 export default Styles;
