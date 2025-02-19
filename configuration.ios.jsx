@@ -1,12 +1,12 @@
 const HaapiConfiguration = {
     "appRedirect": "app:start",
-    "clientId": "react-ios-client",
-    "baseUri": "https://dlindau.ngrok.io",
-    "tokenEndpointUri": "https://dlindau.ngrok.io/dev/oauth/token",
-    "authorizationEndpointUri": "https://dlindau.ngrok.io/dev/oauth/authorize",
-    "revocationEndpointUri": "https://dlindau.ngrok.io/revoke",
+    "clientId": "haapi-ios-dev-client",
+    "baseUri": "$IDSVR_BASE_URL",
+    "tokenEndpointPathUri": "$IDSVR_BASE_URL/oauth/v2/oauth-token",
+    "authorizationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-authorize",
+    "revocationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-revoke",
     "validateTlsCertificate": false,
     "acrValues": "",
-    "scope": "openid",
+    "scope": "openid profile",
 }
 export default HaapiConfiguration
