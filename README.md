@@ -42,7 +42,7 @@ pod install
 ```
 
 Then start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.\
-To start Metro, run the following command from the _root_ of the React Native project:
+To do so, run the following command from the _root_ of the React Native project:
 
 ```bash
 # using npm
@@ -82,9 +82,9 @@ Sign in to the deployed environment using the following test username and passwo
 - Username: `demouser`
 - Password: `Password1`
 
-To test logins with native passkeys, the backend must publish an assets document at a trusted internet HTTPS URL.\
+To test logins with native passkeys, an assets document must run at a trusted internet HTTPS URL.\
 One way to do so is to re-run the deployment so that the Curity Identity Server using an ngrok URL.\
-The application configuration then updates to point to the ngrok URL.
+The application configuration then updates to point to ngrok's internet HTTPS URL.
 
 ```bash
 USE_NGROK='true'
@@ -121,5 +121,5 @@ Run the `Changes -> Run Config Spec` command to upload a config spec and enter p
 ## Further Information
 
 - See the [React Native HAAPI Code Example](https://curity.io/resources/learn/react-native-haapi/) for an overview of the code example's behaviors.
-- See the [Confgiure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial for details on the technical setup.
+- See the [Configure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial for details on the technical setup.
 - See the [Mobile Setup with ngrok](https://curity.io/resources/learn/mobile-setup-ngrok/) tutorial for details about testing with ngrok.
