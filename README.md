@@ -34,7 +34,8 @@ First install React native dependencies:
 npm install
 ```
 
-For iOS, also generate an Xcode workspace where you can run the example in an emulator:
+For iOS, also generate an Xcode workspace where you can run the example in an emulator.\
+You may need to apply [this workaround](https://github.com/facebook/react-native/issues/42109#issuecomment-1880663873) if the `pod install` command fails.
 
 ```bash
 cd ios
