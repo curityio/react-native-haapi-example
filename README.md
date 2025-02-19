@@ -8,7 +8,7 @@ Use the README instructions to prepare a deployment and configuration and then r
 ## 1. Set up a React Native Environment
 
 Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup).\
-Follow the React Native instructions until the `Creating a new application` step.
+Follow the React Native instructions and ensure that you can run a basic app.
 
 ## 2. Deploy the Curity Identity Server
 
@@ -20,12 +20,12 @@ Before running the script, ensure that you have the `envsubst` tool installed, e
 ./start-idsvr.sh
 ```
 
-## 3. Understand Application Configuration
+## 3. Set the Application Configuration
 
-The script also updates the application configuration to point to the deployed system:
+The script performs the following tasks, which can be done manually if you prefer:
 
-- [Android Application Configuration](configuration.android.jsx)
-- [iOS Application Configuration](configuration.ios.jsx)
+- Create the root level `configuration.android.jsx`  file from the `configuration.android.template` file.
+- Create the root level `configuration.ios.jsx`  file from the `configuration.ios.template` file.
 
 ## 4. Run the Application
 

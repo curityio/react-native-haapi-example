@@ -17,22 +17,19 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# First get the host IP address that Android emulators or iOS simulators can connect to
-# Some emulators may instead use the special IP address 10.0.2.2 to connect to the host computer.
+# First get the host IP address that connected devices or emulators / simulators can connect to.
+# On Android, older emulators may require special IP address 10.0.2.2 to connect to the host computer.
 #
 if [ "$HOST_IP_ADDRESS" == '' ]; then
-  #HOST_IP_ADDRESS=$(ipconfig getifaddr en0)
-  HOST_IP_ADDRESS='10.0.2.2'
+  HOST_IP_ADDRESS=$(ipconfig getifaddr en0)
 fi
 
 #
 # Set USE_NGROK to true and a dynamic NGROK base URL will be used automatically.
 #
-if [ "$USE_NGROK" != 'true' ]; then 
-  USE_NGROK='false'
-  BASE_URL="https://$HOST_IP_ADDRESS:8443"
-  EXAMPLE_NAME='haapi'
-fi
+USE_NGROK='false'
+BASE_URL="https://$HOST_IP_ADDRESS:8443"
+EXAMPLE_NAME='haapi'
 
 #
 # First check prerequisites
@@ -55,6 +52,12 @@ fi
 cd deployment
 git checkout feature/sdk_update
 cd ..
+
+#
+# Set parameters for the deployment
+#
+export ANDROID_PACKAGE_NAME='io.curity.haapi.react.example'
+export ANDROID_SIGNATURE_DIGEST='+sYXRdwJA3hvue3mKpYrOZ9zSPC7b4mbgzJmdZEDO5w='
 
 #
 # Run an automated deployment of the Curity Identity Server
