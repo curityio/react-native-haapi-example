@@ -21,14 +21,14 @@ export USE_NGROK='false'
 
 ## 3. Set the Application Configuration
 
-The script performs the following tasks, which can be done manually if you prefer:
+The script performs the following tasks, which can be done manually if you prefer.
 
 - Create the root level `configuration.android.jsx`  file from the [configuration.android.template](configuration.android.template) file.
 - Create the root level `configuration.ios.jsx`  file from the [configuration.ios.template](configuration.ios.template) file.
 
 ## 4. Run the Application
 
-First install React native dependencies:
+First install React native dependencies.
 
 ```bash
 npm install
@@ -43,7 +43,7 @@ pod install
 ```
 
 To start an Android emulator for the first time, use a second terminal.\
-Run the following command from the _root_ of the React Native project
+Run the following command from the _root_ of the React Native project.
 
 ```bash
 # using npm
@@ -54,7 +54,7 @@ yarn android
 ```
 
 To start an iOS simulator for the first time, use a second terminal.\
-Run the following command from the _root_ of the React Native project, which takes a few minutes:
+Run the following command from the _root_ of the React Native project, which takes a few minutes.
 
 ```bash
 # using npm
@@ -65,7 +65,7 @@ yarn ios
 ```
 
 Then start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.\
-To do so, run the following command from the _root_ of the React Native project:
+To do so, run the following command from the _root_ of the React Native project.
 
 ```bash
 # using npm
@@ -78,7 +78,7 @@ yarn start
 ## 5. Test Basic Logins
 
 Run the app and first test basic logins using an HTML Form authenticator.\
-Sign in to the deployed environment using the following test username and password:
+Sign in to the deployed environment using the following test username and password.
 
 - Username: `demouser`
 - Password: `Password1`
@@ -132,6 +132,9 @@ Run the `Changes -> Run Config Spec` command to upload a config spec and enter p
 
 ## Further Information
 
-- See the [React Native HAAPI Code Example](https://curity.io/resources/learn/react-native-haapi/) for an overview of the code example's behaviors.
-- See the [Configure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial for details on the technical setup.
-- See the [Mobile Setup with ngrok](https://curity.io/resources/learn/mobile-setup-ngrok/) tutorial for details about testing with ngrok.
+See also the following related tutorials:
+
+- The [React Native HAAPI Code Example](https://curity.io/resources/learn/react-native-haapi/) provides an overview of the code example's behaviors.
+- The [ngrok tutorials](https://curity.io/resources/learn/mobile-setup-ngrok/) explain how to use an internet URL and also how to [capture HAAPI messages](https://curity.io/resources/learn/expose-local-curity-ngrok/#ngrok-inspection-and-status).
+-  The [Configure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial explains the technical setup when using passkeys.
+- The [Implementing HAAPI Attestation Fallback](https://curity.io/resources/learn/implementing-haapi-fallback/) explains some extra steps if you need to deal with non-compliant Android devices.
