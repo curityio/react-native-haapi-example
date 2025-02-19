@@ -65,6 +65,12 @@ export ANDROID_SIGNATURE_DIGEST='+sYXRdwJA3hvue3mKpYrOZ9zSPC7b4mbgzJmdZEDO5w='
 export ANDROID_FINGERPRINT='FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C'
 
 #
+# To test passkeys on iOS, update to a Team ID that you own and a unique bundle ID
+#
+export APPLE_TEAM_ID='MYTEAMID'
+export APPLE_BUNDLE_ID='io.curity.haapi.react.example'
+
+#
 # Run an automated deployment of the Curity Identity Server
 #
 cp ./license.json deployment/resources/license.json

@@ -15,7 +15,7 @@ The deployment includes a [working configuration](https://github.com/curityio/mo
 Before running the script, ensure that you have the `envsubst` tool installed, e.g with `brew install gettext`.
 
 ```bash
-USE_NGROK='false'
+export USE_NGROK='false'
 ./start-idsvr.sh
 ```
 
@@ -42,17 +42,6 @@ cd ios
 pod install
 ```
 
-Then start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.\
-To do so, run the following command from the _root_ of the React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
 To start an Android emulator for the first time, use a second terminal.\
 Run the following command from the _root_ of the React Native project
 
@@ -65,7 +54,7 @@ yarn android
 ```
 
 To start an iOS simulator for the first time, use a second terminal.\
-Run the following command from the _root_ of the React Native project:
+Run the following command from the _root_ of the React Native project, which takes a few minutes:
 
 ```bash
 # using npm
@@ -75,7 +64,18 @@ npm run ios
 yarn ios
 ```
 
-## 5. Test Logins
+Then start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.\
+To do so, run the following command from the _root_ of the React Native project:
+
+```bash
+# using npm
+npm start
+
+# OR using Yarn
+yarn start
+```
+
+## 5. Test Basic Logins
 
 Run the app and first test basic logins using an HTML Form authenticator.\
 Sign in to the deployed environment using the following test username and password:
@@ -83,16 +83,27 @@ Sign in to the deployed environment using the following test username and passwo
 - Username: `demouser`
 - Password: `Password1`
 
-To test logins with native passkeys, an assets document must run at a trusted internet HTTPS URL.\
-One way to do so is to re-run the deployment so that the Curity Identity Server using an ngrok URL.\
-The application configuration then updates to point to ngrok's internet HTTPS URL.
+## 6. Use Passkey Logins
+
+Passkeys require hosting of an assets document at a trusted internet HTTPS URL.\
+One way to do so is to re-run the deployment so that the Curity Identity Server uses an ngrok URL.
+
+On iOS, first edit the `start-idsvr.sh` script to set your Apple details and use a unique bundle identifier.\
+Then open the `ios` folder in Xcode and configure the same details there, along with your Apple signing certificate.
 
 ```bash
-USE_NGROK='true'
+export APPLE_TEAM_ID='MYTEAMID'
+export APPLE_BUNDLE_IDENTIFIER='io.myorg.haapi.react.example'
+```
+
+Then rerun the deployment script to use ngrok and test passkeys logins for both Android and iOS.
+
+```bash
+export USE_NGROK='true'
 ./start-idsvr.sh
 ```
 
-## 6. Learn about the React Native HAAPI Module
+## 7. Learn about the React Native HAAPI Module
 
 The example app uses the [React Native HAAPI Module](https://github.com/curityio/react-native-haapi-module), whose README explains more about options.\
 Use pre-released modules by updating the example app to use a file based dependency.\
@@ -111,7 +122,7 @@ npm uninstall @curity/react-native-haapi-module
 npm install <path-to-file>.tgz --save
 ```
 
-## 7. Use Config Specs for Deployed Environments
+## 8. Use Config Specs for Deployed Environments
 
 This repo also includes some parameterized configuration (config specs) that you can import using the admin UI.\
 Run the `Changes -> Run Config Spec` command to upload a config spec and enter parameters:

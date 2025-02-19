@@ -9,11 +9,11 @@ const HaapiConfiguration = {
     "revocationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-revoke",
     "validateTlsCertificate": false,
     "scope": "openid profile",
-    "appRedirect": "app://haapi",
+    "appRedirect": "haapi://callback",
     "extraRequestParameters": {"ui_locales": "sv"},
     "extraHttpHeaders": {"my-good-header": "foo-bar"}
     //"fallback_template_id": "haapi-template-client",
     //"registrationEndpointUri": "$IDSVR_BASE_URL/token-service/oauth-registration",
-    //"registration_secret": "Password1",
+    //"registration_secret": "Password1"
 }
 export default HaapiConfiguration
