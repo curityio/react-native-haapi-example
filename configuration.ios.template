@@ -7,7 +7,6 @@ const HaapiConfiguration = {
     "authorizationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-authorize",
     "revocationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-revoke",
     "validateTlsCertificate": false,
-    "acrValues": "",
     "scope": "openid profile",
     "appRedirect": "haapi://callback"
 }
