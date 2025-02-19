@@ -1,3 +1,4 @@
+// Replace the $IDSVR_BASE_URL to produce the configuration.android.jsx file
 const HaapiConfiguration = {
     "appRedirect": "app:start",
     "keyStoreAlias": "haapi-react-native",

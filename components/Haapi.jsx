@@ -20,6 +20,8 @@ import HaapiConfiguration from "../configuration";
 export const {HaapiModule} = NativeModules;
 
 HaapiModule.load(HaapiConfiguration).catch(e => {
+    console.log(HaapiConfiguration);
+    console.log(e.stack);
     console.error('Error in loading configuration', e);
 });
 

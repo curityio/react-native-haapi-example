@@ -8,11 +8,13 @@ Use the README instructions to prepare a deployment and configuration and then r
 ## 1. Set up a React Native Environment
 
 Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup).\
-Follow the instructions until the `Creating a new application` step.
+Follow the React Native instructions until the `Creating a new application` step.
 
 ## 2. Deploy the Curity Identity Server
 
-Get started with the following script to deploy a Docker based Curity Identity Server with a [working configuration](https://github.com/curityio/mobile-deployments/blob/main/haapi/example-config-template.xml):
+Get started with the following script to deploy a Docker based Curity Identity Server.\
+The deployment includes a [working configuration](https://github.com/curityio/mobile-deployments/blob/main/haapi/example-config-template.xml) for a local computer.\
+Before running the script, ensure that you have the `envsubst` tool installed, e.g with `brew install gettext`.
 
 ```bash
 ./start-idsvr.sh
@@ -22,8 +24,8 @@ Get started with the following script to deploy a Docker based Curity Identity S
 
 The script also updates the application configuration to point to the deployed system:
 
-- [configuration.android.jsx](configuration.android.jsx)
-- [configuration.ios.jsx](configuration.ios.jsx)
+- [Android Application Configuration](configuration.android.jsx)
+- [iOS Application Configuration](configuration.ios.jsx)
 
 ## 4. Run the Application
 
@@ -33,7 +35,7 @@ First install React native dependencies:
 npm install
 ```
 
-For iOS, also generate an XCode workspace where you can run the example in an emulator:
+For iOS, also generate an Xcode workspace where you can run the example in an emulator:
 
 ```bash
 cd ios
@@ -41,7 +43,7 @@ pod install
 ```
 
 Then start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.\
-To start Metro, run the following command from the _root_ of your React Native project:
+To start Metro, run the following command from the _root_ of the React Native project:
 
 ```bash
 # using npm
@@ -51,8 +53,8 @@ npm start
 yarn start
 ```
 
-Open a second terminal from the _root_ of your React Native project.\
-Run the following command to start the Android app:
+To start an Android emulator for the first time, use a second terminal.\
+Run the following command from the _root_ of the React Native project
 
 ```bash
 # using npm
@@ -62,7 +64,8 @@ npm run android
 yarn android
 ```
 
-Run the following command to start the iOS app:
+To start an iOS emulator for the first time, use a second terminal.\
+Run the following command from the _root_ of the React Native project:
 
 ```bash
 # using npm
@@ -74,4 +77,7 @@ yarn ios
 
 ## 5. Test Logins
 
-TODO
+## Further Information
+
+- See the [React Native HAAPI Code Example](https://curity.io/resources/learn/react-native-haapi/) for an overview of the code example's behaviors.
+- See the [Confgiure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial for details on the technical setup.

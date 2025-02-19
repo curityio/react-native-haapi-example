@@ -1,26 +1,36 @@
 #!/bin/bash
 
 ####################################################################################################
-# Run the Curity Identity Server in Docker on the local computer, preconfigured for the code example
+# A developer deployment to run the Curity Identity Server in Docker on the local computer.
+# The deployment provides a working configuration and includes native passkeys automation.
+#
 # Please ensure that the following resources are installed before running this script:
 # - Docker Desktop
-# - The envsubst tool (`brew install gettext` on MacOS)
+# - The envsubst tool (`brew install gettext` on macOS)
 #
-# If you want to expose the local instance of the Curity Identity Server via ngrok, then the following
-# need to also be installed:
+# To use native passkeys, you can expose the local instance of the Curity Identity Server via ngrok.
+# In this case, also install the following tools:
 # - ngrok
-# - The jq tool (`brew install jq` on MacOS)
+# - The jq tool (`brew install jq` on macOS)
 ####################################################################################################
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# By default the Curity Identity Server will use the default host IP address.
+# First get the host IP address that Android emulators or iOS simulators can connect to
+# Some emulators may instead use the special IP address 10.0.2.2 to connect to the host computer.
+#
+if [ "$HOST_IP_ADDRESS" == '' ]; then
+  #HOST_IP_ADDRESS=$(ipconfig getifaddr en0)
+  HOST_IP_ADDRESS='10.0.2.2'
+fi
+
+#
 # Set USE_NGROK to true and a dynamic NGROK base URL will be used automatically.
 #
 if [ "$USE_NGROK" != 'true' ]; then 
   USE_NGROK='false'
-  BASE_URL='https://10.0.2.2:8443'
+  BASE_URL="https://$HOST_IP_ADDRESS:8443"
   EXAMPLE_NAME='haapi'
 fi
 
@@ -61,3 +71,14 @@ fi
 #
 RUNTIME_BASE_URL="$(cat ./deployment/output.txt)"
 echo "Curity Identity Server is running at $RUNTIME_BASE_URL"
+
+#
+# Update the application configuration to use the runtime base URL
+#
+export IDSVR_BASE_URL="$RUNTIME_BASE_URL"
+envsubst < configuration.android.template > configuration.android.jsx
+envsubst < configuration.ios.template     > configuration.ios.jsx
+if [ $? -ne 0 ]; then
+  echo 'Problem encountered running the envsubst tool to update configuration'
+  exit 1
+fi

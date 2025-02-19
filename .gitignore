@@ -69,3 +69,5 @@ yarn-error.log
 # Curity Identity Server automation
 license.json
 deployment
+#configuration.android.jsx
+#configuration.ios.jsx

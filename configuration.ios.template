@@ -1,3 +1,4 @@
+// Replace the $IDSVR_BASE_URL to produce the configuration.ios.jsx file
 const HaapiConfiguration = {
     "appRedirect": "app:start",
     "clientId": "haapi-ios-dev-client",
