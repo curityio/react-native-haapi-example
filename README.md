@@ -83,7 +83,7 @@ Sign in to the deployed environment using the following test username and passwo
 - Username: `demouser`
 - Password: `Password1`
 
-## 6. Use Passkey Logins
+## 6. Test Native Passkey Logins
 
 Passkeys require hosting of an assets document at a trusted internet HTTPS URL.\
 One way to enable that is to re-run the deployment and use an ngrok URL for the Curity Identity Server.
