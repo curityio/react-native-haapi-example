@@ -86,10 +86,10 @@ Sign in to the deployed environment using the following test username and passwo
 ## 6. Use Passkey Logins
 
 Passkeys require hosting of an assets document at a trusted internet HTTPS URL.\
-One way to do so is to re-run the deployment so that the Curity Identity Server uses an ngrok URL.
+One way to enable that is to re-run the deployment and use an ngrok URL for the Curity Identity Server.
 
 On iOS, first edit the `start-idsvr.sh` script to set your Apple details and use a unique bundle identifier.\
-Then open the `ios` folder in Xcode and configure the same details there, along with your Apple signing certificate.
+Open the `ios` folder in Xcode and configure the same details and use your Apple signing certificate.
 
 ```bash
 export APPLE_TEAM_ID='MYTEAMID'
@@ -107,7 +107,7 @@ export USE_NGROK='true'
 
 The example app uses the [React Native HAAPI Module](https://github.com/curityio/react-native-haapi-module), whose README explains more about options.\
 Use pre-released modules by updating the example app to use a file based dependency.\
-If you need to troubleshoot you can perform actions like adding `println` statements to the module's Kotlin code.
+You can change the module code, e.g. to add `println` debug statements, then run it with the example app.
 
 ```bash
 git clone https://github.com/curityio/react-native-haapi-module.git
