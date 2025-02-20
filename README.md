@@ -3,7 +3,7 @@
 [![Quality](https://img.shields.io/badge/quality-demo-red)](https://curity.io/resources/code-examples/status/)
 [![Availability](https://img.shields.io/badge/availability-source-blue)](https://curity.io/resources/code-examples/status/)
 
-This is an example React Native app that uses the Curity Identity Server's Hypermedia API to perform an OIDC flow.\
+An example React Native app that uses the Curity Identity Server's Hypermedia API to perform an OIDC flow.\
 Authentication uses native screens without the need for an external browser.
 
 ## 1. Prepare a React Native Environment
@@ -30,7 +30,7 @@ export USE_NGROK='true'
 ./start-idsvr.sh
 ```
 
-Alternatively, provide a host name with which connected emulators or devices call the Curity Identity Server in Docker.\
+Alternatively, provide a host name with which connected emulators or devices call the Curity Identity Server.\
 For example, run the following commands to connect to a macOS computer using its IP address:
 
 ```bash
@@ -44,7 +44,7 @@ You can set the `IDSVR_HOST_NAME` variable in various ways:
 - You can set it to `localhost` if you only want to test on iOS simulators.
 - Some older Android emulators might require `IDSVR_HOST_NAME` to use the special value `10.0.2.2`.
 
-### 3. View Security Configuration
+## 3. View Security Configuration
 
 The [Mobile Deployments](https://github.com/curityio/mobile-deployments) repository explains further information about the deployed backend infrastructure.\
 You can view the [HAAPI Configuration](config/docker-template.xml) to understand the settings to apply to deployed environments.
@@ -133,8 +133,8 @@ export USE_NGROK='true'
 ./start-idsvr.sh
 ```
 
-On iOS, also open the `ios` folder in Xcode and configure the team ID and bundle ID under `Signing & Capabilities`.\
-Also ensure that Apple development tools sign the app, such as with the `Automatically manage signing` option.
+Also open the `ios` folder in Xcode and set the team ID and bundle ID under `Signing & Capabilities`.\
+Then use Apple development tools to sign the app, such as with the `Automatically manage signing` option.
 
 ## 8. Learn about the React Native HAAPI Module
 
@@ -170,7 +170,7 @@ See also the following resources:
 - The [React Native HAAPI Code Example](https://curity.io/resources/learn/react-native-haapi/) provides an overview of the code example's behaviors.
 - The [ngrok tutorials](https://curity.io/resources/learn/mobile-setup-ngrok/) explain how to use an internet URL and [view HAAPI messages](https://curity.io/resources/learn/expose-local-curity-ngrok/#ngrok-inspection-and-status).
 - The [Configure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial explains the technical setup when using passkeys.
-- The [Implementing HAAPI Attestation Fallback](https://curity.io/resources/learn/implementing-haapi-fallback/) explains some extra steps if you need to deal with non-compliant Android devices.
+- The [Implementing HAAPI Attestation Fallback](https://curity.io/resources/learn/implementing-haapi-fallback/) explains how to manage non-compliant Android devices.
 
 ## More information
 
