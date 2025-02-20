@@ -1,0 +1,146 @@
+<!--
+  ~ Copyright (C) 2020 Curity AB. All rights reserved.
+  ~
+  ~ The contents of this file are the property of Curity AB.
+  ~ You may not copy or use this file, in either source code
+  ~ or executable form, except in compliance with terms
+  ~ set by Curity AB.
+  ~
+  ~ For further information, please contact Curity AB.
+  -->
+
+<data xmlns="urn:ietf:params:xml:ns:yang:ietf-restconf">
+    <environments xmlns="https://curity.se/ns/conf/base">
+        <environment>
+            <base-url>$RUNTIME_BASE_URL</base-url>
+            <services>
+                <zones>
+                    <default-zone>
+                        <mobile-app-association>
+                            <ios-app-configuration>
+                                <app-id>$APPLE_TEAM_ID.$APPLE_BUNDLE_ID</app-id>
+                            </ios-app-configuration>
+                            <android-app-configuration>
+                                <namespace>android_app</namespace>
+                                <package-name>io.curity.haapi.react.example</package-name>
+                                <sha256-cert-fingerprints>
+                                    <fingerprint>FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C</fingerprint>
+                                </sha256-cert-fingerprints>
+                            </android-app-configuration>
+                        </mobile-app-association>
+                    </default-zone>
+                </zones>
+            </services>
+        </environment>
+    </environments>
+    <profiles xmlns="https://curity.se/ns/conf/base">
+        <profile>
+            <id>authentication-service</id>
+            <type xmlns:auth="https://curity.se/ns/conf/profile/authentication">auth:authentication-service</type>
+            <settings>
+                <authentication-service xmlns="https://curity.se/ns/conf/profile/authentication">
+                    <authenticators>
+                        <authenticator>
+                            <id>Passkeys</id>
+                            <required-authenticator-for-registration>HtmlForm</required-authenticator-for-registration>
+                            <passkeys xmlns="https://curity.se/ns/conf/authenticators/passkeys">
+                              <enable-discoverable-credentials>false</enable-discoverable-credentials>
+                              <account-manager>
+                                <id>default-account-manager</id>
+                              </account-manager>
+                            </passkeys>
+                        </authenticator>
+                    </authenticators>
+                </authentication-service>
+            </settings>
+        </profile>
+        <profile>
+            <id>token-service</id>
+            <type xmlns:as="https://curity.se/ns/conf/profile/oauth">as:oauth-service</type>
+            <expose-detailed-error-messages/>
+            <settings>
+                <authorization-server xmlns="https://curity.se/ns/conf/profile/oauth">
+                    <client-store>
+                        <config-backed>
+                            <client>
+                                <id>haapi-ios-client</id>
+                                <client-name>Haapi iOS Client</client-name>
+                                <no-authentication>true</no-authentication>
+                                <redirect-uris>haapi://callback</redirect-uris>
+                                <user-authentication>
+                                </user-authentication>
+                                <scope>address</scope>
+                                <scope>email</scope>
+                                <scope>openid</scope>
+                                <scope>phone</scope>
+                                <scope>profile</scope>
+                                <user-authentication>
+                                    <allowed-authenticators>HtmlForm</allowed-authenticators>
+                                    <allowed-authenticators>Passkeys</allowed-authenticators>
+                                </user-authentication>
+                                <capabilities>
+                                    <code/>
+                                    <haapi>
+                                        <issue-token-bound-authorization-code>true</issue-token-bound-authorization-code>
+                                    </haapi>
+                                </capabilities>
+                                <attestation>
+                                <disable-attestation-validation>true</disable-attestation-validation>
+                                <ios>
+                                    <app-id>$APPLE_BUNDLE_ID</app-id>
+                                    <ios-policy>ios-dev-policy</ios-policy>
+                                </ios>
+                                </attestation>
+                            </client>
+                            <client>
+                                <id>haapi-android-client</id>
+                                <client-name>Haapi Android Client</client-name>
+                                <no-authentication>true</no-authentication>
+                                <redirect-uris>haapi://callback</redirect-uris>
+                                <audience>haapi-client</audience>
+                                <scope>address</scope>
+                                <scope>email</scope>
+                                <scope>openid</scope>
+                                <scope>phone</scope>
+                                <scope>profile</scope>
+                                <user-authentication>
+                                    <allowed-authenticators>HtmlForm</allowed-authenticators>
+                                    <allowed-authenticators>Passkeys</allowed-authenticators>
+                                </user-authentication>
+                                <capabilities>
+                                    <code/>
+                                    <haapi>
+                                        <issue-token-bound-authorization-code>true</issue-token-bound-authorization-code>
+                                    </haapi>
+                                </capabilities>
+                                <attestation>
+                                    <android>
+                                        <package-name>io.curity.haapi.react.example</package-name>
+                                        <signature-digest>+sYXRdwJA3hvue3mKpYrOZ9zSPC7b4mbgzJmdZEDO5w=</signature-digest>
+                                        <android-policy>android-dev-policy</android-policy>
+                                    </android>
+                                </attestation>
+                            </client>
+                        </config-backed>
+                    </client-store>
+                </authorization-server>
+            </settings>
+        </profile>
+    </profiles>
+    <facilities xmlns="https://curity.se/ns/conf/base">
+        <client-attestation>
+            <ios-policy xmlns="https://curity.se/ns/conf/client-attestation">
+                <id>ios-dev-policy</id>
+                <mode>non-production</mode>
+            </ios-policy>
+            <android-policy xmlns="https://curity.se/ns/conf/client-attestation">
+                <id>android-dev-policy</id>
+                <verify-boot-state>false</verify-boot-state>
+                <minimum-security-level>software</minimum-security-level>
+                <override-certificate-chain-validation>
+                    <do-not-validate-certificate-chain/>
+                </override-certificate-chain-validation>
+            </android-policy>
+        </client-attestation>
+    </facilities>
+</data>

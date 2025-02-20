@@ -45,7 +45,7 @@ Note that some older Android emulators might require `IDSVR_HOST_NAME` to use th
 ### 3. View Security Configuration
 
 The [Mobile Deployments](https://github.com/curityio/mobile-deployments) repository explains further information about the deployed backend infrastructure.\
-You can view the [HAAPI Configuration](https://github.com/curityio/mobile-deployments/blob/main/haapi/example-config-template.xml) to understand the settings to apply to deployed environments.
+You can view the [HAAPI Configuration](config/docker-template.xml) to understand the settings to apply to deployed environments.
 
 ## 4. Configure the Application
 
@@ -167,7 +167,7 @@ See also the following resources:
 
 - The [React Native HAAPI Code Example](https://curity.io/resources/learn/react-native-haapi/) provides an overview of the code example's behaviors.
 - The [ngrok tutorials](https://curity.io/resources/learn/mobile-setup-ngrok/) explain how to use an internet URL and [view HAAPI messages](https://curity.io/resources/learn/expose-local-curity-ngrok/#ngrok-inspection-and-status).
--  The [Configure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial explains the technical setup when using passkeys.
+- The [Configure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial explains the technical setup when using passkeys.
 - The [Implementing HAAPI Attestation Fallback](https://curity.io/resources/learn/implementing-haapi-fallback/) explains some extra steps if you need to deal with non-compliant Android devices.
 
 ## More information

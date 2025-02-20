@@ -46,14 +46,6 @@ git checkout feature/sdk_update
 cd ..
 
 #
-# Set attestation and passkey related parameters for this app's deployment
-# https://curity.io/resources/learn/mobile-logins-using-native-passkeys/
-#
-export ANDROID_PACKAGE_NAME='io.curity.haapi.react.example'
-export ANDROID_SIGNATURE_DIGEST='+sYXRdwJA3hvue3mKpYrOZ9zSPC7b4mbgzJmdZEDO5w='
-export ANDROID_FINGERPRINT='FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C'
-
-#
 # To test passkeys on iOS, override these settings with a Team ID that you own and your own unique bundle ID
 #
 if [ "$APPLE_TEAM_ID" == '' ]; then
@@ -62,6 +54,11 @@ fi
 if [ "$APPLE_BUNDLE_ID" == '' ]; then
   export APPLE_BUNDLE_ID='io.curity.haapi.react.example'
 fi
+
+#
+# Override the HAAPI default configuration settings
+#
+cp config/docker-template.xml deployment/haapi/example-config-template.xml
 
 #
 # Run an automated deployment of the Curity Identity Server
