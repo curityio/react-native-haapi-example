@@ -105,8 +105,8 @@ On iOS, first edit the `start-idsvr.sh` script to set your Apple details and use
 Then rerun the deployment script to use ngrok and test passkeys logins for both Android and iOS.
 
 ```bash
-export APPLE_TEAM_ID='U3VTCHYEM7'
-export APPLE_BUNDLE_ID='io.gary.haapi.react.example'
+export APPLE_TEAM_ID='MYTEAMID'
+export APPLE_BUNDLE_ID='io.myorganization.haapi.react.example'
 export USE_NGROK='true'
 ./start-idsvr.sh
 ```

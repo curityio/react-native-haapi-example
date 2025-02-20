@@ -107,6 +107,7 @@ function replaceTextInFile() {
 }
 
 if [ "$USE_NGROK" == 'true' ]; then
-  replaceTextInFile 'localhost:8443' "$RUNTIME_BASE_URL" './android/app/src/main/res/values/strings.xml'
-  replaceTextInFile 'localhost:8443' "${RUNTIME_BASE_URL#https://}" './haapidemo.entitlements'
+  RUNTIME_HOST_NAME="${RUNTIME_BASE_URL#https://}"
+  replaceTextInFile 'localhost:8443' "$RUNTIME_HOST_NAME" ./android/app/src/main/res/values/strings.xml
+  replaceTextInFile 'localhost:8443' "$RUNTIME_HOST_NAME" ./ios/HaapiReactNativeExample/HaapiReactNativeExample.entitlements
 fi
