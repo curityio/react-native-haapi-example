@@ -28,15 +28,17 @@ export USE_NGROK='true'
 ./start-idsvr.sh
 ```
 
-If not using ngrok, provide a host name with which connected emulators or devices call the Curity Identity Server.\
+Alternatively, provide a host name with which connected emulators or devices call the Curity Identity Server.\
 The local computer's IP address should work for both Android and iOS on connected emulators and devices.\
-The following command works on macOS, though older Android emulators may require the special value `10.0.2.2`.
+The following commands should work on macOS:
 
 ```bash
 export USE_NGROK='false'
 export IDSVR_HOST_NAME="$(ipconfig getifaddr en0)"
 ./start-idsvr.sh
 ```
+
+Note that some older Android emulators might require `IDSVR_HOST_NAME` to be set to the special value `10.0.2.2`.
 
 ## 3. Configure the Application
 
@@ -61,30 +63,9 @@ cd ios
 pod install
 ```
 
-To start an Android emulator, use a second terminal.\
-Run the following command from the _root_ of the React Native project.
+### Run the Metro Server
 
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-To start an iOS simulator, use a second terminal.\
-Run the following command from the _root_ of the React Native project.
-
-```bash
-# using npm
-npm run ios -- --simulator='iPhone 16 Pro'
-
-# OR using Yarn
-yarn ios
-```
-
-Start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.\
-To do so, run the following command from the _root_ of the React Native project.
+Run the JavaScript _bundler_ that ships _with_ React Native from the _root_ of the React Native project:
 
 ```bash
 # using npm
@@ -94,10 +75,37 @@ npm start
 yarn start
 ```
 
+Let Metro Bundler run in its _own_ terminal and open a _new_ terminal from the _root_ of your React Native project.
+
+### For Android
+
+Run the following command to start your _Android_ app:
+
+```bash
+# using npm
+npm run android
+
+# OR using Yarn
+yarn android
+```
+
+
+### For iOS
+
+Run the following command to start your _iOS_ app:
+
+```bash
+# using npm
+npm run ios -- --simulator='iPhone 16 Pro'
+
+# OR using Yarn
+yarn ios
+```
+
 ## 5. Test Basic Logins
 
 Run the app and first test basic logins using an HTML Form authenticator.\
-Sign in to the deployed environment using the following test username and password.
+Sign in to the deployed environment and use a pre-shipped test user account.
 
 - Username: `demouser`
 - Password: `Password1`
@@ -105,8 +113,9 @@ Sign in to the deployed environment using the following test username and passwo
 ## 6. Test Native Passkey Logins
 
 Passkeys require hosting of assets documents at trusted internet HTTPS URL.\
-On iOS, you must also provide overrides with your Apple team ID and a unique bundle identifier.\
-You can use ngrok to host assets documents and test passkeys logins for both Android and iOS.
+On iOS, you must also provide overrides with your own Apple team ID and unique bundle identifier.\
+You can use ngrok to host assets documents and test passkeys logins for both Android and iOS.\
+The following example commands deploy the Curity Identity Server with a passkeys configuration:
 
 ```bash
 export APPLE_TEAM_ID='MYTEAMID'
@@ -116,7 +125,7 @@ export USE_NGROK='true'
 ```
 
 On iOS, also open the `ios` folder in Xcode and configure the team ID and bundle ID under `Signing & Capabilities`.\
-Also use a signing option such as `Automatically manage signing`.
+Also ensure that Apple development tools sign the app, such as with the `Automatically manage signing` option.
 
 ## 7. Learn about the React Native HAAPI Module
 
