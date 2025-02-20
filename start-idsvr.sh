@@ -3,15 +3,7 @@
 ####################################################################################################
 # A developer deployment to run the Curity Identity Server in Docker on the local computer.
 # The deployment provides a working configuration and includes native passkeys automation.
-#
-# Please ensure that the following resources are installed before running this script:
-# - Docker Desktop
-# - The envsubst tool (`brew install gettext` on macOS)
-#
-# To use native passkeys, you can expose the local instance of the Curity Identity Server via ngrok.
-# In this case, also install the following tools:
-# - ngrok
-# - The jq tool (`brew install jq` on macOS)
+# - https://curity.io/resources/learn/mobile-logins-using-native-passkeys/
 ####################################################################################################
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
@@ -99,7 +91,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Ensure a correct passkeys configuration that uses the ngrok URL
+# Ensure a working passkeys configuration that uses the ngrok URL
 #
 function replaceTextInFile() {
 

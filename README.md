@@ -10,12 +10,16 @@ Follow the React Native instructions and ensure that you can run a basic app.
 
 ## 2. Deploy the Curity Identity Server
 
-Get started with a local docker deployment of the Curity Identity Server.\
-See the [Mobile Deployments README](https://github.com/curityio/mobile-deployments) for further information about the backend infrastructure.\
-The deployment includes a [working configuration](https://github.com/curityio/mobile-deployments/blob/main/haapi/example-config-template.xml) with HAAPI development settings.
+Ensure that the local computer has these prerequisites:
+
+- A Docker engine.
+- The `envsubst` tool, e.g with `brew install gettext`.
+- The `jq` tool, e.g with `brew install jq`.
+
+Get started with a local Docker deployment of the Curity Identity Server.\
+See the [Mobile Deployments README](https://github.com/curityio/mobile-deployments) for further information about the backend infrastructure.
 
 To run the deployment, first copy a `license.json` file for the Curity Identity Server into the root folder.\
-Also ensure that you have the `envsubst` tool installed, e.g with `brew install gettext`.\
 Then run a script to deploy the system:
 
 ```bash
@@ -25,7 +29,7 @@ export HOST_BASE_URL=$(ipconfig getifaddr en0)
 ```
 
 Connected emulators or devices will use the `HOST_BASE_URL` to connect to the Curity Identity Server in Docker.\
-For a deployment that should work for both Android and iOS, use the local computer's IP address.\
+For a backend that should work for both Android and iOS, use the local computer's IP address.\
 iOS can use the value `localhost` and some Android emulators may require the special value `10.0.2.2`.
 
 ## 3. Configure the Application
