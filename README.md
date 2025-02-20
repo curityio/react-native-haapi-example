@@ -1,30 +1,34 @@
-# React Native example using HAAPI
+# React Native Example using HAAPI
 
 [![Quality](https://img.shields.io/badge/quality-demo-red)](https://curity.io/resources/code-examples/status/)
 [![Availability](https://img.shields.io/badge/availability-source-blue)](https://curity.io/resources/code-examples/status/)
 
-## 1. Set up a React Native Environment
+## 1. Prepare a React Native Environment
 
 First make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup).\
 Follow the React Native instructions and ensure that you can run a basic app.
 
 ## 2. Deploy the Curity Identity Server
 
-Get started with the following script to deploy a Docker based Curity Identity Server.\
-The deployment includes a [working configuration](https://github.com/curityio/mobile-deployments/blob/main/haapi/example-config-template.xml) for a local computer.\
-Before running the script, ensure that you have the `envsubst` tool installed, e.g with `brew install gettext`.
+Get started with a local docker deployment of the Curity Identity Server.\
+See the [Mobile Deployments README](https://github.com/curityio/mobile-deployments) for further information about the backend infrastructure.\
+The deployment includes a [working configuration](https://github.com/curityio/mobile-deployments/blob/main/haapi/example-config-template.xml) with HAAPI development settings.
+
+To run the deployment, first copy a `license.json` file for the Curity Identity Server into the root folder.\
+Also ensure that you have the `envsubst` tool installed, e.g with `brew install gettext`.\
+Then run the following script to deploy the system:
 
 ```bash
 export USE_NGROK='false'
 ./start-idsvr.sh
 ```
 
-## 3. Set the Application Configuration
+## 3. Configure the Application
 
-The script performs the following tasks, which can be done manually if you prefer.
+The script performs the following tasks, which you could also do manually:
 
-- Create the root level `configuration.android.jsx`  file from the [configuration.android.template](configuration.android.template) file.
-- Create the root level `configuration.ios.jsx`  file from the [configuration.ios.template](configuration.ios.template) file.
+- Populate base URLs in the `configuration.android.jsx` file from the [configuration.android.template](configuration.android.template) file.
+- Populate base URLs in `configuration.ios.jsx` file from the [configuration.ios.template](configuration.ios.template) file.
 
 ## 4. Run the Application
 
