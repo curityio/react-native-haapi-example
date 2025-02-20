@@ -9,26 +9,23 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# First get the host IP address that connected devices or emulators / simulators can connect to.
-# On Android, older emulators may instead require the special IP address of 10.0.2.2 for the host computer.
-#
-if [ "$HOST_IP_ADDRESS" == '' ]; then
-  HOST_IP_ADDRESS=$(ipconfig getifaddr en0)
-fi
-
-if [ "$USE_NGROK" != 'true' ]; then
-  USE_NGROK='false'
-fi
-
-BASE_URL="https://$HOST_IP_ADDRESS:8443"
-EXAMPLE_NAME='haapi'
-
-#
-# First check prerequisites
+# First check for a license
 #
 if [ ! -f './license.json' ]; then
   echo 'Please copy a license.json file into the root folder of the code example'
   exit 1
+fi
+
+#
+# Then validate or default parameters
+#
+EXAMPLE_NAME='haapi'
+if [ "$USE_NGROK" != 'true' ]; then
+  USE_NGROK='false'
+  if [ "$IDSVR_HOST_NAME" == '' ]; then
+    echo 'You must supply an IDSVR_HOST_NAME for the Curity Identity Server'
+    exit 1
+  fi
 fi
 
 #
@@ -67,22 +64,25 @@ fi
 # Run an automated deployment of the Curity Identity Server
 #
 cp ./license.json deployment/resources/license.json
-./deployment/start.sh "$USE_NGROK" "$BASE_URL" "$EXAMPLE_NAME"
+if [ "$USE_NGROK" == 'true' ]; then
+  ./deployment/start.sh 'true' '-' "$EXAMPLE_NAME"
+else
+  ./deployment/start.sh 'false' "https://$IDSVR_HOST_NAME:8443" "$EXAMPLE_NAME"
+fi
 if [ $? -ne 0 ]; then
   echo 'Problem encountered deploying the Curity Identity Server'
   exit 1
 fi
 
 #
-# Inform the user of the Curity Identity Server URL, to be copied to configuration
+# Get the final Curity Identity Server URL
 #
-RUNTIME_BASE_URL="$(cat ./deployment/output.txt)"
-echo "Curity Identity Server is running at $RUNTIME_BASE_URL"
+export IDSVR_BASE_URL="$(cat ./deployment/output.txt)"
+echo "Curity Identity Server is running at $IDSVR_BASE_URL"
 
 #
 # Update the application configuration to use the runtime base URL
 #
-export IDSVR_BASE_URL="$RUNTIME_BASE_URL"
 envsubst < configuration.android.template > configuration.android.jsx
 envsubst < configuration.ios.template     > configuration.ios.jsx
 if [ $? -ne 0 ]; then
@@ -107,7 +107,7 @@ function replaceTextInFile() {
 }
 
 if [ "$USE_NGROK" == 'true' ]; then
-  RUNTIME_HOST_NAME="${RUNTIME_BASE_URL#https://}"
-  replaceTextInFile 'localhost:8443' "$RUNTIME_HOST_NAME" ./android/app/src/main/res/values/strings.xml
-  replaceTextInFile 'localhost:8443' "$RUNTIME_HOST_NAME" ./ios/HaapiReactNativeExample/HaapiReactNativeExample.entitlements
+  IDSVR_HOST_NAME="${IDSVR_BASE_URL#https://}"
+  replaceTextInFile 'localhost:8443' "$IDSVR_HOST_NAME" ./android/app/src/main/res/values/strings.xml
+  replaceTextInFile 'localhost:8443' "$IDSVR_HOST_NAME" ./ios/HaapiReactNativeExample/HaapiReactNativeExample.entitlements
 fi

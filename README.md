@@ -20,17 +20,23 @@ Get started with a local Docker deployment of the Curity Identity Server.\
 See the [Mobile Deployments README](https://github.com/curityio/mobile-deployments) for further information about the backend infrastructure.
 
 To run the deployment, first copy a `license.json` file for the Curity Identity Server into the root folder.\
-Then run a script to deploy the system:
+Then deploy the system, and indicate how connected emulators or devices call the Curity Identity Server.\
+The following example uses an ngrok URL:
 
 ```bash
-export USE_NGROK='false'
-export HOST_BASE_URL=$(ipconfig getifaddr en0)
+export USE_NGROK='true'
 ./start-idsvr.sh
 ```
 
-Connected emulators or devices will use the `HOST_BASE_URL` to connect to the Curity Identity Server in Docker.\
-For a backend that should work for both Android and iOS, use the local computer's IP address.\
-iOS can use the value `localhost` and some Android emulators may require the special value `10.0.2.2`.
+If not using ngrok, provide a host name with which connected emulators or devices call the Curity Identity Server.\
+The local computer's IP address should work for both Android and iOS on connected emulators and devices.\
+The following command works on macOS, though older Android emulators may require the special value `10.0.2.2`.
+
+```bash
+export USE_NGROK='false'
+export IDSVR_HOST_NAME="$(ipconfig getifaddr en0)"
+./start-idsvr.sh
+```
 
 ## 3. Configure the Application
 
@@ -98,11 +104,9 @@ Sign in to the deployed environment using the following test username and passwo
 
 ## 6. Test Native Passkey Logins
 
-Passkeys require hosting of an assets document at a trusted internet HTTPS URL.\
-One way to enable that is to re-run the deployment and use an ngrok URL for the Curity Identity Server.
-
-On iOS, first edit the `start-idsvr.sh` script to set your Apple details and use a unique bundle identifier.\
-Then rerun the deployment script to use ngrok and test passkeys logins for both Android and iOS.
+Passkeys require hosting of assets documents at trusted internet HTTPS URL.\
+On iOS, you must also provide overrides with your Apple team ID and a unique bundle identifier.\
+You can use ngrok to host assets documents and test passkeys logins for both Android and iOS.
 
 ```bash
 export APPLE_TEAM_ID='MYTEAMID'
@@ -111,8 +115,8 @@ export USE_NGROK='true'
 ./start-idsvr.sh
 ```
 
-On iOS, also open the `ios` folder in Xcode and configure the same details under `Signing & Capabilities`.\
-For example, use the `Automatically manage signing` option for your Apple account.
+On iOS, also open the `ios` folder in Xcode and configure the team ID and bundle ID under `Signing & Capabilities`.\
+Also use a signing option such as `Automatically manage signing`.
 
 ## 7. Learn about the React Native HAAPI Module
 
