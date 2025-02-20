@@ -38,6 +38,9 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+#
+# TODO: delete before merging
+#
 cd deployment
 git checkout feature/sdk_update
 cd ..

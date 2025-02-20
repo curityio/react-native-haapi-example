@@ -3,6 +3,9 @@
 [![Quality](https://img.shields.io/badge/quality-demo-red)](https://curity.io/resources/code-examples/status/)
 [![Availability](https://img.shields.io/badge/availability-source-blue)](https://curity.io/resources/code-examples/status/)
 
+This is an example React Native app that uses the Curity Identity Server's Hypermedia API to perform an OIDC flow.\
+Authentication uses native screens without the need for an external browser.
+
 ## 1. Prepare a React Native Environment
 
 First make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup).\
@@ -10,18 +13,17 @@ Follow the React Native instructions and ensure that you can run a basic app.
 
 ## 2. Deploy the Curity Identity Server
 
-Ensure that the local computer has these prerequisites:
+Start with a local automated deployment to ensure that you understand the technical setup.\
+You can then apply the same configuration to deployed environments.\
+First ensure that the local computer has these prerequisites:
 
 - A Docker engine.
 - The `envsubst` tool, e.g with `brew install gettext`.
 - The `jq` tool, e.g with `brew install jq`.
 
-Get started with a local Docker deployment of the Curity Identity Server.\
-See the [Mobile Deployments README](https://github.com/curityio/mobile-deployments) for further information about the backend infrastructure.
-
-To run the deployment, first copy a `license.json` file for the Curity Identity Server into the root folder.\
+Copy a `license.json` file for the Curity Identity Server into the root folder.\
 Then deploy the system, and indicate how connected emulators or devices call the Curity Identity Server.\
-The following example uses an ngrok URL:
+The following example uses the ngrok tool to provide an internet HTTPS URL:
 
 ```bash
 export USE_NGROK='true'
@@ -29,8 +31,8 @@ export USE_NGROK='true'
 ```
 
 Alternatively, provide a host name with which connected emulators or devices call the Curity Identity Server.\
-The local computer's IP address should work for both Android and iOS on connected emulators and devices.\
-The following commands should work on macOS:
+The local computer's IP address should work for both Android and iOS.\
+For example, run the following commands on a macOS computer:
 
 ```bash
 export USE_NGROK='false'
@@ -38,16 +40,21 @@ export IDSVR_HOST_NAME="$(ipconfig getifaddr en0)"
 ./start-idsvr.sh
 ```
 
-Note that some older Android emulators might require `IDSVR_HOST_NAME` to be set to the special value `10.0.2.2`.
+Note that some older Android emulators might require `IDSVR_HOST_NAME` to use the special value `10.0.2.2`.
 
-## 3. Configure the Application
+### 3. View Security Configuration
 
-The script performs the following tasks, which you could also do manually:
+The [Mobile Deployments](https://github.com/curityio/mobile-deployments) repository explains further information about the deployed backend infrastructure.\
+You can view the [HAAPI Configuration](https://github.com/curityio/mobile-deployments/blob/main/haapi/example-config-template.xml) to understand the settings to apply to deployed environments.
+
+## 4. Configure the Application
+
+The deployment script performs the following tasks, which you could also do manually:
 
 - Populate base URLs in the `configuration.android.jsx` file from the [configuration.android.template](configuration.android.template) file.
 - Populate base URLs in `configuration.ios.jsx` file from the [configuration.ios.template](configuration.ios.template) file.
 
-## 4. Run the Application
+## 5. Run the Application
 
 First install React native dependencies.
 
@@ -102,7 +109,7 @@ npm run ios -- --simulator='iPhone 16 Pro'
 yarn ios
 ```
 
-## 5. Test Basic Logins
+## 6. Test Basic Logins
 
 Run the app and first test basic logins using an HTML Form authenticator.\
 Sign in to the deployed environment and use a pre-shipped test user account.
@@ -110,7 +117,7 @@ Sign in to the deployed environment and use a pre-shipped test user account.
 - Username: `demouser`
 - Password: `Password1`
 
-## 6. Test Native Passkey Logins
+## 7. Test Native Passkey Logins
 
 Passkeys require hosting of assets documents at trusted internet HTTPS URL.\
 On iOS, you must also provide overrides with your own Apple team ID and unique bundle identifier.\
@@ -127,7 +134,7 @@ export USE_NGROK='true'
 On iOS, also open the `ios` folder in Xcode and configure the team ID and bundle ID under `Signing & Capabilities`.\
 Also ensure that Apple development tools sign the app, such as with the `Automatically manage signing` option.
 
-## 7. Learn about the React Native HAAPI Module
+## 8. Learn about the React Native HAAPI Module
 
 The example app uses the [React Native HAAPI Module](https://github.com/curityio/react-native-haapi-module), whose README explains more about options.\
 Use pre-released modules by updating the example app to use a file based dependency.\
@@ -146,7 +153,7 @@ npm uninstall @curity/react-native-haapi-module
 npm install <path-to-file>.tgz --save
 ```
 
-## 8. Use Config Specs for Deployed Environments
+## 9. Use Config Specs for Deployed Environments
 
 This repo also includes some parameterized configuration (config specs) that you can import using the admin UI.\
 Run the `Changes -> Run Config Spec` command to upload a config spec and enter parameters:
@@ -154,11 +161,15 @@ Run the `Changes -> Run Config Spec` command to upload a config spec and enter p
 - [android config spec](config/setup-android-no-attestation-validation.xml) 
 - [ios config spec](config/setup-ios-no-attestation-validation.xml)
 
-## Further Information
+## Tutorials
 
-See also the following related tutorials:
+See also the following resources:
 
 - The [React Native HAAPI Code Example](https://curity.io/resources/learn/react-native-haapi/) provides an overview of the code example's behaviors.
-- The [ngrok tutorials](https://curity.io/resources/learn/mobile-setup-ngrok/) explain how to use an internet URL and also how to [capture HAAPI messages](https://curity.io/resources/learn/expose-local-curity-ngrok/#ngrok-inspection-and-status).
+- The [ngrok tutorials](https://curity.io/resources/learn/mobile-setup-ngrok/) explain how to use an internet URL and [view HAAPI messages](https://curity.io/resources/learn/expose-local-curity-ngrok/#ngrok-inspection-and-status).
 -  The [Configure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial explains the technical setup when using passkeys.
 - The [Implementing HAAPI Attestation Fallback](https://curity.io/resources/learn/implementing-haapi-fallback/) explains some extra steps if you need to deal with non-compliant Android devices.
+
+## More information
+
+Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server.
