@@ -97,3 +97,24 @@ if [ $? -ne 0 ]; then
   echo 'Problem encountered running the envsubst tool to update configuration'
   exit 1
 fi
+
+#
+# Ensure a correct passkeys configuration that uses the ngrok URL
+#
+function replaceTextInFile() {
+
+  FROM="$1"
+  TO="$2"
+  FILE="$3"
+  
+  if [ "$(uname -s)" == 'Darwin' ]; then
+    sed -i '' "s/$FROM/$TO/g" "$FILE"
+  else
+    sed -i -e "s/$FROM/$TO/g" "$FILE"
+  fi
+}
+
+if [ "$USE_NGROK" == 'true' ]; then
+  replaceTextInFile 'localhost:8443' "$RUNTIME_BASE_URL" './android/app/src/main/res/values/strings.xml'
+  replaceTextInFile 'localhost:8443' "${RUNTIME_BASE_URL#https://}" './haapidemo.entitlements'
+fi

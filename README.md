@@ -16,12 +16,17 @@ The deployment includes a [working configuration](https://github.com/curityio/mo
 
 To run the deployment, first copy a `license.json` file for the Curity Identity Server into the root folder.\
 Also ensure that you have the `envsubst` tool installed, e.g with `brew install gettext`.\
-Then run the following script to deploy the system:
+Then run a script to deploy the system:
 
 ```bash
 export USE_NGROK='false'
+export HOST_BASE_URL=$(ipconfig getifaddr en0)
 ./start-idsvr.sh
 ```
+
+Connected emulators or devices will use the `HOST_BASE_URL` to connect to the Curity Identity Server in Docker.\
+For a deployment that should work for both Android and iOS, use the local computer's IP address.\
+iOS can use the value `localhost` and some Android emulators may require the special value `10.0.2.2`.
 
 ## 3. Configure the Application
 
