@@ -28,9 +28,6 @@ if [ "$USE_NGROK" != 'true' ]; then
   USE_NGROK='false'
 fi
 
-#
-# Set USE_NGROK to true and a dynamic NGROK base URL will be used automatically.
-#
 BASE_URL="https://$HOST_IP_ADDRESS:8443"
 EXAMPLE_NAME='haapi'
 
@@ -65,10 +62,14 @@ export ANDROID_SIGNATURE_DIGEST='+sYXRdwJA3hvue3mKpYrOZ9zSPC7b4mbgzJmdZEDO5w='
 export ANDROID_FINGERPRINT='FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C'
 
 #
-# To test passkeys on iOS, update these settings to a Team ID that you own and a unique bundle ID
+# To test passkeys on iOS, override these settings with a Team ID that you own and your own unique bundle ID
 #
-export APPLE_TEAM_ID='MYTEAMID'
-export APPLE_BUNDLE_ID='io.curity.haapi.react.example'
+if [ "$APPLE_TEAM_ID" == '' ]; then
+  export APPLE_TEAM_ID='MYTEAMID'
+fi
+if [ "$APPLE_BUNDLE_ID" == '' ]; then
+  export APPLE_BUNDLE_ID='io.curity.haapi.react.example'
+fi
 
 #
 # Run an automated deployment of the Curity Identity Server

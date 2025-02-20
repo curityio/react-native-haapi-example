@@ -46,7 +46,7 @@ cd ios
 pod install
 ```
 
-To start an Android emulator for the first time, use a second terminal.\
+To start an Android emulator, use a second terminal.\
 Run the following command from the _root_ of the React Native project.
 
 ```bash
@@ -57,18 +57,18 @@ npm run android
 yarn android
 ```
 
-To start an iOS simulator for the first time, use a second terminal.\
-Run the following command from the _root_ of the React Native project, which takes a few minutes.
+To start an iOS simulator, use a second terminal.\
+Run the following command from the _root_ of the React Native project.
 
 ```bash
 # using npm
-npm run ios
+npm run ios -- --simulator='iPhone 16 Pro'
 
 # OR using Yarn
 yarn ios
 ```
 
-Then start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.\
+Start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.\
 To do so, run the following command from the _root_ of the React Native project.
 
 ```bash
@@ -93,19 +93,17 @@ Passkeys require hosting of an assets document at a trusted internet HTTPS URL.\
 One way to enable that is to re-run the deployment and use an ngrok URL for the Curity Identity Server.
 
 On iOS, first edit the `start-idsvr.sh` script to set your Apple details and use a unique bundle identifier.\
-Open the `ios` folder in Xcode and configure the same details and use your Apple signing certificate.
-
-```bash
-export APPLE_TEAM_ID='MYTEAMID'
-export APPLE_BUNDLE_IDENTIFIER='io.myorg.haapi.react.example'
-```
-
 Then rerun the deployment script to use ngrok and test passkeys logins for both Android and iOS.
 
 ```bash
+export APPLE_TEAM_ID='U3VTCHYEM7'
+export APPLE_BUNDLE_ID='io.gary.haapi.react.example'
 export USE_NGROK='true'
 ./start-idsvr.sh
 ```
+
+On iOS, also open the `ios` folder in Xcode and configure the same details under `Signing & Capabilities`.\
+For example, use the `Automatically manage signing` option for your Apple account.
 
 ## 7. Learn about the React Native HAAPI Module
 
