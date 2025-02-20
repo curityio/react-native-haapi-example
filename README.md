@@ -30,9 +30,8 @@ export USE_NGROK='true'
 ./start-idsvr.sh
 ```
 
-Alternatively, provide a host name with which connected emulators or devices call the Curity Identity Server.\
-The local computer's IP address should work for both Android and iOS.\
-For example, run the following commands on a macOS computer:
+Alternatively, provide a host name with which connected emulators or devices call the Curity Identity Server in Docker.\
+For example, run the following commands to connect to a macOS computer using its IP address:
 
 ```bash
 export USE_NGROK='false'
@@ -40,7 +39,10 @@ export IDSVR_HOST_NAME="$(ipconfig getifaddr en0)"
 ./start-idsvr.sh
 ```
 
-Note that some older Android emulators might require `IDSVR_HOST_NAME` to use the special value `10.0.2.2`.
+You can set the `IDSVR_HOST_NAME` variable in various ways:
+
+- You can set it to `localhost` if you only want to test on iOS simulators.
+- Some older Android emulators might require `IDSVR_HOST_NAME` to use the special value `10.0.2.2`.
 
 ### 3. View Security Configuration
 
