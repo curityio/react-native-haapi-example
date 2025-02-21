@@ -1,6 +1,5 @@
 // Replace IDSVR_BASE_URL placeholders to produce the configuration.android.jsx file
 const HaapiConfiguration = {
-    "appRedirect": "app:start",
     "keyStoreAlias": "haapi-react-native",
     "clientId": "haapi-android-client",
     "baseUri": "$IDSVR_BASE_URL",
@@ -8,7 +7,9 @@ const HaapiConfiguration = {
     "authorizationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-authorize",
     "revocationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-revoke",
     "validateTlsCertificate": false,
-    "scope": "openid profile",
-    "appRedirect": "haapi://callback"
+    "scope": "openid profile"
+    // "registrationEndpointUri": "https://dlindau.ngrok.io/register",
+    // "fallback_template_id": "react-android-template",
+    // "registration_secret": "Password1",
 }
 export default HaapiConfiguration
