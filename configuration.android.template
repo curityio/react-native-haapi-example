@@ -8,7 +8,7 @@ const HaapiConfiguration = {
     "revocationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-revoke",
     "validateTlsCertificate": false,
     "scope": "openid profile"
-    // "registrationEndpointUri": "https://dlindau.ngrok.io/register",
+    // "registrationEndpointUri": "$IDSVR_BASE_URL/token-service/oauth-registration",
     // "fallback_template_id": "react-android-template",
     // "registration_secret": "Password1",
 }
