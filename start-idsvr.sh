@@ -31,11 +31,13 @@ fi
 #
 # Download mobile deployment resources
 #
-rm -rf deployment
-git clone https://github.com/curityio/mobile-deployments deployment
-if [ $? -ne 0 ]; then
-  echo 'Problem encountered downloading deployment resources'
-  exit 1
+if [ ! -d ./deployment ]; then
+  rm -rf deployment
+  git clone https://github.com/curityio/mobile-deployments deployment
+  if [ $? -ne 0 ]; then
+    echo 'Problem encountered downloading deployment resources'
+    exit 1
+  fi
 fi
 
 #
