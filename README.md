@@ -22,15 +22,9 @@ First ensure that the local computer has these prerequisites:
 - The `jq` tool, e.g with `brew install jq`.
 
 Copy a `license.json` file for the Curity Identity Server into the root folder.\
-Then deploy the system, and indicate how connected emulators or devices call the Curity Identity Server.\
-The following example uses the ngrok tool to provide an internet HTTPS URL:
+Then deploy the system, and indicate how connected emulators or devices call the Curity Identity Server.
 
-```bash
-export USE_NGROK='true'
-./start-idsvr.sh
-```
-
-Alternatively, provide a host name with which connected emulators or devices call the Curity Identity Server.\
+You can provide a host name with which connected emulators or devices call the Curity Identity Server.\
 For example, run the following commands to connect to a macOS computer using its IP address:
 
 ```bash
@@ -122,9 +116,11 @@ Sign in to the deployed environment and use a pre-shipped test user account.
 ## 7. Test Native Passkey Logins
 
 Passkeys require hosting of assets documents at trusted internet HTTPS URL.\
-On iOS, you must also provide overrides with your own Apple team ID and unique bundle identifier.\
+On iOS, you must also provide overrides with your own Apple team ID and unique bundle identifier.
+
 You can use ngrok to host assets documents and test passkeys logins for both Android and iOS.\
-The following example commands deploy the Curity Identity Server with a passkeys configuration:
+The following example commands deploy the Curity Identity Server with a passkeys configuration.\
+For more about ngrok, see the tutorial link at the end of this page.
 
 ```bash
 export APPLE_TEAM_ID='MYTEAMID'
@@ -136,7 +132,15 @@ export USE_NGROK='true'
 Also open the `ios` folder in Xcode and set the team ID and bundle ID under `Signing & Capabilities`.\
 Then use Apple development tools to sign the app, such as with the `Automatically manage signing` option.
 
-## 8. Learn about the React Native HAAPI Module
+## 8. Free Deployment Resources
+
+Once you have finished testing, free all backend resources with the following command:
+
+```bash
+./stop-idsvr.sh
+```
+
+## 9. Learn about the React Native HAAPI Module
 
 The example app uses the [React Native HAAPI Module](https://github.com/curityio/react-native-haapi-module), whose README explains more about options.\
 Use pre-released modules by updating the example app to use a file based dependency.\
@@ -155,7 +159,7 @@ npm uninstall @curity/react-native-haapi-module
 npm install <path-to-file>.tgz --save
 ```
 
-## 9. Use Config Specs for Deployed Environments
+## 10. Use Config Specs for Deployed Environments
 
 This repo also includes some parameterized configuration (config specs) that you can import using the admin UI.\
 Run the `Changes -> Run Config Spec` command to upload a config spec and enter parameters:
