@@ -134,7 +134,7 @@ Then use Apple development tools to sign the app, such as with the `Automaticall
 
 ## 8. Free Deployment Resources
 
-Once you have finished testing, free all backend resources with the following command:
+Once you have finished local testing, free all backend resources with the following command:
 
 ```bash
 ./stop-idsvr.sh
