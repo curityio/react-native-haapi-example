@@ -2,6 +2,7 @@
 const HaapiConfiguration = {
     "keyStoreAlias": "haapi-react-native",
     "clientId": "haapi-android-client",
+    "appRedirect": "app:start",
     "baseUri": "$IDSVR_BASE_URL",
     "tokenEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-token",
     "authorizationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-authorize",
