@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HaapiReactNativeExample</string>
+    <string name="asset_statements" translatable="false">[{\"include\": \"https://localhost:8443/.well-known/assetlinks.json\"}]</string>
 </resources>

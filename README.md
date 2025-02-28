@@ -1,61 +1,74 @@
-# React Native example using HAAPI
+# React Native Example using HAAPI
 
 [![Quality](https://img.shields.io/badge/quality-demo-red)](https://curity.io/resources/code-examples/status/)
 [![Availability](https://img.shields.io/badge/availability-source-blue)](https://curity.io/resources/code-examples/status/)
 
-# Getting Started
+An example React Native app that uses the Curity Identity Server's Hypermedia API to perform an OIDC flow.\
+Authentication uses native screens without the need for an external browser.
 
-> **Note**: Make sure you have completed
-> the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a
-> new
-> application" step, before proceeding.
+## 1. Prepare a React Native Environment
 
+First make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup).\
+Follow the React Native instructions and ensure that you can run a basic app.
 
-To install necessary dependencies, run
+## 2. Deploy the Curity Identity Server
+
+Start with a local automated deployment to ensure that you understand the technical setup.\
+You can then apply the same configuration to deployed environments.\
+First ensure that the local computer has these prerequisites:
+
+- A Docker engine.
+- The `envsubst` tool, e.g with `brew install gettext`.
+- The `jq` tool, e.g with `brew install jq`.
+
+Copy a `license.json` file for the Curity Identity Server into the root folder.\
+Then deploy the system, and indicate how connected emulators or devices call the Curity Identity Server.
+
+You can provide a host name with which connected emulators or devices call the Curity Identity Server.\
+For example, run the following commands to connect to a macOS computer using its IP address:
+
+```bash
+export USE_NGROK='false'
+export IDSVR_HOST_NAME="$(ipconfig getifaddr en0)"
+./start-idsvr.sh
+```
+
+You can set the `IDSVR_HOST_NAME` variable in various ways:
+
+- You can set it to `localhost` if you only want to test on iOS simulators.
+- Some older Android emulators might require `IDSVR_HOST_NAME` to use the special value `10.0.2.2`.
+
+## 3. View Security Configuration
+
+The [Mobile Deployments](https://github.com/curityio/mobile-deployments) repository explains further information about the deployed backend infrastructure.\
+You can view the [HAAPI Configuration](config/docker-template.xml) to understand the settings to apply to deployed environments.
+
+## 4. Configure the Application
+
+The deployment script performs the following tasks, which you could also do manually:
+
+- Populate base URLs in the `configuration.android.jsx` file from the [configuration.android.template](configuration.android.template) file.
+- Populate base URLs in `configuration.ios.jsx` file from the [configuration.ios.template](configuration.ios.template) file.
+
+## 5. Run the Application
+
+First install React native dependencies.
 
 ```bash
 npm install
 ```
 
-For iOS, you also need to run
+For iOS, also generate an Xcode workspace where you can run the example in an emulator.\
+You may need to apply [this workaround](https://github.com/facebook/react-native/issues/42109#issuecomment-1880663873) if the `pod install` command fails.
+
 ```bash
 cd ios
 pod install
 ```
-Issuing `pod install` will generate a XCode workspace where you can run the example in an emulator.
 
-# Development modules
-To be able to run unreleased modules, you need to checkout the module repo and update the dependency to be file based. 
-First, create the package:
-```bash
-git clone https://github.com/curityio/react-native-haapi-module.git
-cd react-native-haapi-module
-npm pack
-```
+### Run the Metro Server
 
-This should create a `.tgz` file.
-
-Then we can update the depdencies.
-
-```bash
-npm uninstall @curity/react-native-haapi-module
-npm install <path-to-file>.tgz --save
-```
-
-Alternatively, we can use the repo directly to be able to easily change the source code without having to pack the
-module for each change.
-
-```bash
-npm uninstall @curity/react-native-haapi-module
-npm install <path-to-repo> --save
-```
-
-
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
+Run the JavaScript _bundler_ that ships _with_ React Native from the _root_ of the React Native project:
 
 ```bash
 # using npm
@@ -65,12 +78,11 @@ npm start
 yarn start
 ```
 
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the
-following command to start your _Android_ or _iOS_ app:
+Let Metro Bundler run in its _own_ terminal and open a _new_ terminal from the _root_ of your React Native project.
 
 ### For Android
+
+Run the following command to start your _Android_ app:
 
 ```bash
 # using npm
@@ -80,32 +92,90 @@ npm run android
 yarn android
 ```
 
+
 ### For iOS
+
+Run the following command to start your _iOS_ app:
 
 ```bash
 # using npm
-npm run ios
+npm run ios -- --simulator='iPhone 16 Pro'
 
 # OR using Yarn
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_
-shortly provided you have set up your emulator/simulator correctly.
+## 6. Test Basic Logins
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+Run the app and first test basic logins using an HTML Form authenticator.\
+Sign in to the deployed environment and use a pre-shipped test user account.
 
-# Curity Identity Server configuration
+- Username: `demouser`
+- Password: `Password1`
 
-To configure clients needed for this example to run, there's config specs for [android](config/setup-android-no-attestation-validation.xml) and [ios](config/setup-ios-no-attestation-validation.xml) that can be imported using the admin UI in `Changes -> Run Config Spec`. Running a spec will prompt you for basic information needed to create the client. Some default values will be added, which for development purposes should not need to be changed. Redirect URI for the clients will configured as `app:start`.
+## 7. Test Native Passkey Logins
 
-## Configure passkey authentication
-See [Mobile Logins Using Passkeys](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) article in the Curity resource library for setting up the authenticator and clients using the admin UI.
-For convenience, clients can be setup using [android](config/setup-android-no-attestation-validation-passkeys.xml) or [ios](config/setup-ios-no-attestation-validation-passkeys.xml) config specs. Associated domains has to be added to the iOS workspace manually.
+Passkeys require hosting of assets documents at trusted internet HTTPS URL.\
+On iOS, you must also provide overrides with your own Apple team ID and unique bundle identifier.
 
-### Android signing certificate
-Android needs to have the fingerprint of the signing certificate configured when passkeys are enabled. To find your fingerprint, go to `android/` folder in a terminal and issue:
+You can use ngrok to host assets documents and test passkeys logins for both Android and iOS.\
+The following example commands deploy the Curity Identity Server with a passkeys configuration.\
+For more about ngrok, see the tutorial link at the end of this page.
+
 ```bash
-./gradlew signingReport
+export APPLE_TEAM_ID='MYTEAMID'
+export APPLE_BUNDLE_ID='io.myorganization.haapi.react.example'
+export USE_NGROK='true'
+./start-idsvr.sh
 ```
-Locate the SHA256 fingerprint in the report and configure it using the config spec.
+
+Also open the `ios` folder in Xcode and set the team ID and bundle ID under `Signing & Capabilities`.\
+Then use Apple development tools to sign the app, such as with the `Automatically manage signing` option.
+
+## 8. Free Deployment Resources
+
+Once you have finished local testing, free all backend resources with the following command:
+
+```bash
+./stop-idsvr.sh
+```
+
+## 9. Learn about the React Native HAAPI Module
+
+The example app uses the [React Native HAAPI Module](https://github.com/curityio/react-native-haapi-module), whose README explains more about options.\
+Use pre-released modules by updating the example app to use a file based dependency.\
+You can change the module code, e.g. to add `println` debug statements, then run it with the example app.
+
+```bash
+git clone https://github.com/curityio/react-native-haapi-module.git
+npm uninstall @curity/react-native-haapi-module
+npm install <path-to-repo> --save
+```
+
+Alternatively, build the module as a `.tgz` file and update the example app to use it:
+
+```bash
+npm uninstall @curity/react-native-haapi-module
+npm install <path-to-file>.tgz --save
+```
+
+## 10. Use Config Specs for Deployed Environments
+
+This repo also includes some parameterized configuration (config specs) that you can import using the admin UI.\
+Run the `Changes -> Run Config Spec` command to upload a config spec and enter parameters:
+
+- [android config spec](config/setup-android-no-attestation-validation.xml) 
+- [ios config spec](config/setup-ios-no-attestation-validation.xml)
+
+## Tutorials
+
+See also the following resources:
+
+- The [React Native HAAPI Code Example](https://curity.io/resources/learn/react-native-haapi/) provides an overview of the code example's behaviors.
+- The [ngrok tutorials](https://curity.io/resources/learn/mobile-setup-ngrok/) explain how to use an internet URL and [view HAAPI messages](https://curity.io/resources/learn/expose-local-curity-ngrok/#ngrok-inspection-and-status).
+- The [Configure Native Passkeys for Mobile Logins](https://curity.io/resources/learn/mobile-logins-using-native-passkeys/) tutorial explains the technical setup when using passkeys.
+- The [Implementing HAAPI Attestation Fallback](https://curity.io/resources/learn/implementing-haapi-fallback/) explains how to manage non-compliant Android devices.
+
+## More information
+
+Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server.

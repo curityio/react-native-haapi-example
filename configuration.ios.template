@@ -1,0 +1,12 @@
+// Replace IDSVR_BASE_URL placeholders to produce the configuration.ios.jsx file
+const HaapiConfiguration = {
+    "clientId": "haapi-ios-client",
+    "appRedirect": "app:start",
+    "baseUri": "$IDSVR_BASE_URL",
+    "tokenEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-token",
+    "authorizationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-authorize",
+    "revocationEndpointUri": "$IDSVR_BASE_URL/oauth/v2/oauth-revoke",
+    "validateTlsCertificate": false,
+    "scope": "openid profile"
+}
+export default HaapiConfiguration
