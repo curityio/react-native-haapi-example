@@ -41,13 +41,6 @@ if [ ! -d ./deployment ]; then
 fi
 
 #
-# TODO: delete before merging
-#
-cd deployment
-git checkout feature/sdk_update
-cd ..
-
-#
 # To test passkeys on iOS, override these settings with a Team ID that you own and your own unique bundle ID
 #
 if [ "$APPLE_TEAM_ID" == '' ]; then
