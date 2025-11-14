@@ -44,7 +44,7 @@ export const Fields = (props) => {
     return fields
             .filter(field => field.type !== 'hidden')
             .map(field => (
-                    <TextInput style={Styles.input}
+                    <TextInput style={Styles.input} autoCapitalize='none'
                                secureTextEntry={field.name === "password"}
                                placeholder={getFieldPlaceHolder(field)}
                                defaultValue={field.value}
